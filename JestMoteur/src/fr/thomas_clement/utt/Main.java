@@ -15,6 +15,8 @@ public class Main {
 //		
 //		p4.chooseOffers();
 //		p2.chooseOffers();
+		
+		// J'ajoute quelque chose pour la branche initialization_method
 	
 	}
 
