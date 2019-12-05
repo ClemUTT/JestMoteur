@@ -34,6 +34,16 @@ public abstract class Player {
 		this.strategy = strategy;
 	}
 	
+	public String toString() {
+		
+		StringBuffer bf = new StringBuffer();
+		
+		bf.append(this.nickname);
+		bf.append("; " + this.strategy.getClass().getSimpleName());
+		
+		return bf.toString();
+	}
+	
 	
 
 }
