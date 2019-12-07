@@ -37,7 +37,7 @@ public class Packet {
 	}
 	
 	public String toString() {
-		return this.cards.toString();
+		return this.cards.toString() + " size : " + this.cards.size();
 	}
 	
 	

@@ -11,9 +11,60 @@ public class Game {
 	Packet trophies;
 	Card reference_card;
 	
+	int nbRounds = 1;
+	
 	
 	public Game() {
 		
+	}
+	
+	public void playRounds() {
+		// Check if there are still cards in the draw deck (this.deck)
+		while(this.deck.getCards().size() > 0) {
+			
+			System.out.println("\n---------------------------------\n");
+			System.out.println("NOUS SOMMES AU ROUND " + this.nbRounds);
+			System.out.println("\n---------------------------------\n");
+			
+			// Deal Cards to each player
+			this.dealOffersToEachPlayer(this.getDeck(), 2);
+			
+			// Ask to each player which offer they want to hide
+			for (int i = 0; i < this.players.size(); i++) {
+				players.get(i).makeOffers();
+			}
+			
+			System.out.println("Voici toutes les offres : \n");
+			
+			StringBuffer bf  = new StringBuffer();
+			for (int i = 0; i < players.size(); i++) {
+				bf.append("Nom : " + players.get(i).getNickname() + " \n");
+				
+				for (int j = 0; j < players.get(i).getHand().getCards().size(); j++) {
+					bf.append("offre " + (j+1) + " : ");
+					bf.append(players.get(i).getHand().getCards().get(j));
+				}
+				bf.append("\n --------------------------- \n");
+			}
+			System.out.println(bf.toString());
+			
+			// Ask to each player to choose an offer
+			
+			
+			
+			// Change round
+			this.nbRounds += 1;
+		}
+	}
+	
+	
+	
+	public void dealOffersToEachPlayer(Packet p, int nbCards) {
+		for (int i = 0; i < players.size(); i++) {
+			for (int j = 0; j < nbCards; j++) {
+				p.addACardFromAPacketToAnotherPacket(j, players.get(i).getHand()); // Add a card j from the deck to the hand of the player i
+			}
+		}
 	}
 	
 	public void initializeDeck() {
