@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface Strategy {
 	
-	abstract public void makeOffers(Player player);
+	abstract public int makeOffers(Player player);
 	
-	abstract public void chooseOffers(List<Player> players);
+	abstract public Object[] chooseOffers(List<Player> players, Player player);
 	
 
 }

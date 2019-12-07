@@ -1,11 +1,20 @@
 package fr.thomas_clement.utt;
 
+import java.util.Random;
+
 public class Main {
 
 	public static void main(String[] args) {
 		
 		//System.out.println(Shape.CLUBS.ordinal());
-		
+//		int max = 4;
+//		int min = 0;
+//		
+//		Random r = new Random();
+//		System.out.println(r.nextInt((max - min) + 1) + min);
+//		
+//		int offerHidden = new Random().nextInt((1 - 0) + 1) + 0;
+//		System.out.println(offerHidden);
 		
 		Game party = new Game();
 		

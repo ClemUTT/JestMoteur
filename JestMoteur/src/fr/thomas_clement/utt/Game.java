@@ -11,7 +11,8 @@ public class Game {
 	Packet trophies;
 	Card reference_card;
 	Player lastToPlay = null;
-	Player playing = null; // its turn
+	Player choosing = null; // its turn
+	List<Player> playersWhoHavePlayed = new ArrayList<Player>();
 	
 	int nbRounds = 1;
 	
@@ -39,17 +40,30 @@ public class Game {
 				}
 			}
 			
+			/*************************************************************************
+			 ************************Make Offers************************************** 
+			 *************************************************************************/
+			
 			// Ask to each player which offer they want to hide
 			for (int i = 0; i < this.players.size(); i++) {
-				players.get(i).makeOffers();
+				
+				System.out.println(this.players.get(i).getNickname() + ", choisissez l'offre que vous ne souhaitez PAS révéler (1 ou 2) parmi vos offres :");
+				int answer = players.get(i).makeOffers();
+				
+				while(answer != 1 && answer != 2) {
+					System.out.println("Veuillez choisir un nombre entre 1 et 2 : ");
+					answer = players.get(i).makeOffers();
+				}
+				
+				players.get(i).getHand().getCards().get(answer - 1).setFaceHidden(true);
+				players.get(i).sortPlayerHand();
+				
 				System.out.println("-------------------------------------------");
 			}
 			
 			
 			
 			System.out.println("Voici toutes les offres : \n");
-			
-			
 			
 			StringBuffer bf  = new StringBuffer();
 			for (int i = 0; i < players.size(); i++) {
@@ -64,12 +78,56 @@ public class Game {
 			System.out.println(bf.toString());
 			
 			
+			/*************************************************************************
+			 ************************Choose Offers************************************** 
+			 *************************************************************************/
+			
+			//Determine who plays first
+			this.whoPlaysFirst();
 			
 			// Ask to each player to choose an offer
-			System.out.println("Celui qui joue en premier est : " + this.whoPlaysFirst().getNickname());
+			
+			
+			System.out.println("Celui qui joue en premier est : " + this.choosing.getNickname());
 			
 			for (int i = 0; i < players.size(); i++) { // There are as many choose as there are players
-				this.playing.chooseOffers(tabPlayersWhoCanBeChosen(this.lastToPlay, this.playing));
+				List<Player> tabPlayersWhoCanBeChosen = tabPlayersWhoCanBeChosen(this.lastToPlay, this.choosing);
+				
+				if(this.playersWhoHavePlayed.contains(this.choosing)) {
+					//If no one have 2 offers but itself has, so the player which is choosing an offer is itself
+					this.choosing = tabPlayersWhoCanBeChosen.get(0);
+				}
+				System.out.println(this.choosing.getNickname() + ", choisissez un joueur parmi la liste suivante :");
+				
+				
+				for (int j = 0; j < tabPlayersWhoCanBeChosen.size(); j++) {
+					System.out.print(tabPlayersWhoCanBeChosen.get(j).getNickname() + ", ");
+				}
+				// tabPlayersWhoCanBeChosen(this.lastToPlay, this.choosing) ; return a tab with players that can be chosen
+				
+				//Asking...
+				Object[] answer = this.choosing.chooseOffers(tabPlayersWhoCanBeChosen);
+				
+				while(!tabPlayersWhoCanBeChosen.contains(answer[0])) {
+					System.out.println(answer[0] + "n'est pas un nom figurant dans la liste ci-dessus, réessayez :");
+					answer = this.choosing.chooseOffers(tabPlayersWhoCanBeChosen(this.lastToPlay, this.choosing));
+				}
+				
+				Player playerTaken = (Player) answer[0];
+				int offerChosen = (int) answer[1]-1;
+				
+				System.out.println(this.choosing.getNickname() + " a choisi le joueur " + playerTaken.getNickname() + ", ainsi que l'offre " + answer[1]);
+				
+				playerTaken.getHand().addACardFromAPacketToAnotherPacket(offerChosen, this.choosing.getJest());
+				
+				
+				//Say that a player has chosen for the entire round
+				this.playersWhoHavePlayed.add(this.choosing);
+				
+				
+				this.lastToPlay = this.choosing;
+				this.choosing = playerTaken;
+				
 			}
 			
 			
@@ -79,22 +137,40 @@ public class Game {
 		//} //End while
 	}
 	
-	public List<Player> tabPlayersWhoCanBeChosen(Player lastToPlay, Player playing) {
+	public List<Player> tabPlayersWhoCanBeChosen(Player lastToPlay, Player choosing) {
 		
 		//lastToPlay = Player who just have chosen
-		//playing = Player who is going to choose (but who ?)
+		//choosing = Player who is going to choose (but who ?)
+		List<Player> tabPlayers = new ArrayList<Player>();
 		
 		//Players that still have 2 offers
+		for (int i = 0; i < this.players.size(); i++) {
+			if(this.players.get(i).getHand().getCards().size() == 2) {
+				tabPlayers.add(this.players.get(i));
+			}
+		}
 		
 		//Delete the player that is playing (if there is one, it's because it's the first player to play
+		for (int i = 0; i < tabPlayers.size(); i++) {
+			if(tabPlayers.get(i).equals(this.choosing)) {
+				tabPlayers.remove(tabPlayers.get(i));
+				break;
+			}
+		}
 		
 		//Delete the player that just have chosen
+		for (int i = 0; i < tabPlayers.size(); i++) {
+			if(tabPlayers.get(i).equals(this.lastToPlay)) {
+				tabPlayers.remove(tabPlayers.get(i));
+				break;
+			}
+		}
 		
-		return null;
+		return tabPlayers;
 		
 	}
 	
-	public Player whoPlaysFirst() {
+	public void whoPlaysFirst() {
 		
 		List<Player> playersSortedByValue = new ArrayList<Player>();
 		List<Player> playersSortedByShape = new ArrayList<Player>();
@@ -105,7 +181,7 @@ public class Game {
 			if(playersSortedByValue.size() == 0) {
 				//System.out.println("Si le tableau playersSortedByValue a une taille de 0");
 				playersSortedByValue.add(this.players.get(i));
-				System.out.println("First to be added in the playerSortedByValue : " + playersSortedByValue);
+				//System.out.println("First to be added in the playerSortedByValue : " + playersSortedByValue);
 			} else {
 				//System.out.println("Else le tableau playersSortedByValue a une taille supérieure à 1");
 				for (int j = 0; j < playersSortedByValue.size(); j++) {
@@ -114,13 +190,13 @@ public class Game {
 						//System.out.println("Si le player a une valeur de carte EGALE à celui qui est dans le tableau playersSortedByValue");
 						//If the player in the sortedValue tab has the same value as the player in players tab, add it to the sortedValue tab
 						playersSortedByValue.add(this.players.get(i));
-						System.out.println("Ensuite on ajoute à playerSortedByValue : " + playersSortedByValue);
+						//System.out.println("Ensuite on ajoute à playerSortedByValue : " + playersSortedByValue);
 						break;
 					} else if(this.players.get(i).getHand().getCards().get(0).getValue() > playersSortedByValue.get(j).getHand().getCards().get(0).getValue()) {
 						//System.out.println("Else if le player a une valeur de carte SUPERIEURE à celui qui est dans le tableau playersSortedByValue");
 						playersSortedByValue.clear();
 						playersSortedByValue.add(this.players.get(i));
-						System.out.println("Ensuite clear playerSortedByValue et on ajoute le meilleur: " + playersSortedByValue);
+						//System.out.println("Ensuite clear playerSortedByValue et on ajoute le meilleur: " + playersSortedByValue);
 					}
 				}
 				
@@ -132,7 +208,7 @@ public class Game {
 		
 		if(playersSortedByValue.size() == 1) {
 			// It's the only player so it's no use at all to compare the shape to itself
-			System.out.println("si le tableau playersSortedByValue a une taille de 1");
+			//System.out.println("si le tableau playersSortedByValue a une taille de 1");
 			playersSortedByShape.add(playersSortedByValue.get(0));
 		} else {
 			for (int i = 0; i < playersSortedByValue.size(); i++) {
@@ -156,7 +232,7 @@ public class Game {
 		
 		System.out.println("Tab sorted by shape : " + playersSortedByShape);
 		
-		return playersSortedByShape.get(0);
+		this.choosing = playersSortedByShape.get(0);
 	}
 	
 	

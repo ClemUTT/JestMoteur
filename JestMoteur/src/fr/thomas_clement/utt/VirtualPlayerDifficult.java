@@ -5,15 +5,16 @@ import java.util.List;
 public class VirtualPlayerDifficult implements Strategy{
 
 	@Override
-	public void makeOffers(Player player) {
-		// TODO Auto-generated method stub
+	public int makeOffers(Player player) {
+		
+		return 0;
 		
 	}
 
 	@Override
-	public void chooseOffers(List<Player> players) {
-		// TODO Auto-generated method stub
+	public Object[] chooseOffers(List<Player> players, Player p) {
 		
+		return null;
 	}
 
 	

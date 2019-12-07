@@ -18,14 +18,14 @@ public abstract class Player {
 		this.hand = new Packet(new ArrayList<Card>());
 	}
 	
-	public void chooseOffers(List<Player> players) {
-		this.strategy.chooseOffers(players);
+	public int makeOffers() {
+		return this.strategy.makeOffers(this);
+	}
+	
+	public Object[] chooseOffers(List<Player> players) {
+		return this.strategy.chooseOffers(players, this);
 	}
 
-	public void makeOffers() {
-		this.strategy.makeOffers(this);
-		this.sortPlayerHand();
-	}
 	
 	public void sortPlayerHand() { // Sort the player hand in this way = 0; offer not hidden, 1; offer hidden
 		Card cardHidden = null;
@@ -40,13 +40,12 @@ public abstract class Player {
 			}
 		} // End of the loop : sort out the player hand
 		
-//		System.out.println(this.getHand().getCards());
+		
 		this.getHand().getCards().remove(0);
 		this.getHand().getCards().remove(0);
 		
 		
 		this.getHand().getCards().add(cardNotHidden); //The hand of each player is sorted out with 1st : cardNotHidden, 2nde : cardHidden
-		
 		this.getHand().getCards().add(cardHidden);
 	}
 	
