@@ -7,12 +7,12 @@ public class RealPlayerStrategy implements Strategy{
 
 	@Override
 	public void makeOffers(Player p) {
-		System.out.println(p.getNickname() + ", voici vos offres : ");
+		
+		System.out.println(p.getNickname() + ", choisissez l'offre que vous ne souhaitez PAS révéler (1 ou 2) parmi vos offres :");
 		for (int i = 0; i < p.getHand().getCards().size(); i++) {
 			System.out.println("offre " + (i+1) + " : " + p.getHand().getCards().get(i));
 		}
 		
-		System.out.println("Choisissez l'offre que vous ne souhaitez PAS révéler (1 ou 2)");
 		Scanner sc = new Scanner(System.in);
 		int answer = sc.nextInt();
 		

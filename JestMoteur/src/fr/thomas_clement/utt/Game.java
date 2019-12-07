@@ -10,6 +10,8 @@ public class Game {
 	Packet deck;
 	Packet trophies;
 	Card reference_card;
+	Player lastToPlay = null;
+	Player playing = null; // its turn
 	
 	int nbRounds = 1;
 	
@@ -20,21 +22,34 @@ public class Game {
 	
 	public void playRounds() {
 		// Check if there are still cards in the draw deck (this.deck)
-		while(this.deck.getCards().size() > 0) {
+		//while(this.deck.getCards().size() > 0) {
 			
 			System.out.println("\n---------------------------------\n");
 			System.out.println("NOUS SOMMES AU ROUND " + this.nbRounds);
 			System.out.println("\n---------------------------------\n");
 			
+			
 			// Deal Cards to each player
 			this.dealOffersToEachPlayer(this.getDeck(), 2);
+			
+			// The ace has a value of 1 for all the players who have an ace in its hand
+			for (int i = 0; i < this.players.size(); i++) {
+				if(this.players.get(i).getHand().getCards().get(0).getShape() == Shape.SPADES) {
+					this.players.get(i).getHand().getCards().get(0).setValue(1);
+				}
+			}
 			
 			// Ask to each player which offer they want to hide
 			for (int i = 0; i < this.players.size(); i++) {
 				players.get(i).makeOffers();
+				System.out.println("-------------------------------------------");
 			}
 			
+			
+			
 			System.out.println("Voici toutes les offres : \n");
+			
+			
 			
 			StringBuffer bf  = new StringBuffer();
 			for (int i = 0; i < players.size(); i++) {
@@ -48,13 +63,100 @@ public class Game {
 			}
 			System.out.println(bf.toString());
 			
+			
+			
 			// Ask to each player to choose an offer
+			System.out.println("Celui qui joue en premier est : " + this.whoPlaysFirst().getNickname());
+			
+			for (int i = 0; i < players.size(); i++) { // There are as many choose as there are players
+				this.playing.chooseOffers(tabPlayersWhoCanBeChosen(this.lastToPlay, this.playing));
+			}
 			
 			
 			
 			// Change round
 			this.nbRounds += 1;
+		//} //End while
+	}
+	
+	public List<Player> tabPlayersWhoCanBeChosen(Player lastToPlay, Player playing) {
+		
+		//lastToPlay = Player who just have chosen
+		//playing = Player who is going to choose (but who ?)
+		
+		//Players that still have 2 offers
+		
+		//Delete the player that is playing (if there is one, it's because it's the first player to play
+		
+		//Delete the player that just have chosen
+		
+		return null;
+		
+	}
+	
+	public Player whoPlaysFirst() {
+		
+		List<Player> playersSortedByValue = new ArrayList<Player>();
+		List<Player> playersSortedByShape = new ArrayList<Player>();
+		
+		
+		for (int i = 0; i < this.players.size(); i++) {
+			
+			if(playersSortedByValue.size() == 0) {
+				//System.out.println("Si le tableau playersSortedByValue a une taille de 0");
+				playersSortedByValue.add(this.players.get(i));
+				System.out.println("First to be added in the playerSortedByValue : " + playersSortedByValue);
+			} else {
+				//System.out.println("Else le tableau playersSortedByValue a une taille supérieure à 1");
+				for (int j = 0; j < playersSortedByValue.size(); j++) {
+					//System.out.println("entrée dans la boucle de playersSortedByValue ");
+					if(this.players.get(i).getHand().getCards().get(0).getValue() == playersSortedByValue.get(j).getHand().getCards().get(0).getValue()) {
+						//System.out.println("Si le player a une valeur de carte EGALE à celui qui est dans le tableau playersSortedByValue");
+						//If the player in the sortedValue tab has the same value as the player in players tab, add it to the sortedValue tab
+						playersSortedByValue.add(this.players.get(i));
+						System.out.println("Ensuite on ajoute à playerSortedByValue : " + playersSortedByValue);
+						break;
+					} else if(this.players.get(i).getHand().getCards().get(0).getValue() > playersSortedByValue.get(j).getHand().getCards().get(0).getValue()) {
+						//System.out.println("Else if le player a une valeur de carte SUPERIEURE à celui qui est dans le tableau playersSortedByValue");
+						playersSortedByValue.clear();
+						playersSortedByValue.add(this.players.get(i));
+						System.out.println("Ensuite clear playerSortedByValue et on ajoute le meilleur: " + playersSortedByValue);
+					}
+				}
+				
+			} //End of the first else
+			
 		}
+		
+		System.out.println("Tab sorted by value : " + playersSortedByValue);
+		
+		if(playersSortedByValue.size() == 1) {
+			// It's the only player so it's no use at all to compare the shape to itself
+			System.out.println("si le tableau playersSortedByValue a une taille de 1");
+			playersSortedByShape.add(playersSortedByValue.get(0));
+		} else {
+			for (int i = 0; i < playersSortedByValue.size(); i++) {
+				if(playersSortedByShape.size() == 0) {
+					playersSortedByShape.add(playersSortedByValue.get(i));
+				} else {
+					
+					for (int j = 0; j < playersSortedByShape.size(); j++) {
+						if(playersSortedByValue.get(i).getHand().getCards().get(0).getShape().ordinal() > playersSortedByShape.get(j).getHand().getCards().get(0).getShape().ordinal()) {
+							
+							playersSortedByShape.clear();
+							playersSortedByShape.add(playersSortedByValue.get(i));
+							
+						}
+					}
+					
+					
+				} // end of the second else
+			} //end of the first for loop
+		} // end of the first else
+		
+		System.out.println("Tab sorted by shape : " + playersSortedByShape);
+		
+		return playersSortedByShape.get(0);
 	}
 	
 	
@@ -140,7 +242,7 @@ public class Game {
 			//Add 2 Cards to the trophies
 			this.deck.addACardFromAPacketToAnotherPacket(0, this.trophies);
 			
-			this.deck.addACardFromAPacketToAnotherPacket(1, this.trophies);
+			this.deck.addACardFromAPacketToAnotherPacket(0, this.trophies);
 			
 		} else { //If there are 3 players
 			

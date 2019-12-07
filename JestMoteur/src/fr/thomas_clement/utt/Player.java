@@ -24,6 +24,30 @@ public abstract class Player {
 
 	public void makeOffers() {
 		this.strategy.makeOffers(this);
+		this.sortPlayerHand();
+	}
+	
+	public void sortPlayerHand() { // Sort the player hand in this way = 0; offer not hidden, 1; offer hidden
+		Card cardHidden = null;
+		Card cardNotHidden = null;
+		
+		
+		for (int j = 0; j < this.getHand().getCards().size(); j++) { //Run the hand of the player in order to sort it out
+			if(this.getHand().getCards().get(j).isFaceHidden()) { //If the card face is hidden
+				cardHidden = this.getHand().getCards().get(j);
+			} else {
+				cardNotHidden = this.getHand().getCards().get(j);
+			}
+		} // End of the loop : sort out the player hand
+		
+//		System.out.println(this.getHand().getCards());
+		this.getHand().getCards().remove(0);
+		this.getHand().getCards().remove(0);
+		
+		
+		this.getHand().getCards().add(cardNotHidden); //The hand of each player is sorted out with 1st : cardNotHidden, 2nde : cardHidden
+		
+		this.getHand().getCards().add(cardHidden);
 	}
 	
 	public String getNickname() {
