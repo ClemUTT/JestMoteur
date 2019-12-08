@@ -24,15 +24,67 @@ public class Game {
 	
 	public void playRounds() {
 		// Check if there are still cards in the draw deck (this.deck)
-		//while(this.deck.getCards().size() > 0) {
+		while(this.deck.getCards().size() > 0) {
 			
 			System.out.println("\n---------------------------------\n");
 			System.out.println("NOUS SOMMES AU ROUND " + this.nbRounds);
 			System.out.println("\n---------------------------------\n");
 			
 			
-			// Deal Cards to each player
-			this.dealOffersToEachPlayer(this.getDeck(), 2);
+			// Deal Cards to each player if it's the first round
+			if(this.nbRounds == 1) {
+				
+				this.dealOffersToEachPlayer(this.getDeck(), 2);
+				
+			} else {
+				/*************************************************************************
+				 ************************Recover remaining offers*************************
+				 *************************************************************************/
+				
+				//Add the remaining offers to the stack
+				for (int j = 0; j < this.players.size(); j++) {
+					this.players.get(j).getHand().getCards().get(0).setFaceHidden(false); // Change each face to false
+					this.players.get(j).getHand().addACardFromAPacketToAnotherPacket(0, this.stack);
+				}
+				
+//				System.out.println("------------------------------");
+//				System.out.println("hand de chaque joueur : ");
+//				for (int i = 0; i < this.players.size(); i++) {
+//					System.out.println(this.players.get(i).getHand());
+//				}
+				
+				//Add to the stack a number of cards from the draw deck equal to the number of players
+				for (int j = 0; j < players.size(); j++) {
+					this.deck.addACardFromAPacketToAnotherPacket(0, this.stack);
+				}
+				
+//				System.out.println("------------------------------");
+//				System.out.println("stack :");
+//				System.out.println(this.stack);
+				
+				//Shuffle the stack
+				this.stack.shuffleCards();
+				
+				//Deal 2 cards from the stack to each player
+				this.dealOffersToEachPlayer(this.stack, 2);
+				
+				
+			}
+			
+			System.out.println("------------------------------");
+			System.out.println("hand de chaque joueur : ");
+			for (int i = 0; i < this.players.size(); i++) {
+				System.out.println(this.players.get(i).getHand());
+			}
+			
+			System.out.println("------------------------------");
+			System.out.println("stack :");
+			System.out.println(this.stack);
+			
+			System.out.println("------------------------------");
+			System.out.println("deck :");
+			System.out.println(this.deck);
+			
 			
 			// The ace has a value of 1 for all the players who have an ace in its hand
 			for (int i = 0; i < this.players.size(); i++) {
@@ -135,56 +187,28 @@ public class Game {
 			
 
 			/*************************************************************************
-			 ************************Recover remaining offers*************************
+			 ************************Choose Offers************************************** 
 			 *************************************************************************/
 			
-			//Add the remaining offers to the stack
-			for (int j = 0; j < this.players.size(); j++) {
-				this.players.get(j).getHand().getCards().get(0).setFaceHidden(false); // Change each face to false
-				this.players.get(j).getHand().addACardFromAPacketToAnotherPacket(0, this.stack);
-			}
-			
-			System.out.println("------------------------------");
-			System.out.println("hand de chaque joueur : ");
-			for (int i = 0; i < this.players.size(); i++) {
-				System.out.println(this.players.get(i).getHand());
-			}
-			
-			//Add to the stack a number of cards from the draw deck equal to the number of players
-			for (int j = 0; j < players.size(); j++) {
-				this.deck.addACardFromAPacketToAnotherPacket(0, this.stack);
-			}
-			
-			System.out.println("------------------------------");
-			System.out.println("stack :");
-			System.out.println(this.stack);
-			
-			//Shuffle the stack
-			this.stack.shuffleCards();
-			
-			//Deal 2 cards from the stack to each player
-			this.dealOffersToEachPlayer(this.stack, 2);
-			
-			System.out.println("------------------------------");
-			System.out.println("hand de chaque joueur : ");
-			for (int i = 0; i < this.players.size(); i++) {
-				System.out.println(this.players.get(i).getHand());
-			}
-			
-			System.out.println("------------------------------");
-			System.out.println("stack :");
-			System.out.println(this.stack);
-			
-			System.out.println("------------------------------");
-			System.out.println("deck :");
-			System.out.println(this.deck);
-			
+			this.lastToPlay = null;
+			this.choosing = null;
+			this.playersWhoHavePlayed = new ArrayList<Player>(); // At the end of a round, no one has played
 			
 			// Change round
 			this.nbRounds += 1;
-		//} //End while
+		} //End while
+		
+		this.endOfTheGame();
 	}
 	
+	private void endOfTheGame() {
+		
+		System.out.println("----------------------------");
+		System.out.println("-------FIN DE LA PARTIE-----");
+		System.out.println("----------------------------");
+		
+	}
+
 	public List<Player> tabPlayersWhoCanBeChosen(Player lastToPlay, Player choosing) {
 		
 		//lastToPlay = Player who just have chosen
