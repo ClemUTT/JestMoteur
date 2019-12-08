@@ -7,8 +7,8 @@ public class VirtualPlayerRandom implements Strategy{
 
 	@Override
 	public int makeOffers(Player player) {
-		int offerHidden = new Random().nextInt((1 - 0) + 1) + 0;
-		player.getHand().getCards().get(offerHidden).setFaceHidden(true);
+		int offerHidden = new Random().nextInt((2 - 1) + 1) + 1;
+		//player.getHand().getCards().get(offerHidden).setFaceHidden(true);
 		
 		return offerHidden;
 		
@@ -17,12 +17,11 @@ public class VirtualPlayerRandom implements Strategy{
 	@Override
 	public Object[] chooseOffers(List<Player> tabPlayers, Player p) {
 		
-		Player playerChosen = tabPlayers.get((new Random().nextInt((tabPlayers.size() - 0) + 1) + 0));
-		int offerTaken = new Random().nextInt((1 - 0) + 1) + 0;
+		Player playerChosen = tabPlayers.get((new Random().nextInt(((tabPlayers.size()-1) - 0) + 1) + 0));
+		int offerTaken = new Random().nextInt((2 - 1) + 1) + 1;
 		
-		playerChosen.getHand().addACardFromAPacketToAnotherPacket(offerTaken, p.getJest());
 		
-		return null;
+		return new Object[] {playerChosen, offerTaken};
 		
 	}
 

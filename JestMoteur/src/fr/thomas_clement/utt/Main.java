@@ -28,13 +28,13 @@ public class Main {
 		
 		party.playRounds();
 		
-		System.out.println(party.getDeck());
-		//System.out.println(party.getPlayers());
-		System.out.println(party.getTrophies());
-		
-		for (int i = 0; i < party.getPlayers().size(); i++) {
-			System.out.println(party.getPlayers().get(i).getHand());
-		}
+//		System.out.println(party.getDeck());
+//		//System.out.println(party.getPlayers());
+//		System.out.println(party.getTrophies());
+//		
+//		for (int i = 0; i < party.getPlayers().size(); i++) {
+//			System.out.println(party.getPlayers().get(i).getHand());
+//		}
 		
 		
 	}

@@ -8,6 +8,7 @@ public class Game {
 	
 	List<Player> players = new ArrayList<Player>();
 	Packet deck;
+	Packet stack = new Packet(new ArrayList<Card>());
 	Packet trophies;
 	Card reference_card;
 	Player lastToPlay = null;
@@ -116,7 +117,8 @@ public class Game {
 				Player playerTaken = (Player) answer[0];
 				int offerChosen = (int) answer[1]-1;
 				
-				System.out.println(this.choosing.getNickname() + " a choisi le joueur " + playerTaken.getNickname() + ", ainsi que l'offre " + answer[1]);
+				System.out.println("\n" + this.choosing.getNickname() + " a choisi le joueur " + playerTaken.getNickname() + ", ainsi que l'offre " + answer[1]);
+				System.out.println("\n --------------------------------------");
 				
 				playerTaken.getHand().addACardFromAPacketToAnotherPacket(offerChosen, this.choosing.getJest());
 				
@@ -128,8 +130,54 @@ public class Game {
 				this.lastToPlay = this.choosing;
 				this.choosing = playerTaken;
 				
+				
+			} //End of the for loop that ask to choose
+			
+
+			/*************************************************************************
+			 ************************Recover remaining offers*************************
+			 *************************************************************************/
+			
+			//Add the remaining offers to the stack
+			for (int j = 0; j < this.players.size(); j++) {
+				this.players.get(j).getHand().getCards().get(0).setFaceHidden(false); // Change each face to false
+				this.players.get(j).getHand().addACardFromAPacketToAnotherPacket(0, this.stack);
 			}
 			
+			System.out.println("------------------------------");
+			System.out.println("hand de chaque joueur : ");
+			for (int i = 0; i < this.players.size(); i++) {
+				System.out.println(this.players.get(i).getHand());
+			}
+			
+			//Add to the stack a number of cards from the draw deck equal to the number of players
+			for (int j = 0; j < players.size(); j++) {
+				this.deck.addACardFromAPacketToAnotherPacket(0, this.stack);
+			}
+			
+			System.out.println("------------------------------");
+			System.out.println("stack :");
+			System.out.println(this.stack);
+			
+			//Shuffle the stack
+			this.stack.shuffleCards();
+			
+			//Deal 2 cards from the stack to each player
+			this.dealOffersToEachPlayer(this.stack, 2);
+			
+			System.out.println("------------------------------");
+			System.out.println("hand de chaque joueur : ");
+			for (int i = 0; i < this.players.size(); i++) {
+				System.out.println(this.players.get(i).getHand());
+			}
+			
+			System.out.println("------------------------------");
+			System.out.println("stack :");
+			System.out.println(this.stack);
+			
+			System.out.println("------------------------------");
+			System.out.println("deck :");
+			System.out.println(this.deck);
 			
 			
 			// Change round
@@ -171,6 +219,10 @@ public class Game {
 	}
 	
 	public void whoPlaysFirst() {
+		
+//		for (int i = 0; i < this.players.size(); i++) {
+//			System.out.println(this.players.get(i).getHand());
+//		}
 		
 		List<Player> playersSortedByValue = new ArrayList<Player>();
 		List<Player> playersSortedByShape = new ArrayList<Player>();
@@ -230,7 +282,7 @@ public class Game {
 			} //end of the first for loop
 		} // end of the first else
 		
-		System.out.println("Tab sorted by shape : " + playersSortedByShape);
+		System.out.println("Tab sorted by shape : " + playersSortedByShape + "\n");
 		
 		this.choosing = playersSortedByShape.get(0);
 	}
@@ -240,7 +292,7 @@ public class Game {
 	public void dealOffersToEachPlayer(Packet p, int nbCards) {
 		for (int i = 0; i < players.size(); i++) {
 			for (int j = 0; j < nbCards; j++) {
-				p.addACardFromAPacketToAnotherPacket(j, players.get(i).getHand()); // Add a card j from the deck to the hand of the player i
+				p.addACardFromAPacketToAnotherPacket(0, players.get(i).getHand()); // Add a card (index 0) from the Packet p to the hand of the player i
 			}
 		}
 	}
@@ -315,14 +367,13 @@ public class Game {
 		
 		if(this.players.size() == 4) { //If there are 4 players
 			
-			//Add 2 Cards to the trophies
-			this.deck.addACardFromAPacketToAnotherPacket(0, this.trophies);
-			
+			//Add 1 Card to the trophies
 			this.deck.addACardFromAPacketToAnotherPacket(0, this.trophies);
 			
 		} else { //If there are 3 players
 			
-			//Add 1 random Card to the trophies
+			//Add 2 random Cards to the trophies
+			this.deck.addACardFromAPacketToAnotherPacket(0, this.trophies);
 			this.deck.addACardFromAPacketToAnotherPacket(0, this.trophies);
 		}
 		

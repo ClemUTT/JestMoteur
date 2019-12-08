@@ -8,6 +8,7 @@ public class RealPlayerStrategy implements Strategy{
 	@Override
 	public int makeOffers(Player p) {
 		
+		//Display its offers
 		for (int i = 0; i < p.getHand().getCards().size(); i++) {
 			System.out.println("offre " + (i+1) + " : " + p.getHand().getCards().get(i));
 		}
@@ -28,7 +29,7 @@ public class RealPlayerStrategy implements Strategy{
 		String nameAnswer = sc.next();
 		Player playerTaken = null;
 		
-		
+		//The String chosen player is casted ad a Player
 		for (int i = 0; i < players.size(); i++) {
 			if(players.get(i).getNickname().equalsIgnoreCase(nameAnswer)) {
 				playerTaken = players.get(i);
