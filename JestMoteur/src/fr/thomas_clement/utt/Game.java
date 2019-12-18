@@ -1,10 +1,13 @@
 package fr.thomas_clement.utt;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
-public class Game {
+public class Game implements GameVisitor{
 	
 	List<Player> players = new ArrayList<Player>();
 	Packet deck;
@@ -22,7 +25,20 @@ public class Game {
 		
 	}
 	
+	@Override
+	public void calcul(Jester jest) {
+		
+	}
+	
 	public void playRounds() {
+		
+		//For each round, the the value of an ace equals to 1
+		for (int i = 0; i < this.deck.getCards().size(); i++) {
+			if(this.deck.getCards().get(i).getValue() == 5) {
+				this.deck.getCards().get(i).setValue(1);
+			}
+		}
+		
 		// Check if there are still cards in the draw deck (this.deck)
 		while(this.deck.getCards().size() > 0 ) {
 			
@@ -54,12 +70,12 @@ public class Game {
 				
 			
 		
-			// The ace has a value of 1 for all the players who have an ace in its hand
-			for (int i = 0; i < this.players.size(); i++) {
-				if(this.players.get(i).getHand().getCards().get(0).getShape() == Shape.SPADES) {
-					this.players.get(i).getHand().getCards().get(0).setValue(1);
-				}
-			}
+//			// The ace has a value of 1 for all the players who have an ace in its hand
+//			for (int i = 0; i < this.players.size(); i++) {
+//				if(this.players.get(i).getHand().getCards().get(0).getShape() == Shape.SPADES) {
+//					this.players.get(i).getHand().getCards().get(0).setValue(1);
+//				}
+//			}
 			
 			/*************************************************************************
 			 ************************Make Offers************************************** 
@@ -107,7 +123,6 @@ public class Game {
 			this.whoPlaysFirst();
 			
 			// Ask to each player to choose an offer
-			
 			
 			System.out.println("Celui qui joue en premier est : " + this.choosing.getNickname());
 			
@@ -199,9 +214,22 @@ public class Game {
 		System.out.println("-------FIN DE LA PARTIE-----");
 		System.out.println("----------------------------");
 		
+		//At the end of the game, the the value of an ace equals to 5, and each jest card is not hidden anymore
+			for (int i = 0; i < this.players.size(); i++) {
+				for (int j = 0; j < this.players.get(i).getJest().getCards().size(); j++) {
+					this.players.get(i).getJest().getCards().get(j).setFaceHidden(false);
+					if(this.players.get(i).getJest().getCards().get(j).getValue() == 1) {
+						this.players.get(i).getJest().getCards().get(j).setValue(5);
+					}
+				}
+				
+			}
+		
 		System.out.println("Deck : \n" + this.deck);
 		
 		System.out.println("Stack : \n" + this.stack);
+		
+		System.out.println("Stack : \n" + this.trophies);
 		System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*");
 		
 		for (int i = 0; i < players.size(); i++) {
@@ -215,6 +243,221 @@ public class Game {
 			System.out.println(players.get(i).getHand());
 		}
 		
+		System.out.println(this.trophies);
+	
+		
+		/*************************************************************************
+		 ************************WHO GETS THE TROPHIE(S)**************************
+		 *************************************************************************/
+
+		this.calculateTrophies();
+		
+	}
+	
+	public void calculateTrophies() {
+		
+		for (int i = 0; i < this.trophies.getCards().size(); i++) {
+			
+			switch(this.trophies.getCards().get(i).getJestValue()) {
+				
+			case HIGHTEST_HEARTS: calculateHightest(Shape.HEARTS);
+				break;
+			case HIGHTEST_DIAMONDS: calculateHightest(Shape.DIAMONDS);
+				break;
+			case HIGHTEST_CLUBS: calculateHightest(Shape.CLUBS);
+				break;
+			case HIGHTEST_SPADES: calculateHightest(Shape.SPADES);
+				break;
+			case LOWEST_HEARTS: calculateLowest(Shape.HEARTS);
+				break;
+			case LOWEST_DIAMONDS: calculateLowest(Shape.DIAMONDS);
+				break;
+			case LOWEST_CLUBS: calculateLowest(Shape.CLUBS);
+				break;
+			case LOWEST_SPADES: calculateLowest(Shape.SPADES);
+				break;
+			case MAJORITY_4: calculateMajority(4);
+				break;
+			case MAJORITY_3: calculateMajority(3);
+				break;
+			case MAJORITY_2: calculateMajority(2);
+				break;
+			case BEST_JEST: calculateBestJest();
+				break;
+			case BEST_JEST_NOJOKER: calculateBestJestNojoke();
+				break;
+			case JOKER: calculateJoker();
+			default:
+				break;
+			
+			}
+			
+		}
+		
+	}
+	
+	public void calculateHightest(Shape s) {
+		System.out.println("entrée dans la méthode calculateHightest pour la forme " + s.name());
+		Player highestValue = null;
+		Card card = null;
+		
+		for (int i = 0; i < this.players.size(); i++) { //Run each player
+			
+			for (int k = 0; k < this.players.get(i).getJest().getCards().size(); k++) { //Run each player card jest
+				
+				if(highestValue == null && this.players.get(i).getJest().getCards().get(k).getShape().equals(s)) {
+					//If there is no player in the variable highestValue and the current player jest card has the same shape of the condition, then change the variables below
+					highestValue = this.players.get(i);
+					card = this.players.get(i).getJest().getCards().get(k); //Store its jest card
+				}
+				
+				if(this.players.get(i).getJest().getCards().get(k).getShape().equals(s)) {
+					if(this.players.get(i).getJest().getCards().get(k).getValue() > card.getValue()) {
+						highestValue = this.players.get(i);
+						card = this.players.get(i).getJest().getCards().get(k); //Store its jest card
+					}
+				} //End if equals to s
+			} //End run each player card
+		} //End run each player
+		
+		System.out.println("Le joueur qui remporte le trophée est " + highestValue);
+	}
+	
+	public void calculateLowest(Shape s) {
+		System.out.println("entrée dans la méthode calculateLowest pour la forme " + s.name());
+		Player lowestValue = null;
+		Card card = null;
+		
+		for (int i = 0; i < this.players.size(); i++) { //Run each player
+			
+			for (int k = 0; k < this.players.get(i).getJest().getCards().size(); k++) { //Run each player card jest
+				
+				if(lowestValue == null && this.players.get(i).getJest().getCards().get(k).getShape().equals(s)) {
+					//If there is no player in the variable highestValue and the current player jest card has the same shape of the condition, then change the variables below
+					lowestValue = this.players.get(i);
+					card = this.players.get(i).getJest().getCards().get(k); //Store its jest card
+				}
+				
+				if(this.players.get(i).getJest().getCards().get(k).getShape().equals(s)) {
+					if(this.players.get(i).getJest().getCards().get(k).getValue() < card.getValue()) {
+						lowestValue = this.players.get(i);
+						card = this.players.get(i).getJest().getCards().get(k); //Store its jest card
+					}
+				} //End if equals to s
+			} //End run each player card
+		} //End run each player
+		
+		System.out.println("Le joueur qui remporte le trophée est " + lowestValue);
+	}
+	
+	public void calculateMajority(int value) {
+		
+		Map<Player, Integer> tab = new HashMap<>();
+		
+		for (int i = 0; i < this.players.size(); i++) {
+			tab.put(this.players.get(i), 0);
+			for (int j = 0; j < this.players.get(i).getJest().getCards().size(); j++) {
+				if(this.players.get(i).getJest().getCards().get(j).getValue() == value) {
+					tab.put(this.players.get(i), tab.get(this.players.get(i))+1);
+				}
+			}
+			
+		}
+		
+		//System.out.println(tab);
+		List<Player> tabPlayers = new ArrayList<Player>();
+		
+		for (int i = 0; i < this.players.size(); i++) {
+			
+			if(tabPlayers.size() == 0) {
+				//If the size equals 0 add to the tabPlayers the first player of the loop
+				tabPlayers.add(this.players.get(i));
+				
+			} else if(tab.get(tabPlayers.get(0)) < tab.get(this.players.get(i))) {
+				//If a player in the tabPlayers has majority value < the current player, clear the tabPlayers and add the current player
+				tabPlayers.clear();
+				tabPlayers.add(this.players.get(i));
+				
+			} else if(tab.get(tabPlayers.get(0)) == tab.get(this.players.get(i))) {
+				// If a player has the same majority value, add it to tabPlayers
+					tabPlayers.add(this.players.get(i));
+			}
+		}
+		
+		System.out.println("\nCelui ou ceux qui ont la majorité de " + value + ", est : " + tabPlayers);
+		
+		if(tabPlayers.size() > 1) {
+			
+			Map<Player, Card> playersSortedByShape = new HashMap<>();
+		for (int i = 0; i < tabPlayers.size(); i++) {
+			
+			//Get the best card (best shape) of the suit from the value number
+			Map<Player, Card> currentPlayerSortedByShape = new HashMap<>();
+			
+			for (int j = 0; j < tabPlayers.get(i).getJest().getCards().size(); j++) {
+				System.out.println(currentPlayerSortedByShape);
+				if(currentPlayerSortedByShape.size() == 0 && tabPlayers.get(i).getJest().getCards().get(j).getValue() == value) {
+					//We add the first card
+					currentPlayerSortedByShape.put(tabPlayers.get(i), tabPlayers.get(i).getJest().getCards().get(j));
+				} else if(currentPlayerSortedByShape.size() > 0 && tabPlayers.get(i).getJest().getCards().get(j).getShape().ordinal() > currentPlayerSortedByShape.get(tabPlayers.get(i)).getShape().ordinal() && tabPlayers.get(i).getJest().getCards().get(j).getValue() == value) {
+					
+					currentPlayerSortedByShape.put(tabPlayers.get(i), tabPlayers.get(i).getJest().getCards().get(j));
+				}
+			}
+			
+			//Compare its best card shape value to the one of the player in the playersSortedByShape
+			if(playersSortedByShape.size() == 0) {
+				playersSortedByShape.put(tabPlayers.get(i), currentPlayerSortedByShape.get(tabPlayers.get(i)));
+			} else if(currentPlayerSortedByShape.get(tabPlayers.get(i)).getShape().ordinal() > playersSortedByShape.entrySet().iterator().next().getValue().getShape().ordinal()) {
+				playersSortedByShape.clear();
+				playersSortedByShape.put(tabPlayers.get(i), currentPlayerSortedByShape.get(tabPlayers.get(i)));
+			}
+			
+			currentPlayerSortedByShape.clear();
+		}
+		System.out.println("\ngagnant !!! : " + playersSortedByShape);
+	}
+		
+		
+//		Player winner = null;
+//		int majority = 0;
+//		
+//		for (int i = 0; i < this.players.size(); i++) {
+//			if(winner == null) {
+//				winner = this.players.get(i);
+//				majority = tab.get(this.players.get(i));
+//			}
+//			
+//			if(tab.get(this.players.get(i)) > majority) {
+//				winner = this.players.get(i);
+//				majority = tab.get(this.players.get(i));
+//			}
+//			
+//			
+//		}
+		
+		
+		
+		
+	}
+	
+	public void calculateBestJest() {
+		
+	}
+	
+	public void calculateBestJestNojoke() {
+		
+	}
+	
+	public void calculateJoker() {
+		
+		for (int i = 0; i < this.players.size(); i++) {
+			for (int j = 0; j < this.players.get(i).getJest().getCards().size(); j++) {
+				if(this.players.get(i).getJest().getCards().get(j).getShape().equals(Shape.JOKER)) {
+					System.out.println("Le joueur qui a le joker : " + this.players.get(i));
+				}
+			}
+		}
 		
 	}
 
@@ -264,24 +507,17 @@ public class Game {
 		for (int i = 0; i < this.players.size(); i++) {
 			
 			if(playersSortedByValue.size() == 0) {
-				//System.out.println("Si le tableau playersSortedByValue a une taille de 0");
 				playersSortedByValue.add(this.players.get(i));
-				//System.out.println("First to be added in the playerSortedByValue : " + playersSortedByValue);
 			} else {
-				//System.out.println("Else le tableau playersSortedByValue a une taille supérieure à 1");
 				for (int j = 0; j < playersSortedByValue.size(); j++) {
-					//System.out.println("entrée dans la boucle de playersSortedByValue ");
 					if(this.players.get(i).getHand().getCards().get(0).getValue() == playersSortedByValue.get(j).getHand().getCards().get(0).getValue()) {
-						//System.out.println("Si le player a une valeur de carte EGALE à celui qui est dans le tableau playersSortedByValue");
+				
 						//If the player in the sortedValue tab has the same value as the player in players tab, add it to the sortedValue tab
 						playersSortedByValue.add(this.players.get(i));
-						//System.out.println("Ensuite on ajoute à playerSortedByValue : " + playersSortedByValue);
 						break;
 					} else if(this.players.get(i).getHand().getCards().get(0).getValue() > playersSortedByValue.get(j).getHand().getCards().get(0).getValue()) {
-						//System.out.println("Else if le player a une valeur de carte SUPERIEURE à celui qui est dans le tableau playersSortedByValue");
 						playersSortedByValue.clear();
 						playersSortedByValue.add(this.players.get(i));
-						//System.out.println("Ensuite clear playerSortedByValue et on ajoute le meilleur: " + playersSortedByValue);
 					}
 				}
 				
@@ -339,24 +575,24 @@ public class Game {
 		Card joker = new Card(0, false, false, Shape.JOKER, JestValue.BEST_JEST);
 		Card referenceCard = new Card(-1, false, false, Shape.REFERENCE_CARD, JestValue.NONE);
 		
-		Card Spades5 = new Card(5, false, false, Shape.SPADES, JestValue.HIGHTEST); //Ace
-		Card Clubs5 = new Card(5, false, false, Shape.CLUBS, JestValue.HIGHTEST); //Ace
+		Card Spades5 = new Card(5, false, false, Shape.SPADES, JestValue.HIGHTEST_CLUBS); //Ace
+		Card Clubs5 = new Card(5, false, false, Shape.CLUBS, JestValue.HIGHTEST_SPADES); //Ace
 		Card Diamonds5 = new Card(5, false, false, Shape.DIAMONDS, JestValue.MAJORITY_4); //Ace
 		Card Hearts5 = new Card(5, false, false, Shape.HEARTS, JestValue.JOKER); //Ace
 		
-		Card Spades4 = new Card(4, false, false, Shape.SPADES, JestValue.LOWWEST);
-		Card Clubs4 = new Card(4, false, false, Shape.CLUBS, JestValue.LOWWEST);
+		Card Spades4 = new Card(4, false, false, Shape.SPADES, JestValue.LOWEST_CLUBS);
+		Card Clubs4 = new Card(4, false, false, Shape.CLUBS, JestValue.LOWEST_SPADES);
 		Card Diamonds4 = new Card(4, false, false, Shape.DIAMONDS, JestValue.BEST_JEST_NOJOKER);
 		Card Hearts4 = new Card(4, false, false, Shape.HEARTS, JestValue.JOKER);
 		
 		Card Spades3 = new Card(3, false, false, Shape.SPADES, JestValue.MAJORITY_2);
-		Card Clubs3 = new Card(3, false, false, Shape.CLUBS, JestValue.HIGHTEST);
-		Card Diamonds3 = new Card(3, false, false, Shape.DIAMONDS, JestValue.LOWWEST);
+		Card Clubs3 = new Card(3, false, false, Shape.CLUBS, JestValue.HIGHTEST_HEARTS);
+		Card Diamonds3 = new Card(3, false, false, Shape.DIAMONDS, JestValue.LOWEST_DIAMONDS);
 		Card Hearts3 = new Card(3, false, false, Shape.HEARTS, JestValue.JOKER);
 		
 		Card Spades2 = new Card(2, false, false, Shape.SPADES, JestValue.MAJORITY_3);
-		Card Clubs2 = new Card(2, false, false, Shape.CLUBS, JestValue.LOWWEST);
-		Card Diamonds2 = new Card(2, false, false, Shape.DIAMONDS, JestValue.HIGHTEST);
+		Card Clubs2 = new Card(2, false, false, Shape.CLUBS, JestValue.LOWEST_HEARTS);
+		Card Diamonds2 = new Card(2, false, false, Shape.DIAMONDS, JestValue.HIGHTEST_DIAMONDS);
 		Card Hearts2 = new Card(2, false, false, Shape.HEARTS, JestValue.JOKER);
 		
 		//We instance an ArrayList which will receive all the cards
@@ -406,8 +642,20 @@ public class Game {
 		} else { //If there are 3 players
 			
 			//Add 2 random Cards to the trophies
-			this.deck.addACardFromAPacketToAnotherPacket(0, this.trophies);
-			this.deck.addACardFromAPacketToAnotherPacket(0, this.trophies);
+			for (int i = 0; i < this.deck.getCards().size(); i++) {
+				if(this.trophies.getCards().size() < 2) {
+					
+					if(this.deck.getCards().get(i).getJestValue().equals(JestValue.MAJORITY_4)) { //Testing majority calculation
+						this.deck.addACardFromAPacketToAnotherPacket(i, this.trophies);
+					} else if(this.deck.getCards().get(i).getJestValue().equals(JestValue.MAJORITY_3)) { //Testing majority calculation
+						this.deck.addACardFromAPacketToAnotherPacket(i, this.trophies);
+					} else if(this.deck.getCards().get(i).getJestValue().equals(JestValue.MAJORITY_2)) { //Testing majority calculation
+						this.deck.addACardFromAPacketToAnotherPacket(i, this.trophies);
+					}
+				}
+				
+			}
+			//this.deck.addACardFromAPacketToAnotherPacket(0, this.trophies);
 		}
 		
 	}
@@ -490,6 +738,7 @@ public class Game {
 	public Packet getTrophies() {
 		return trophies;
 	}
+
 	
 	
 	

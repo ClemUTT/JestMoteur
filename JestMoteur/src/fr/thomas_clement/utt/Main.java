@@ -1,5 +1,7 @@
 package fr.thomas_clement.utt;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 public class Main {
@@ -15,6 +17,15 @@ public class Main {
 //		
 //		int offerHidden = new Random().nextInt((1 - 0) + 1) + 0;
 //		System.out.println(offerHidden);
+		
+//		Player test  = new RealPlayer("fez");
+//		
+//		Map<Player, Integer> tab = new HashMap<>();
+//		
+//		tab.put(test, 0);
+//		tab.put(test, tab.get(test)+2);
+//		
+//		System.out.println(tab);
 		
 		Game party = new Game();
 		
