@@ -55,7 +55,7 @@ public class Game implements Visiteur {
 			}
 			
 			if(jest.getCards().get(i).getShape().equals(Shape.JOKER)) {
-				System.out.println("Il a le joker !! " + jest.getCards().get(i));
+				System.out.println("Il a le joker !! ");
 				hasJoker = true;
 			}
 		}
@@ -369,9 +369,15 @@ public class Game implements Visiteur {
 		 ***************************WHO IS THE WINNER*****************************
 		 *************************************************************************/
 		
+		
 		for (int i = 0; i <this.players.size(); i++) {
+			System.out.println("--*-*-*-*-*-*-*-*-*-*-*-*-*-*");
 			System.out.println("Calcul du score de " + this.players.get(i));
+			System.out.println(this.players.get(i).getJest());
+			
 			this.players.get(i).getJest().accepterVisiteur(this);
+			
+			System.out.println("le score de " + this.players.get(i).getNickname() + " est de " + this.players.get(i).getJest().getScore());
 		}
 		
 		Player winner = null;
@@ -434,14 +440,14 @@ public class Game implements Visiteur {
 			this.trophies.addACardFromAPacketToAnotherPacket(0, winners.get(i).getJest());
 		}
 		
-		for (int j = 0; j < players.size(); j++) {
-			System.out.println(players.get(j).getNickname());
-			System.out.println(players.get(j).getJest());
-		}
+//		for (int j = 0; j < players.size(); j++) {
+//			System.out.println(players.get(j).getNickname());
+//			System.out.println(players.get(j).getJest());
+//		}
 	}
 	
 	public Player calculateHightest(Shape s) {
-		System.out.println("entrée dans la méthode calculateHightest pour la forme " + s.name());
+		//System.out.println("entrée dans la méthode calculateHightest pour la forme " + s.name());
 		Player highestValue = null;
 		Card card = null;
 		
@@ -489,7 +495,7 @@ public class Game implements Visiteur {
 	}
 	
 	public Player calculateLowest(Shape s) {
-		System.out.println("entrée dans la méthode calculateLowest pour la forme " + s.name());
+		//System.out.println("entrée dans la méthode calculateLowest pour la forme " + s.name());
 		Player lowestValue = null;
 		Card card = null;
 		
@@ -636,10 +642,6 @@ public class Game implements Visiteur {
 		Player playerWithJoker = null;
 		
 		for (int i = 0; i < this.players.size(); i++) {
-			System.out.println(this.players.get(i).getNickname());
-			System.out.println(this.players.get(i).getJest());
-			System.out.println("--*-*-*-*-*-*-*-*-*-*-*-*-*-*");
-			
 			if(joker == false) {
 				for (int j = 0; j < this.players.get(i).getJest().getCards().size(); j++) {
 					if(this.players.get(i).getJest().getCards().get(j).getShape().equals(Shape.JOKER)) {
@@ -647,9 +649,12 @@ public class Game implements Visiteur {
 						playerWithJoker = this.players.get(i);
 					}
 				}
-				this.players.get(i).getJest().accepterVisiteur(this);
 				
 			}
+			System.out.println(this.players.get(i).getNickname());
+			System.out.println(this.players.get(i).getJest());
+			System.out.println("--*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+			
 			this.players.get(i).getJest().accepterVisiteur(this);
 			
 			System.out.println("le score de " + this.players.get(i).getNickname() + " est de " + this.players.get(i).getJest().getScore());
@@ -684,7 +689,7 @@ public class Game implements Visiteur {
 		for (int i = 0; i < this.players.size(); i++) {
 			for (int j = 0; j < this.players.get(i).getJest().getCards().size(); j++) {
 				if(this.players.get(i).getJest().getCards().get(j).getShape().equals(Shape.JOKER)) {
-					System.out.println("Le gagnant de la condition BEST_JEST est " + this.players.get(i).getNickname());
+					System.out.println("Le gagnant de la condition JOKER est " + this.players.get(i).getNickname());
 					winner = this.players.get(i);
 //					for (int k = 0; k < this.trophies.getCards().size(); k++) {
 //						if(this.trophies.getCards().get(k).getJestValue().equals(JestValue.BEST_JEST)) {
@@ -880,21 +885,21 @@ public class Game implements Visiteur {
 		} else { //If there are 3 players
 			
 			//Add 2 random Cards to the trophies
-//			for (int i = 0; i < this.deck.getCards().size(); i++) {
-//				if(this.trophies.getCards().size() < 2) {
-//					
-//					if(this.deck.getCards().get(i).getJestValue().equals(JestValue.BEST_JEST)) { //Testing majority calculation
-//						this.deck.addACardFromAPacketToAnotherPacket(i, this.trophies);
-//					} else if(this.deck.getCards().get(i).getJestValue().equals(JestValue.MAJORITY_3)) { //Testing majority calculation
-//						this.deck.addACardFromAPacketToAnotherPacket(i, this.trophies);
-//					} else if(this.deck.getCards().get(i).getJestValue().equals(JestValue.MAJORITY_2)) { //Testing majority calculation
-//						this.deck.addACardFromAPacketToAnotherPacket(i, this.trophies);
-//					}
-//				}
-//				
-//			}
-			this.deck.addACardFromAPacketToAnotherPacket(0, this.trophies);
-			this.deck.addACardFromAPacketToAnotherPacket(1, this.trophies);
+			for (int i = 0; i < this.deck.getCards().size(); i++) {
+				if(this.trophies.getCards().size() < 2) {
+					
+					if(this.deck.getCards().get(i).getJestValue().equals(JestValue.BEST_JEST_NOJOKER)) { //Testing majority calculation
+						this.deck.addACardFromAPacketToAnotherPacket(i, this.trophies);
+					} else if(this.deck.getCards().get(i).getJestValue().equals(JestValue.MAJORITY_3)) { //Testing majority calculation
+						this.deck.addACardFromAPacketToAnotherPacket(i, this.trophies);
+					} else if(this.deck.getCards().get(i).getJestValue().equals(JestValue.MAJORITY_2)) { //Testing majority calculation
+						this.deck.addACardFromAPacketToAnotherPacket(i, this.trophies);
+					}
+				}
+				
+			}
+			//this.deck.addACardFromAPacketToAnotherPacket(0, this.trophies);
+			//this.deck.addACardFromAPacketToAnotherPacket(1, this.trophies);
 		}
 		
 	}
