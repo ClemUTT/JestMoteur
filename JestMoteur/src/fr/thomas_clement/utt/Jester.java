@@ -2,7 +2,7 @@ package fr.thomas_clement.utt;
 
 import java.util.ArrayList;
 
-public class Jester extends Packet implements JesterVisitable{
+public class Jester extends Packet implements Visitable{
 
 	private int score;
 	
@@ -11,8 +11,17 @@ public class Jester extends Packet implements JesterVisitable{
 	}
 
 	@Override
-	public void accept(Game game) {
-		game.calcul(this); //The visitor (Game) is able to visit the Jester (this)
+	public void accepterVisiteur(Visiteur v) {
+		v.calculerScore(this);
+	}
+	
+	
+	public int getScore() {
+		return this.score;
+	}
+	
+	public void setScore(int s) {
+		this.score = s;
 	}
 
 }

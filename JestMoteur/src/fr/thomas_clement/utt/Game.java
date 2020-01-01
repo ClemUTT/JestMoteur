@@ -2,12 +2,13 @@ package fr.thomas_clement.utt;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Scanner;
 
-public class Game implements GameVisitor{
+public class Game implements Visiteur {
 	
 	List<Player> players = new ArrayList<Player>();
 	Packet deck;
@@ -25,9 +26,120 @@ public class Game implements GameVisitor{
 		
 	}
 	
-	@Override
-	public void calcul(Jester jest) {
+	public void calculerScore(Jester jest) {
+		int score = 0;
 		
+		List<Card> tabHearts = new ArrayList<>();
+		List<Card> tabAce = new ArrayList<>();
+		List<Card> tabClubs = new ArrayList<>();
+		List<Card> tabDiamonds = new ArrayList<>();
+		List<Card> tabSpades = new ArrayList<>();
+		boolean hasJoker = false;
+		
+		
+		//Add all cards in their tab
+		for (int i = 0; i < jest.getCards().size(); i++) {
+			
+			if(jest.getCards().get(i).getShape().equals(Shape.HEARTS)) {
+				tabHearts.add(jest.getCards().get(i));
+			} else if(jest.getCards().get(i).getShape().equals(Shape.CLUBS)) {
+				tabClubs.add(jest.getCards().get(i));
+			} else if(jest.getCards().get(i).getShape().equals(Shape.DIAMONDS)) {
+				tabDiamonds.add(jest.getCards().get(i));
+			} else if(jest.getCards().get(i).getShape().equals(Shape.SPADES)) {
+				tabSpades.add(jest.getCards().get(i));
+			}
+			
+			if(jest.getCards().get(i).getValue() == 5) {
+				tabAce.add(jest.getCards().get(i));
+			}
+			
+			if(jest.getCards().get(i).getShape().equals(Shape.JOKER)) {
+				System.out.println("Il a le joker !! " + jest.getCards().get(i));
+				hasJoker = true;
+			}
+		}
+		
+		// If there is an ace which has the only suit of all the other cards
+		// the face value becomes a 5
+		for (int i = 0; i < tabAce.size(); i++) {
+			for (int j = 0; j < jest.getCards().size(); j++) {
+				if(tabAce.get(i).getShape().equals(jest.getCards().get(j).getShape()) && jest.getCards().get(j).getValue() != 5) {
+					tabAce.get(i).setValue(1);
+					System.out.println("un ace a value de 1");
+					break;
+				} else if(j == jest.getCards().size()-1) {
+					tabAce.get(i).setValue(5);
+					System.out.println("un ace a value de 5");
+					break;
+				}
+			}
+		}
+		
+		// Clubs always increase the jest score by its face value
+		if(tabClubs.size() > 0) {
+			for (int i = 0; i < tabClubs.size(); i++) {
+				score += tabClubs.get(i).getValue();
+			}
+			System.out.println("clubs " + score);
+		}
+		
+		// Spades always increase the jest score by its face value
+		if(tabSpades.size() > 0) {
+			for (int i = 0; i < tabSpades.size(); i++) {
+				score += tabSpades.get(i).getValue();
+			}
+			System.out.println("spades " + score);
+		}
+		
+		// Diamonds always decrease the jest score by its face value
+		if(tabDiamonds.size() > 0) {
+			for (int i = 0; i < tabDiamonds.size(); i++) {
+				score -= tabDiamonds.get(i).getValue();
+			}
+			System.out.println("diamonds " + score);
+		}
+		
+		// If there is the joker and no hearts
+		if(hasJoker && tabHearts.size() == 0) {
+			//the jest score increases by 4
+			score += 4;
+			System.out.println("joker and 0 hearts " + score);
+		}
+		
+		
+		// If there is the joker and 1, 2 or 3 hearts
+		if(hasJoker && (tabHearts.size() == 1 || tabHearts.size() == 2 || tabHearts.size() == 3)) {
+			// the jest score decreases by the face value of each heart
+			for (int i = 0; i < tabHearts.size(); i++) {
+				score -= tabHearts.get(i).getValue();
+			}
+			System.out.println("joker and 1,2,3 hearts " + score);
+		}
+		
+		// If there is the joker and the 4 hearts
+		if(hasJoker && tabHearts.size() == 4) {
+			// the jest score increases by the face value of each heart
+			for (int i = 0; i < tabHearts.size(); i++) {
+				score += tabHearts.get(i).getValue();
+			}
+			System.out.println("joker and 4 hearts " + score);
+		}
+		
+		
+		// If there are a Spade and a Club with the same face value
+		if(tabSpades.size() > 0 && tabClubs.size() > 0) {
+			for (int i = 0; i < tabSpades.size(); i++) {
+				for (int j = 0; j < tabClubs.size(); j++) {
+					if(tabSpades.get(i).getValue() == tabClubs.get(j).getValue()) {
+						score += 2;
+					}
+				}
+			}
+			System.out.println("spade and club " + score);
+		}
+		
+		jest.setScore(score);
 	}
 	
 	public void playRounds() {
@@ -243,6 +355,7 @@ public class Game implements GameVisitor{
 			System.out.println(players.get(i).getHand());
 		}
 		
+		System.out.println("----- Trophées ----");
 		System.out.println(this.trophies);
 	
 		
@@ -252,41 +365,64 @@ public class Game implements GameVisitor{
 
 		this.calculateTrophies();
 		
+		/*************************************************************************
+		 ***************************WHO IS THE WINNER*****************************
+		 *************************************************************************/
+		
+		for (int i = 0; i <this.players.size(); i++) {
+			System.out.println("Calcul du score de " + this.players.get(i));
+			this.players.get(i).getJest().accepterVisiteur(this);
+		}
+		
+		Player winner = null;
+		for (int i = 0; i < this.players.size(); i++) {
+			System.out.println(this.players.get(i).getNickname() + " : score de " + this.players.get(i).getJest().getScore());
+			if(winner == null) {
+				winner = this.players.get(i);
+			} else if(this.players.get(i).getJest().getScore() > winner.getJest().getScore()) {
+				winner = this.players.get(i);
+			}
+		}
+		
+		System.out.println("******************");
+		System.out.println("Le gagnant est " + winner.getNickname() + ", avec un score de " + winner.getJest().getScore());
+		System.out.println("******************");
+		
 	}
 	
 	public void calculateTrophies() {
+		List<Player> winners = new ArrayList<>();
 		
 		for (int i = 0; i < this.trophies.getCards().size(); i++) {
-			
 			switch(this.trophies.getCards().get(i).getJestValue()) {
 				
-			case HIGHTEST_HEARTS: calculateHightest(Shape.HEARTS);
+			case HIGHTEST_HEARTS: winners.add(calculateHightest(Shape.HEARTS));
 				break;
-			case HIGHTEST_DIAMONDS: calculateHightest(Shape.DIAMONDS);
+			case HIGHTEST_DIAMONDS: winners.add(calculateHightest(Shape.DIAMONDS));
 				break;
-			case HIGHTEST_CLUBS: calculateHightest(Shape.CLUBS);
+			case HIGHTEST_CLUBS: winners.add(calculateHightest(Shape.CLUBS));
 				break;
-			case HIGHTEST_SPADES: calculateHightest(Shape.SPADES);
+			case HIGHTEST_SPADES: winners.add(calculateHightest(Shape.SPADES));
 				break;
-			case LOWEST_HEARTS: calculateLowest(Shape.HEARTS);
+			case LOWEST_HEARTS: winners.add(calculateLowest(Shape.HEARTS));
 				break;
-			case LOWEST_DIAMONDS: calculateLowest(Shape.DIAMONDS);
+			case LOWEST_DIAMONDS: winners.add(calculateLowest(Shape.DIAMONDS));
 				break;
-			case LOWEST_CLUBS: calculateLowest(Shape.CLUBS);
+			case LOWEST_CLUBS: winners.add(calculateLowest(Shape.CLUBS));
 				break;
-			case LOWEST_SPADES: calculateLowest(Shape.SPADES);
+			case LOWEST_SPADES: winners.add(calculateLowest(Shape.SPADES));
 				break;
-			case MAJORITY_4: calculateMajority(4);
+			case MAJORITY_4: winners.add(calculateMajority(4));
 				break;
-			case MAJORITY_3: calculateMajority(3);
+			case MAJORITY_3: winners.add(calculateMajority(3));
 				break;
-			case MAJORITY_2: calculateMajority(2);
+			case MAJORITY_2: winners.add(calculateMajority(2));
 				break;
-			case BEST_JEST: calculateBestJest();
+			case BEST_JEST: winners.add(calculateBestJest(true));
 				break;
-			case BEST_JEST_NOJOKER: calculateBestJestNojoke();
+			case BEST_JEST_NOJOKER: winners.add(calculateBestJest(false));
 				break;
-			case JOKER: calculateJoker();
+			case JOKER: winners.add(calculateJoker());
 			default:
 				break;
 			
@@ -294,9 +430,17 @@ public class Game implements GameVisitor{
 			
 		}
 		
+		for (int i = 0; i < winners.size(); i++) {
+			this.trophies.addACardFromAPacketToAnotherPacket(0, winners.get(i).getJest());
+		}
+		
+		for (int j = 0; j < players.size(); j++) {
+			System.out.println(players.get(j).getNickname());
+			System.out.println(players.get(j).getJest());
+		}
 	}
 	
-	public void calculateHightest(Shape s) {
+	public Player calculateHightest(Shape s) {
 		System.out.println("entrée dans la méthode calculateHightest pour la forme " + s.name());
 		Player highestValue = null;
 		Card card = null;
@@ -320,10 +464,31 @@ public class Game implements GameVisitor{
 			} //End run each player card
 		} //End run each player
 		
-		System.out.println("Le joueur qui remporte le trophée est " + highestValue);
+		System.out.println("Le gagnant de la condition HIGHTEST_" + s.name().toUpperCase() + " est " + highestValue.getNickname());
+		return highestValue;
+//		for (int i = 0; i < this.trophies.getCards().size(); i++) {
+//			if(s.equals(Shape.CLUBS)) {
+//				if(this.trophies.getCards().get(i).getJestValue().equals(JestValue.HIGHTEST_CLUBS)) {
+//					this.trophies.addACardFromAPacketToAnotherPacket(i, highestValue.getJest());
+//				}
+//			} else if(s.equals(Shape.SPADES)) {
+//				if(this.trophies.getCards().get(i).getJestValue().equals(JestValue.HIGHTEST_SPADES)) {
+//					this.trophies.addACardFromAPacketToAnotherPacket(i, highestValue.getJest());
+//				}
+//			} else if(s.equals(Shape.HEARTS)) {
+//				if(this.trophies.getCards().get(i).getJestValue().equals(JestValue.HIGHTEST_HEARTS)) {
+//					this.trophies.addACardFromAPacketToAnotherPacket(i, highestValue.getJest());
+//				}
+//			} else if(s.equals(Shape.DIAMONDS)) {
+//				if(this.trophies.getCards().get(i).getJestValue().equals(JestValue.HIGHTEST_DIAMONDS)) {
+//					this.trophies.addACardFromAPacketToAnotherPacket(i, highestValue.getJest());
+//				}
+//			}
+//			
+//		}
 	}
 	
-	public void calculateLowest(Shape s) {
+	public Player calculateLowest(Shape s) {
 		System.out.println("entrée dans la méthode calculateLowest pour la forme " + s.name());
 		Player lowestValue = null;
 		Card card = null;
@@ -347,11 +512,32 @@ public class Game implements GameVisitor{
 			} //End run each player card
 		} //End run each player
 		
-		System.out.println("Le joueur qui remporte le trophée est " + lowestValue);
+		System.out.println("Le gagnant de la condition LOWEST_" + s.name().toUpperCase() + " est " + lowestValue.getNickname());
+		return lowestValue;
+//		for (int i = 0; i < this.trophies.getCards().size(); i++) {
+//			if(s.equals(Shape.CLUBS)) {
+//				if(this.trophies.getCards().get(i).getJestValue().equals(JestValue.HIGHTEST_CLUBS)) {
+//					this.trophies.addACardFromAPacketToAnotherPacket(i, lowestValue.getJest());
+//				}
+//			} else if(s.equals(Shape.SPADES)) {
+//				if(this.trophies.getCards().get(i).getJestValue().equals(JestValue.HIGHTEST_SPADES)) {
+//					this.trophies.addACardFromAPacketToAnotherPacket(i, lowestValue.getJest());
+//				}
+//			} else if(s.equals(Shape.HEARTS)) {
+//				if(this.trophies.getCards().get(i).getJestValue().equals(JestValue.HIGHTEST_HEARTS)) {
+//					this.trophies.addACardFromAPacketToAnotherPacket(i, lowestValue.getJest());
+//				}
+//			} else if(s.equals(Shape.DIAMONDS)) {
+//				if(this.trophies.getCards().get(i).getJestValue().equals(JestValue.HIGHTEST_DIAMONDS)) {
+//					this.trophies.addACardFromAPacketToAnotherPacket(i, lowestValue.getJest());
+//				}
+//			}
+//			
+//		}
 	}
 	
-	public void calculateMajority(int value) {
-		
+	public Player calculateMajority(int value) {
+		Player winner = null;
 		Map<Player, Integer> tab = new HashMap<>();
 		
 		for (int i = 0; i < this.players.size(); i++) {
@@ -384,7 +570,7 @@ public class Game implements GameVisitor{
 			}
 		}
 		
-		System.out.println("\nCelui ou ceux qui ont la majorité de " + value + ", est : " + tabPlayers);
+		//System.out.println("\nCelui ou ceux qui ont la majorité de " + value + ", est : " + tabPlayers);
 		
 		if(tabPlayers.size() > 1) {
 			
@@ -395,7 +581,7 @@ public class Game implements GameVisitor{
 			Map<Player, Card> currentPlayerSortedByShape = new HashMap<>();
 			
 			for (int j = 0; j < tabPlayers.get(i).getJest().getCards().size(); j++) {
-				System.out.println(currentPlayerSortedByShape);
+				//System.out.println(currentPlayerSortedByShape);
 				if(currentPlayerSortedByShape.size() == 0 && tabPlayers.get(i).getJest().getCards().get(j).getValue() == value) {
 					//We add the first card
 					currentPlayerSortedByShape.put(tabPlayers.get(i), tabPlayers.get(i).getJest().getCards().get(j));
@@ -415,49 +601,101 @@ public class Game implements GameVisitor{
 			
 			currentPlayerSortedByShape.clear();
 		}
-		System.out.println("\ngagnant !!! : " + playersSortedByShape);
+		//System.out.println("\ngagnant !!! : " + playersSortedByShape);
+		
+		Map.Entry<Player,Card> entry = playersSortedByShape.entrySet().iterator().next();
+		 
+		winner = entry.getKey();
+	} else {
+		winner = tabPlayers.get(0);
 	}
 		
-		
-//		Player winner = null;
-//		int majority = 0;
-//		
-//		for (int i = 0; i < this.players.size(); i++) {
-//			if(winner == null) {
-//				winner = this.players.get(i);
-//				majority = tab.get(this.players.get(i));
+		System.out.println("Le gagnant de la condition MAJORITY_" + value  + " est " + winner.getNickname());
+		return winner;
+//		for (int i = 0; i < this.trophies.getCards().size(); i++) {
+//			if(value == 2) {
+//				if(this.trophies.getCards().get(i).getJestValue().equals(JestValue.MAJORITY_2)) {
+//					this.trophies.addACardFromAPacketToAnotherPacket(i, winner.getJest());
+//				}
+//			} else if(value == 3) {
+//				if(this.trophies.getCards().get(i).getJestValue().equals(JestValue.MAJORITY_3)) {
+//					this.trophies.addACardFromAPacketToAnotherPacket(i, winner.getJest());
+//				}
+//			} else if(value == 4) {
+//				if(this.trophies.getCards().get(i).getJestValue().equals(JestValue.MAJORITY_4)) {
+//					this.trophies.addACardFromAPacketToAnotherPacket(i, winner.getJest());
+//				}
 //			}
-//			
-//			if(tab.get(this.players.get(i)) > majority) {
-//				winner = this.players.get(i);
-//				majority = tab.get(this.players.get(i));
-//			}
-//			
 //			
 //		}
 		
-		
-		
-		
 	}
 	
-	public void calculateBestJest() {
+	public Player calculateBestJest(boolean joker) {
+		Packet jokerPacket = new Packet(new ArrayList<Card>());
+		Player playerWithJoker = null;
 		
+		for (int i = 0; i < this.players.size(); i++) {
+			System.out.println(this.players.get(i).getNickname());
+			System.out.println(this.players.get(i).getJest());
+			System.out.println("--*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+			
+			if(joker == false) {
+				for (int j = 0; j < this.players.get(i).getJest().getCards().size(); j++) {
+					if(this.players.get(i).getJest().getCards().get(j).getShape().equals(Shape.JOKER)) {
+						this.players.get(i).getJest().addACardFromAPacketToAnotherPacket(j, jokerPacket);
+						playerWithJoker = this.players.get(i);
+					}
+				}
+				this.players.get(i).getJest().accepterVisiteur(this);
+				
+			}
+			this.players.get(i).getJest().accepterVisiteur(this);
+			
+			System.out.println("le score de " + this.players.get(i).getNickname() + " est de " + this.players.get(i).getJest().getScore());
+			System.out.println("--*-*-*-*-*-*-*-*-*-*-*-*-*-*");
+		}
+		
+		if(joker == false) {
+			jokerPacket.addACardFromAPacketToAnotherPacket(0, playerWithJoker.getJest());
+		}
+		
+		
+		Player winner = null;
+		for (int i = 0; i < this.players.size(); i++) {
+			if(winner == null) {
+				winner = this.players.get(i);
+			} else if(this.players.get(i).getJest().getScore() > winner.getJest().getScore()) {
+				winner = this.players.get(i);
+			}
+		}
+		
+		System.out.println("Le gagnant de la condition BEST_JEST est " + winner.getNickname());
+		return winner;
+//		for (int i = 0; i < this.trophies.getCards().size(); i++) {
+//			if(this.trophies.getCards().get(i).getJestValue().equals(JestValue.BEST_JEST)) {
+//				this.trophies.addACardFromAPacketToAnotherPacket(i, winner.getJest());
+//			}
+//		}
 	}
 	
-	public void calculateBestJestNojoke() {
-		
-	}
-	
-	public void calculateJoker() {
-		
+	public Player calculateJoker() {
+		Player winner = null;
 		for (int i = 0; i < this.players.size(); i++) {
 			for (int j = 0; j < this.players.get(i).getJest().getCards().size(); j++) {
 				if(this.players.get(i).getJest().getCards().get(j).getShape().equals(Shape.JOKER)) {
-					System.out.println("Le joueur qui a le joker : " + this.players.get(i));
+					System.out.println("Le gagnant de la condition BEST_JEST est " + this.players.get(i).getNickname());
+					winner = this.players.get(i);
+//					for (int k = 0; k < this.trophies.getCards().size(); k++) {
+//						if(this.trophies.getCards().get(k).getJestValue().equals(JestValue.BEST_JEST)) {
+//							this.trophies.addACardFromAPacketToAnotherPacket(k, this.players.get(i).getJest());
+//						}
+//					}
 				}
 			}
 		}
+		
+		return winner;
 		
 	}
 
@@ -642,20 +880,21 @@ public class Game implements GameVisitor{
 		} else { //If there are 3 players
 			
 			//Add 2 random Cards to the trophies
-			for (int i = 0; i < this.deck.getCards().size(); i++) {
-				if(this.trophies.getCards().size() < 2) {
-					
-					if(this.deck.getCards().get(i).getJestValue().equals(JestValue.MAJORITY_4)) { //Testing majority calculation
-						this.deck.addACardFromAPacketToAnotherPacket(i, this.trophies);
-					} else if(this.deck.getCards().get(i).getJestValue().equals(JestValue.MAJORITY_3)) { //Testing majority calculation
-						this.deck.addACardFromAPacketToAnotherPacket(i, this.trophies);
-					} else if(this.deck.getCards().get(i).getJestValue().equals(JestValue.MAJORITY_2)) { //Testing majority calculation
-						this.deck.addACardFromAPacketToAnotherPacket(i, this.trophies);
-					}
-				}
-				
-			}
-			//this.deck.addACardFromAPacketToAnotherPacket(0, this.trophies);
+//			for (int i = 0; i < this.deck.getCards().size(); i++) {
+//				if(this.trophies.getCards().size() < 2) {
+//					
+//					if(this.deck.getCards().get(i).getJestValue().equals(JestValue.BEST_JEST)) { //Testing majority calculation
+//						this.deck.addACardFromAPacketToAnotherPacket(i, this.trophies);
+//					} else if(this.deck.getCards().get(i).getJestValue().equals(JestValue.MAJORITY_3)) { //Testing majority calculation
+//						this.deck.addACardFromAPacketToAnotherPacket(i, this.trophies);
+//					} else if(this.deck.getCards().get(i).getJestValue().equals(JestValue.MAJORITY_2)) { //Testing majority calculation
+//						this.deck.addACardFromAPacketToAnotherPacket(i, this.trophies);
+//					}
+//				}
+//				
+//			}
+			this.deck.addACardFromAPacketToAnotherPacket(0, this.trophies);
+			this.deck.addACardFromAPacketToAnotherPacket(1, this.trophies);
 		}
 		
 	}
