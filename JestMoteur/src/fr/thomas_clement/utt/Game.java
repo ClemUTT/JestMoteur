@@ -8,7 +8,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Scanner;
 
-public class Game implements Visiteur {
+import fr.thomas_clement.modele.AbstractGame;
+
+public class Game extends AbstractGame implements Visiteur {
 	
 	List<Player> players = new ArrayList<Player>();
 	Packet deck;
@@ -20,9 +22,15 @@ public class Game implements Visiteur {
 	List<Player> playersWhoHavePlayed = new ArrayList<Player>();
 	
 	int nbRounds = 1;
+	int nbRealPlayers = 0;
+	int nbVirtualPlayers = 0;
 	
 	
 	public Game() {
+		this.calculRadioButtonsStart();
+	}
+	
+	public void calculRadioButtonsStart() {
 		
 	}
 	

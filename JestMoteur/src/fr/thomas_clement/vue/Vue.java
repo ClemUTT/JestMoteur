@@ -3,7 +3,10 @@ package fr.thomas_clement.vue;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.util.Enumeration;
 
+import javax.swing.AbstractAction;
+import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -11,13 +14,46 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-public class Vue extends JFrame {
+import fr.thomas_clement.controleur.AbstractControleur;
+import fr.thomas_clement.observer.Observer;
+
+public class Vue extends JFrame implements Observer {
 	
 	private static final long serialVersionUID = 1L;
+	private AbstractControleur controleur;
+	private JRadioButton jr[] = {new JRadioButton("1"), new JRadioButton("2"), new JRadioButton("3"), new JRadioButton("4")};
+	private JRadioButton jv[] = {new JRadioButton("1"), new JRadioButton("2"), new JRadioButton("3"), new JRadioButton("4")};
 
-	public Vue() {
+	public Vue(AbstractControleur controleur) {
 		super("Jest (Thomas et Clément)");
+		this.controleur = controleur;
 		init();
+	}
+	
+	@Override
+	public void updateStart(int nbReels, int nbVirtuels) {
+		for (int i = 0; i < nbReels; i++) {
+			//real players number selectionable
+			this.jr[i].setEnabled(true);
+		}
+		
+		for (int i = nbReels; i < jr.length; i++) {
+			//real players number UNselectionable
+			this.jr[i].setEnabled(false);
+		}
+		
+		
+		for (int i = 0; i < nbVirtuels; i++) {
+			//virtual players number selectionable
+			this.jv[i].setEnabled(true);
+		}
+		
+		for (int i = nbVirtuels; i < jr.length; i++) {
+			//virtual players number UNselectionable
+			this.jv[i].setEnabled(false);
+		}
+		
+		
 	}
 	
 	public void init() {
@@ -44,7 +80,7 @@ public class Vue extends JFrame {
 	public JPanel createInitializationWindow() {
 		
 		JPanel content = new JPanel();
-		content.setLayout(new BorderLayout());
+		content.setLayout(new GridLayout(1, 4));
 		
 		JPanel content2 = new JPanel();
 		content2.setLayout(new FlowLayout());
@@ -53,36 +89,41 @@ public class Vue extends JFrame {
 		JLabel nbJoueurs = new JLabel("Nombre de joueurs");
 		JLabel nbJoueursReels = new JLabel("Nombre de joueurs réels");
 		JLabel nbJoueursVirtuels = new JLabel("Nombre de joueurs virtuels");
+		JLabel niveauDifficulte = new JLabel("Niveau de difficulté");
 		
 		ButtonGroup groupeJ = new ButtonGroup();
 		ButtonGroup groupeJR = new ButtonGroup();
 		ButtonGroup groupeJV = new ButtonGroup();
+		ButtonGroup groupeNiv = new ButtonGroup();
 		
-		JRadioButton j1 = new JRadioButton("1");
-		JRadioButton j2 = new JRadioButton("2");
+		JRadioButton j1 = new JRadioButton("3");
+		//j1.setEnabled(false);
+		JRadioButton j2 = new JRadioButton("4");
 		
-		JRadioButton jr1 = new JRadioButton("1");
-		JRadioButton jr2 = new JRadioButton("2");
-		JRadioButton jr3 = new JRadioButton("3");
-		JRadioButton jr4 = new JRadioButton("4");
-		
-		JRadioButton jv1 = new JRadioButton("1");
-		JRadioButton jv2 = new JRadioButton("2");
-		JRadioButton jv3 = new JRadioButton("3");
-		JRadioButton jv4 = new JRadioButton("4");
+		JRadioButton jniv1 = new JRadioButton("1");
+		JRadioButton jniv2 = new JRadioButton("2");
 		
 		groupeJ.add(j1);
 		groupeJ.add(j2);
 		
-		groupeJR.add(jr1);
-		groupeJR.add(jr2);
-		groupeJR.add(jr3);
-		groupeJR.add(jr4);
+		groupeJR.add(jr[0]);
+		groupeJR.add(jr[1]);
+		groupeJR.add(jr[2]);
+		groupeJR.add(jr[3]);
 		
-		groupeJV.add(jv1);
-		groupeJV.add(jv2);
-		groupeJV.add(jv3);
-		groupeJV.add(jv4);
+		groupeJV.add(jv[0]);
+		groupeJV.add(jv[1]);
+		groupeJV.add(jv[2]);
+		groupeJV.add(jv[3]);
+		
+		groupeNiv.add(jniv1);
+		groupeNiv.add(jniv2);
+		
+
+		
+	
+
+
 		
 //		JPanel first = new JPanel();
 //		first.add(nbJoueurs, BorderLayout.WEST);
@@ -100,6 +141,7 @@ public class Vue extends JFrame {
 		firstRadio.add(j1);
 		firstRadio.add(j2);
 		
+		
 		first.add(nbJoueurs);
 		first.add(firstRadio);
 		
@@ -107,10 +149,10 @@ public class Vue extends JFrame {
 		second.setLayout(new GridLayout(2, 1));
 		JPanel secondRadio = new JPanel();
 		secondRadio.setLayout(new FlowLayout());
-		secondRadio.add(jr1);
-		secondRadio.add(jr2);
-		secondRadio.add(jr3);
-		secondRadio.add(jr4);
+		secondRadio.add(jr[0]);
+		secondRadio.add(jr[1]);
+		secondRadio.add(jr[2]);
+		secondRadio.add(jr[3]);
 		
 		second.add(nbJoueursReels);
 		second.add(secondRadio);
@@ -119,22 +161,34 @@ public class Vue extends JFrame {
 		third.setLayout(new GridLayout(2, 1));
 		JPanel thirdRadio = new JPanel();
 		thirdRadio.setLayout(new FlowLayout());
-		thirdRadio.add(jv1);
-		thirdRadio.add(jv2);
-		thirdRadio.add(jv3);
-		thirdRadio.add(jv4);
+		thirdRadio.add(jv[0]);
+		thirdRadio.add(jv[1]);
+		thirdRadio.add(jv[2]);
+		thirdRadio.add(jv[3]);
 		
 		third.add(nbJoueursVirtuels);
 		third.add(thirdRadio);
 		
+		JPanel fourth = new JPanel();
+		fourth.setLayout(new GridLayout(2, 1));
+		JPanel fourthRadio = new JPanel();
+		fourthRadio.setLayout(new FlowLayout());
+		fourthRadio.add(jniv1);
+		fourthRadio.add(jniv2);
+		
+		fourth.add(niveauDifficulte);
+		fourth.add(fourthRadio);
+		
 		nbJoueurs.setHorizontalAlignment(JLabel.CENTER);
 		nbJoueursReels.setHorizontalAlignment(JLabel.CENTER);
 		nbJoueursVirtuels.setHorizontalAlignment(JLabel.CENTER);
+		niveauDifficulte.setHorizontalAlignment(JLabel.CENTER);
 		
-		content.add(first, BorderLayout.WEST);
-		content.add(second, BorderLayout.CENTER);
-		content.add(third, BorderLayout.EAST);
-		
+		content.add(first);
+		content.add(second);
+		content.add(third);
+		content.add(fourth);
+		//this.updateStart(1, 2);
 		return content;
 	}
 

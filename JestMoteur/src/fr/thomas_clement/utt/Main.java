@@ -8,8 +8,10 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		Vue v = new Vue();
-		Game party = new Game();
+		
+		AbstractGame party = new Game();
+		AbstractControleur controleur = new GameControleur(party);
+		Vue v = new Vue(controleur);
 		
 		party.initializeDeck(); //Create cards and add them to a packet named Deck
 		
@@ -17,7 +19,7 @@ public class Main {
 		
 		party.initializeTrophies(); // From the deck, it defines the trophies
 		
-		System.out.println(party.getTrophies());
+		//System.out.println(party.getTrophies());
 		
 		party.playRounds();
 		
