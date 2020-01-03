@@ -1,32 +1,14 @@
 package fr.thomas_clement.utt;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import fr.thomas_clement.controleur.*;
+import fr.thomas_clement.modele.*;
+import fr.thomas_clement.vue.*;
 
 public class Main {
 
 	public static void main(String[] args) {
 		
-		//System.out.println(Shape.CLUBS.ordinal());
-//		int max = 4;
-//		int min = 0;
-//		
-//		Random r = new Random();
-//		System.out.println(r.nextInt((max - min) + 1) + min);
-//		
-//		int offerHidden = new Random().nextInt((1 - 0) + 1) + 0;
-//		System.out.println(offerHidden);
-		
-//		Player test  = new RealPlayer("fez");
-//		
-//		Map<Player, Integer> tab = new HashMap<>();
-//		
-//		tab.put(test, 0);
-//		tab.put(test, tab.get(test)+2);
-//		
-//		System.out.println(tab);
-		
+		Vue v = new Vue();
 		Game party = new Game();
 		
 		party.initializeDeck(); //Create cards and add them to a packet named Deck
