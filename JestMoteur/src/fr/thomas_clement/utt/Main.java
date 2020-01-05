@@ -12,6 +12,7 @@ public class Main {
 		AbstractGame party = new Game();
 		AbstractControleur controleur = new GameControleur(party);
 		Vue v = new Vue(controleur);
+		party.addObserver(v);
 		
 		party.initializeDeck(); //Create cards and add them to a packet named Deck
 		

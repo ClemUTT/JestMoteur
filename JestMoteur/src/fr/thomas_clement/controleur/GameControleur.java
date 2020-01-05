@@ -9,9 +9,9 @@ public class GameControleur extends AbstractControleur{
 	}
 
 	@Override
-	public void griseRadioButton() {
+	public void griseRadioButton(String natureJoueur) {
 		
-		
+		this.game.calculRadioButtonsStart(natureJoueur);
 		
 	}
 
