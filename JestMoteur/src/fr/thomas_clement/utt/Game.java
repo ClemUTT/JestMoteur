@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Game {
-	
+	//test
 	List<Player> players = new ArrayList<Player>();
 	Packet deck;
 	Packet stack = new Packet(new ArrayList<Card>());
