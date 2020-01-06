@@ -43,89 +43,141 @@ public class Vue extends JFrame implements Observer{
 		init();
 	}
 	
-		
-	@Override
-	public void updateStart(int nbReels, int nbVirtuels, int nbVirtuelSelected, int nbReelSelected, boolean readyToPlay) {
-		
+	public void notifyReadyToPlay(boolean readyToPlay) {
 		if(readyToPlay) {
 			this.btnJouer.setEnabled(true);
 		} else {
 			this.btnJouer.setEnabled(false);
 		}
+	}
+	
+	public void updateButtons(int nbJoueurs, int nbReels, int nbVirtuels, int nbNiv1, int nbNiv2, String natureJoueur) {
+		int newNbJoueurs = nbJoueurs,  newNbReels = nbReels,  newNbVirtuels = nbVirtuels,  newNbNiv1 = nbNiv1,  newNbNiv2 = nbNiv2;
 		
-		//jv[nbVirtuelSelected-1].setSelected(true);
-		System.out.println(" nbVirtuelSelected " + nbVirtuelSelected);
+		//Disable all buttons to have a whole control on following conditions
+		this.disableAllButtons();
 		
-		if(nbVirtuelSelected == 0) {
-			for (int i = 0; i < groupeNiv.length; i++) {
-				this.nivButtons[i][0].setEnabled(false);
-				this.nivButtons[i][1].setEnabled(false);
+		//Enable as many buttons as nbJoueurs
+		this.enableAllButtons(nbJoueurs+1);
+		
+		jr[nbReels].setSelected(true);
+		jv[nbVirtuels].setSelected(true);
+		
+		if(natureJoueur.equals("j")) {
+			//If the user has selected a number of v or r players > to the nbJoueurs
+			if((nbReels > nbJoueurs)) {
+				jr[0].setSelected(true);
+				newNbReels = 0;
 			}
-		} else {
-			System.out.println("entré");
-			for (int i = 0; i < nbVirtuelSelected; i++) {
-				this.nivButtons[i][0].setEnabled(true);
-				this.nivButtons[i][1].setEnabled(true);
-				
+			if((nbVirtuels > nbJoueurs)) {
+				jv[0].setSelected(true);
+				newNbVirtuels = 0;
+			}
+		} else if(natureJoueur.equals("r")) {
+			if(nbReels >= nbVirtuels && nbJoueurs == 3) {
+				jv[0].setSelected(true);
+				newNbVirtuels = 0;
+			} else if(nbReels > nbVirtuels && nbJoueurs == 4) {
+				jv[0].setSelected(true);
+				newNbVirtuels = 0;
+			}
+			for (int i = 0; i < jv.length; i++) {
+				jv[i].setEnabled(false);
 			}
 			
-			for (int i = nbVirtuelSelected; i < groupeNiv.length; i++) {
-				this.nivButtons[i][0].setEnabled(false);
-				this.nivButtons[i][1].setEnabled(false);
-				
+			for (int i = 0; i <= nbJoueurs - nbReels; i++) {
+				jv[i].setEnabled(true);
+			}
+			
+		} else if(natureJoueur.equals("v") || natureJoueur.equals("niv")) {
+			
+			if(nbVirtuels >= nbReels && nbJoueurs == 3) {
+				jr[0].setSelected(true);
+				newNbReels = 0;
+			} else if(nbVirtuels > nbReels && nbJoueurs == 4) {
+				jr[0].setSelected(true);
+				newNbReels = 0;
+			}
+			for (int i = 0; i < jr.length; i++) {
+				jr[i].setEnabled(false);
+			}
+			
+			for (int i = 0; i <= nbJoueurs - nbVirtuels; i++) {
+				jr[i].setEnabled(true);
+			}
+			
+			if(nbVirtuels < 4) {
+				for (int i = groupeNiv.length; i > nbVirtuels; i--) {
+					if(nivButtons[i-1][0].isSelected()) {
+						newNbNiv1 -= 1;
+					} else if(nivButtons[i-1][1].isSelected()){
+						newNbNiv2 -= 1;
+					}
+					groupeNiv[i-1].clearSelection();
+				}
+			}
+			
+		}
+		
+		for (int i = 0; i < nivButtons.length; i++) {
+			for (int j = 0; j < nivButtons[i].length; j++) {
+				nivButtons[i][j].setEnabled(false);
+			}
+		}
+		
+		for (int i = 0; i < nbVirtuels; i++) {
+			for (int j = 0; j < nivButtons[i].length; j++) {
+				nivButtons[i][j].setEnabled(true);
 			}
 		}
 		
 		if(jv[0].isSelected()) {
-			for (int i = 0; i < groupeNiv.length; i++) {
-					this.groupeNiv[i].clearSelection();
-			}
-		}
-		
-		for (int i = 0; i < nbReels; i++) {
-			//real players number selectionable
-			this.jr[i].setEnabled(true);
-		}
-		
-		for (int i = nbReels; i < jr.length; i++) {
-			//real players number UNselectionable
-			if(this.jr[i].isSelected()) {
-				this.jr[0].setSelected(true);
-			}
-			this.jr[i].setEnabled(false);
-			
-		}
-		
-		
-		for (int i = 0; i < nbVirtuels; i++) {
-			//virtual players number selectionable
-			this.jv[i].setEnabled(true);
-		}
-		
-		for (int i = nbVirtuels; i < jv.length; i++) {
-			//virtual players number UNselectionable
-			if(this.jv[i].isSelected()) {
-				this.jv[0].setSelected(true);
-				for (int j = 0; j < groupeNiv.length; j++) {
-					this.nivButtons[j][0].setEnabled(false);
-					this.nivButtons[j][1].setEnabled(false);
-					this.groupeNiv[j].clearSelection();
+			for (int i = 0; i < nivButtons.length; i++) {
+				for (int j = 0; j < nivButtons[i].length; j++) {
+					nivButtons[i][j].setEnabled(false);
 				}
+				this.groupeNiv[i].clearSelection();
 			}
-			this.jv[i].setEnabled(false);
+			newNbNiv1 = 0;
+			newNbNiv2 = 0;
 		}
 		
 		
+		
+		controleur.controlStart(newNbJoueurs, newNbReels, newNbVirtuels, newNbNiv1, newNbNiv2);
+	}
+	
+	public void enableAllButtons(int limite) {
+		for (int i = 0; i < limite; i++) {
+			jr[i].setEnabled(true);
+			jv[i].setEnabled(true);
+		}
+		
+		for (int i = 0; i < limite-1; i++) {
+			for (int j = 0; j < nivButtons[i].length; j++) {
+				nivButtons[i][j].setEnabled(true);
+			}
+			//this.groupeNiv[i].clearSelection();
+		}
+	}
+	
+	public void disableAllButtons() {
+		for (int i = 0; i < jr.length; i++) {
+			jr[i].setSelected(false);
+			jr[i].setEnabled(false);
+			jv[i].setSelected(false);
+			jv[i].setEnabled(false);
+		}
+		for (int i = 0; i < nivButtons.length; i++) {
+			for (int j = 0; j < nivButtons[i].length; j++) {
+				nivButtons[i][j].setEnabled(false);
+			}
+			//this.groupeNiv[i].clearSelection();
+		}
 	}
 	
 	public void init() {
 		this.setVisible(true);
-		//Set size of the JFrame
-		//this.setSize(500, 500);
-		//this.pack();
-		//Full screen
-		//this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-		//Set location relative to the screen
 		this.setLocationRelativeTo(null);
 		//When you close the window it also terminates / Kills the program
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -134,16 +186,16 @@ public class Vue extends JFrame implements Observer{
 		//Add a layout to organizer each element
 		content.add(this.createInitializationWindow(), BorderLayout.CENTER);
 		content.add(this.btnJouer, BorderLayout.SOUTH);
+		
 		this.btnJouer.setEnabled(false);
 		this.btnJouer.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-					controleur.jouer();
+					controleur.startInitializePlayers();
 			}
 		});
-		
 		this.pack();
-		
+		this.disableAllButtons();
 		
 	}
 	
@@ -282,6 +334,7 @@ public class Vue extends JFrame implements Observer{
 		content.add(fourth);
 		//this.updateStart(1, 2);
 		
+		
 		for (int i = 0; i < j.length; i++) {
 			this.j[i].addItemListener(new ItemListener() {
 				
@@ -289,7 +342,9 @@ public class Vue extends JFrame implements Observer{
 					
 					if (e.getStateChange() == ItemEvent.SELECTED) {
 						//System.out.println("sélectionné " + Integer.parseInt(((AbstractButton) e.getSource()).getText()));
-						controleur.setNombreJ(Integer.parseInt(((AbstractButton) e.getSource()).getText()), getNiveau());
+						//controleur.setNombreJ(Integer.parseInt(((AbstractButton) e.getSource()).getText()), getNiveau());
+						//controleur.controlStart(getDataStart()[0], getDataStart()[1], getDataStart()[2], getDataStart()[3], getDataStart()[4]);
+						updateButtons(getDataStart()[0], getDataStart()[1], getDataStart()[2], getDataStart()[3], getDataStart()[4], "j");
 				    }
 					
 				}
@@ -303,7 +358,9 @@ public class Vue extends JFrame implements Observer{
 					
 					if (e.getStateChange() == ItemEvent.SELECTED) {
 						//System.out.println("sélectionné " + Integer.parseInt(((AbstractButton) e.getSource()).getText()));
-						controleur.setNombreRJ(Integer.parseInt(((AbstractButton) e.getSource()).getText()), getNiveau());
+						//controleur.setNombreRJ(Integer.parseInt(((AbstractButton) e.getSource()).getText()), getNiveau());
+						//controleur.controlStart(getDataStart()[0], getDataStart()[1], getDataStart()[2], getDataStart()[3], getDataStart()[4]);
+						updateButtons(getDataStart()[0], getDataStart()[1], getDataStart()[2], getDataStart()[3], getDataStart()[4], "r");
 				    }
 					
 				}
@@ -317,7 +374,9 @@ public class Vue extends JFrame implements Observer{
 					
 					if (e.getStateChange() == ItemEvent.SELECTED) {
 						//System.out.println("sélectionné " + Integer.parseInt(((AbstractButton) e.getSource()).getText()));
-						controleur.setNombreVJ(Integer.parseInt(((AbstractButton) e.getSource()).getText()), getNiveau());
+						//controleur.setNombreVJ(Integer.parseInt(((AbstractButton) e.getSource()).getText()), getNiveau());
+						//controleur.controlStart(getDataStart()[0], getDataStart()[1], getDataStart()[2], getDataStart()[3], getDataStart()[4]);
+						updateButtons(getDataStart()[0], getDataStart()[1], getDataStart()[2], getDataStart()[3], getDataStart()[4], "v");
 				    }
 					
 				}
@@ -333,7 +392,9 @@ public class Vue extends JFrame implements Observer{
 				this.nivButtons[i][j].addItemListener(new ItemListener() {
 					public void itemStateChanged(ItemEvent e) {
 						
-						controleur.startParty(getNiveau()[0], getNiveau()[1]);
+						//controleur.startParty(getNiveau()[0], getNiveau()[1]);
+						//controleur.controlStart(getDataStart()[0], getDataStart()[1], getDataStart()[2], getDataStart()[3], getDataStart()[4]);
+						updateButtons(getDataStart()[0], getDataStart()[1], getDataStart()[2], getDataStart()[3], getDataStart()[4], "niv");
 						
 					}
 				});
@@ -346,9 +407,35 @@ public class Vue extends JFrame implements Observer{
 		return content;
 	}
 
-	public int[] getNiveau(){
-		int niv1 = 0, niv2 = 0;
+	public int[] getDataStart(){
+		int nbJoueurs = 0, nbReels = 0, nbVirtuels = 0, niv1 = 0, niv2 = 0;
 		
+		//nbJoueurs
+		for (int i = 0; i < this.j.length; i++) {
+			if(this.j[i].isSelected() && this.j[i].isEnabled()) {
+				if(this.j[i].getText().equals("3")) {
+					nbJoueurs = 3;
+				} else {
+					nbJoueurs = 4;
+				}
+			}
+		}
+		
+		//nbReels
+		for (int i = 0; i < this.jr.length; i++) {
+			if(this.jr[i].isSelected() && this.jr[i].isEnabled()) {
+				nbReels = Integer.parseInt(this.jr[i].getText());
+			}
+		}
+		
+		//nbVirtuels
+		for (int i = 0; i < this.jv.length; i++) {
+			if(this.jv[i].isSelected() && this.jv[i].isEnabled()) {
+				nbVirtuels = Integer.parseInt(this.jv[i].getText());
+			}
+		}
+		
+		//nbNiv
 		for (int i = 0; i < groupeNiv.length; i++) {
 			for (int j = 0; j < 2; j++) {
 				if(nivButtons[i][j].isSelected() && nivButtons[i][j].isEnabled()) {
@@ -360,8 +447,7 @@ public class Vue extends JFrame implements Observer{
 				}
 			}
 		}
-		System.out.println("ohhhhh hhéééé " + niv1 + " " + niv2);
-		return new int[]{niv1, niv2};
+		return new int[]{nbJoueurs, nbReels, nbVirtuels, niv1, niv2};
 	}
 
 }

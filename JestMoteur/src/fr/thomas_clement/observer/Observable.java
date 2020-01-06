@@ -4,6 +4,6 @@ public interface Observable {
 	
 	public void addObserver(Observer obs);
 	public void removeObserver();
-	public void notifyStart(int nbReels, int nbVirtuels, int nbVirtuelSelected, int nbReelSelected, boolean readyToPlay); 
+	public void notifyReadyToPlay(boolean readyToPlay); 
 
 }

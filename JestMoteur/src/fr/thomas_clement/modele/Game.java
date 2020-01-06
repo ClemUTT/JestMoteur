@@ -1,4 +1,4 @@
-package fr.thomas_clement.utt;
+package fr.thomas_clement.modele;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,9 +6,20 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Scanner;
 
-import fr.thomas_clement.modele.AbstractGame;
+import fr.thomas_clement.utt.Card;
+import fr.thomas_clement.utt.JestValue;
+import fr.thomas_clement.utt.Jester;
+import fr.thomas_clement.utt.Packet;
+import fr.thomas_clement.utt.Player;
+import fr.thomas_clement.utt.RealPlayer;
+import fr.thomas_clement.utt.Shape;
+import fr.thomas_clement.utt.VirtualPlayer;
+import fr.thomas_clement.utt.VirtualPlayerDifficult;
+import fr.thomas_clement.utt.VirtualPlayerRandom;
+import fr.thomas_clement.utt.Visiteur;
+
+import java.util.Scanner;
 
 public class Game extends AbstractGame implements Visiteur {
 	
@@ -22,11 +33,6 @@ public class Game extends AbstractGame implements Visiteur {
 	List<Player> playersWhoHavePlayed = new ArrayList<Player>();
 	
 	private int nbRounds = 1;
-	private int nbPlayers = 0;
-	private int nbRealPlayers = 0;
-	private int nbVirtualPlayers = 0;
-	private int niv1 = 0;
-	private int niv2 = 0;
 	private boolean readyToPlay = false;
 	
 	
@@ -42,51 +48,8 @@ public class Game extends AbstractGame implements Visiteur {
 		
 	}
 	
-	public void calculRadioButtonsStart(String natureJoueur) {
-		int nbReels = 0;
-		int nbVirtuels = 0;
-		int nbVirtuelSelected = this.nbVirtualPlayers;
-		int nbReelSelected = this.nbRealPlayers;
+	public void initializePlayers(int nbJoueurs, int nbReels, int nbVirtuels, int nb1, int nb2) {
 		
-		
-		if(this.nbPlayers == 3) {
-			
-			if((this.nbRealPlayers == 0 && this.nbVirtualPlayers == 0) || natureJoueur.equals("j")) {
-				nbReels = 3+1;
-				nbVirtuels = 3+1;
-			}
-			
-			if(natureJoueur.equals("r")) {
-				nbReels = 3+1;
-				nbVirtuels = 3+1 - this.nbRealPlayers;
-			} else if(natureJoueur.equals("v")) {
-				nbVirtuels = 3+1;
-				nbReels = 3+1 - this.nbVirtualPlayers;
-			}
-			
-		} else if(this.nbPlayers == 4) {
-			
-			if((this.nbRealPlayers == 0 && this.nbVirtualPlayers == 0) || natureJoueur.equals("j")) {
-				nbReels = 4+1;
-				nbVirtuels = 4+1;
-			}
-			
-			if(natureJoueur.equals("r")) {
-				nbReels = 4+1;
-				nbVirtuels = 4+1 - this.nbRealPlayers;
-			} else if(natureJoueur.equals("v")) {
-				nbVirtuels = 4+1;
-				nbReels = 4+1 - this.nbVirtualPlayers;
-			}
-			
-			
-		}
-		
-		this.notifyStart(nbReels, nbVirtuels, nbVirtuelSelected, nbReelSelected, this.readyToPlay);
-		System.out.println("nb this.nbreels : "+ this.nbRealPlayers);
-		System.out.println("nb this.nbvirtuels : "+ this.nbVirtualPlayers);
-		System.out.println("nb nbreels : "+ nbReels);
-		System.out.println("nb nbvirtuels : "+ nbVirtuels);
 	}
 	
 	public void calculerScore(Jester jest) {
@@ -1044,36 +1007,6 @@ public class Game extends AbstractGame implements Visiteur {
 
 	public Packet getTrophies() {
 		return trophies;
-	}
-
-	@Override
-	public void setNbPlayers(int nb) {
-		this.nbPlayers = nb;
-		
-	}
-
-	@Override
-	public void setNbRealPlayers(int nb) {
-		this.nbRealPlayers= nb;
-		
-	}
-
-	@Override
-	public void setNbVirtualPlayers(int nb) {
-		this.nbVirtualPlayers = nb;
-		
-	}
-
-	@Override
-	public void setNiv(int niv1, int niv2) {
-		this.niv1 = niv1;
-		this.niv2 = niv2;
-		
-	}
-
-	@Override
-	public int getNbVirtualPlayers() {
-		return this.nbVirtualPlayers;
 	}
 
 	

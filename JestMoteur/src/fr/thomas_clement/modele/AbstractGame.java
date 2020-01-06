@@ -12,14 +12,14 @@ public abstract class AbstractGame implements Observable{
 	@Override
 	public void addObserver(Observer obs) {
 		this.listeObserver.add(obs);
-		this.notifyStart(0, 0, 0, 0, false);
+		this.notifyReadyToPlay(false);
 	}
 	
 	@Override
-	public void notifyStart(int nbReels, int nbVirtuels, int nbVirtuelSelected, int nbReelSelected, boolean readyToPlay) {
+	public void notifyReadyToPlay(boolean readyToPlay) {
 		
 		for(Observer obs : this.listeObserver) {
-			obs.updateStart(nbReels, nbVirtuels, nbVirtuelSelected, nbReelSelected, readyToPlay);
+			obs.notifyReadyToPlay(readyToPlay);
 		}
 	}
 	
@@ -37,20 +37,10 @@ public abstract class AbstractGame implements Observable{
 
 	public abstract void playRounds();
 	
-	public abstract void calculRadioButtonsStart(String natureJoueur);
-	
-	public abstract void setNbPlayers(int nb);
-	
-	public abstract void setNbRealPlayers(int nb);
-	
-	public abstract void setNbVirtualPlayers(int nb);
-	
-	public abstract void setNiv(int niv1, int niv2);
-	
-	public abstract int getNbVirtualPlayers();
-	
 	public abstract boolean isReadyToPlay();
 
 	public abstract void setReadyToPlay(boolean readyToPlay);
+	
+	public abstract void initializePlayers(int nbJoueurs, int nbReels, int nbVirtuels, int nb1, int nb2);
 
 }
