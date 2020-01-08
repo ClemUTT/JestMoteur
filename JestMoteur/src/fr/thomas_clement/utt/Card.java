@@ -7,13 +7,15 @@ public class Card {
 	private boolean isTrophee;
 	private Shape shape;
 	private JestValue jestValue;
+	private String path;
 	
-	public Card(int value, boolean faceHidden, boolean isTrophee, Shape shape, JestValue jestValue) {
+	public Card(int value, boolean faceHidden, boolean isTrophee, Shape shape, JestValue jestValue, String path) {
 		this.value = value;
 		this.faceHidden = faceHidden;
 		this.isTrophee = isTrophee;
 		this.shape = shape;
-		this.jestValue = jestValue;	
+		this.jestValue = jestValue;
+		this.path = path;
 	}
 	
 	public String toString() {
@@ -72,6 +74,14 @@ public class Card {
 
 	public void setJestValue(JestValue jestValue) {
 		this.jestValue = jestValue;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 	
 	

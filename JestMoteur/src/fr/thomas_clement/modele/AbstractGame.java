@@ -1,9 +1,11 @@
 package fr.thomas_clement.modele;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import fr.thomas_clement.observer.Observable;
 import fr.thomas_clement.observer.Observer;
+import fr.thomas_clement.utt.*;
 
 public abstract class AbstractGame implements Observable{
 	
@@ -20,6 +22,13 @@ public abstract class AbstractGame implements Observable{
 		
 		for(Observer obs : this.listeObserver) {
 			obs.notifyReadyToPlay(readyToPlay);
+		}
+	}
+	
+	@Override
+	public void notifyStartPlateau(String path, int nbJoueurs, int deckSize) {
+		for(Observer obs : this.listeObserver) {
+			obs.updateStartPlateau(path, nbJoueurs, deckSize);
 		}
 	}
 	

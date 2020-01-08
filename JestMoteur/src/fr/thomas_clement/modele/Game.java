@@ -34,6 +34,7 @@ public class Game extends AbstractGame implements Visiteur {
 	
 	private int nbRounds = 1;
 	private boolean readyToPlay = false;
+	private boolean nextPlayer = false;
 	
 	
 	public boolean isReadyToPlay() {
@@ -49,7 +50,23 @@ public class Game extends AbstractGame implements Visiteur {
 	}
 	
 	public void initializePlayers(int nbJoueurs, int nbReels, int nbVirtuels, int nb1, int nb2) {
+		this.players.clear();
+		if(nbVirtuels > 0) {
+				for (int j = 0; j < nb1; j++) {
+					this.players.add(new VirtualPlayer(new VirtualPlayerRandom()));
+				}
+				for (int j = 0; j < nb2; j++) {
+					this.players.add(new VirtualPlayer(new VirtualPlayerDifficult()));
+				}
+		}
 		
+		if(nbReels > 0) {
+			for (int i = 0; i < nbReels; i++) {
+				this.players.add(new RealPlayer("jr"+(i+1)));
+			}
+		}
+		System.out.println(this.players);
+		this.initializeDeck();
 	}
 	
 	public void calculerScore(Jester jest) {
@@ -190,6 +207,7 @@ public class Game extends AbstractGame implements Visiteur {
 			if(this.nbRounds == 1) {
 				
 				this.dealOffersToEachPlayer(this.getDeck(), 2);
+				//this.notifyStartPlateau(this.reference_card.getPath(), this.players.size(), this.deck.getCards().size());
 				
 			} else {
 				
@@ -833,6 +851,8 @@ public class Game extends AbstractGame implements Visiteur {
 				p.addACardFromAPacketToAnotherPacket(0, players.get(i).getHand()); // Add a card (index 0) from the Packet p to the hand of the player i
 			}
 		}
+		
+		this.notifyStartPlateau(this.reference_card.getPath(), this.players.size(), this.deck.getCards().size());
 	}
 	
 	public void initializeDeck() {
@@ -841,28 +861,28 @@ public class Game extends AbstractGame implements Visiteur {
 		//HIGHTEST, LOWWEST, MAJORITY, BEST_JEST, BEST_JEST_NOJOKER, JOKER, REFERENCE_CARD;
 		
 		
-		Card joker = new Card(0, false, false, Shape.JOKER, JestValue.BEST_JEST);
-		Card referenceCard = new Card(-1, false, false, Shape.REFERENCE_CARD, JestValue.NONE);
+		Card joker = new Card(0, false, false, Shape.JOKER, JestValue.BEST_JEST, "/17.png");
+		Card referenceCard = new Card(-1, false, false, Shape.REFERENCE_CARD, JestValue.NONE, "/18.png");
 		
-		Card Spades5 = new Card(5, false, false, Shape.SPADES, JestValue.HIGHTEST_CLUBS); //Ace
-		Card Clubs5 = new Card(5, false, false, Shape.CLUBS, JestValue.HIGHTEST_SPADES); //Ace
-		Card Diamonds5 = new Card(5, false, false, Shape.DIAMONDS, JestValue.MAJORITY_4); //Ace
-		Card Hearts5 = new Card(5, false, false, Shape.HEARTS, JestValue.JOKER); //Ace
+		Card Spades5 = new Card(5, false, false, Shape.SPADES, JestValue.HIGHTEST_CLUBS, "/4.png"); //Ace
+		Card Clubs5 = new Card(5, false, false, Shape.CLUBS, JestValue.HIGHTEST_SPADES, "/3.png"); //Ace
+		Card Diamonds5 = new Card(5, false, false, Shape.DIAMONDS, JestValue.MAJORITY_4, "/2.png"); //Ace
+		Card Hearts5 = new Card(5, false, false, Shape.HEARTS, JestValue.JOKER, "/1.png"); //Ace
 		
-		Card Spades4 = new Card(4, false, false, Shape.SPADES, JestValue.LOWEST_CLUBS);
-		Card Clubs4 = new Card(4, false, false, Shape.CLUBS, JestValue.LOWEST_SPADES);
-		Card Diamonds4 = new Card(4, false, false, Shape.DIAMONDS, JestValue.BEST_JEST_NOJOKER);
-		Card Hearts4 = new Card(4, false, false, Shape.HEARTS, JestValue.JOKER);
+		Card Spades4 = new Card(4, false, false, Shape.SPADES, JestValue.LOWEST_CLUBS, "/16.png");
+		Card Clubs4 = new Card(4, false, false, Shape.CLUBS, JestValue.LOWEST_SPADES, "/15.png");
+		Card Diamonds4 = new Card(4, false, false, Shape.DIAMONDS, JestValue.BEST_JEST_NOJOKER, "/14.png");
+		Card Hearts4 = new Card(4, false, false, Shape.HEARTS, JestValue.JOKER, "/13.png");
 		
-		Card Spades3 = new Card(3, false, false, Shape.SPADES, JestValue.MAJORITY_2);
-		Card Clubs3 = new Card(3, false, false, Shape.CLUBS, JestValue.HIGHTEST_HEARTS);
-		Card Diamonds3 = new Card(3, false, false, Shape.DIAMONDS, JestValue.LOWEST_DIAMONDS);
-		Card Hearts3 = new Card(3, false, false, Shape.HEARTS, JestValue.JOKER);
+		Card Spades3 = new Card(3, false, false, Shape.SPADES, JestValue.MAJORITY_2, "/12.png");
+		Card Clubs3 = new Card(3, false, false, Shape.CLUBS, JestValue.HIGHTEST_HEARTS, "/11.png");
+		Card Diamonds3 = new Card(3, false, false, Shape.DIAMONDS, JestValue.LOWEST_DIAMONDS, "/10.png");
+		Card Hearts3 = new Card(3, false, false, Shape.HEARTS, JestValue.JOKER, "/9.png");
 		
-		Card Spades2 = new Card(2, false, false, Shape.SPADES, JestValue.MAJORITY_3);
-		Card Clubs2 = new Card(2, false, false, Shape.CLUBS, JestValue.LOWEST_HEARTS);
-		Card Diamonds2 = new Card(2, false, false, Shape.DIAMONDS, JestValue.HIGHTEST_DIAMONDS);
-		Card Hearts2 = new Card(2, false, false, Shape.HEARTS, JestValue.JOKER);
+		Card Spades2 = new Card(2, false, false, Shape.SPADES, JestValue.MAJORITY_3, "/8.png");
+		Card Clubs2 = new Card(2, false, false, Shape.CLUBS, JestValue.LOWEST_HEARTS, "/7.png");
+		Card Diamonds2 = new Card(2, false, false, Shape.DIAMONDS, JestValue.HIGHTEST_DIAMONDS, "/6.png");
+		Card Hearts2 = new Card(2, false, false, Shape.HEARTS, JestValue.JOKER, "/5.png");
 		
 		//We instance an ArrayList which will receive all the cards
 		ArrayList<Card> cards = new ArrayList<>();
@@ -896,6 +916,9 @@ public class Game extends AbstractGame implements Visiteur {
 		Packet deckCards = new Packet(cards);
 		
 		this.deck = deckCards;
+		this.reference_card = referenceCard;
+		//this.notifyStartPlateau(referenceCard.getPath(), this.players.size(), this.deck.getCards().size());
+		this.initializeTrophies();
 	}
 	
 	public void initializeTrophies() {
@@ -911,23 +934,25 @@ public class Game extends AbstractGame implements Visiteur {
 		} else { //If there are 3 players
 			
 			//Add 2 random Cards to the trophies
-			for (int i = 0; i < this.deck.getCards().size(); i++) {
-				if(this.trophies.getCards().size() < 2) {
-					
-					if(this.deck.getCards().get(i).getJestValue().equals(JestValue.BEST_JEST_NOJOKER)) { //Testing majority calculation
-						this.deck.addACardFromAPacketToAnotherPacket(i, this.trophies);
-					} else if(this.deck.getCards().get(i).getJestValue().equals(JestValue.MAJORITY_3)) { //Testing majority calculation
-						this.deck.addACardFromAPacketToAnotherPacket(i, this.trophies);
-					} else if(this.deck.getCards().get(i).getJestValue().equals(JestValue.MAJORITY_2)) { //Testing majority calculation
-						this.deck.addACardFromAPacketToAnotherPacket(i, this.trophies);
-					}
-				}
-				
-			}
-			//this.deck.addACardFromAPacketToAnotherPacket(0, this.trophies);
-			//this.deck.addACardFromAPacketToAnotherPacket(1, this.trophies);
+//			for (int i = 0; i < this.deck.getCards().size(); i++) {
+//				if(this.trophies.getCards().size() < 2) {
+//					
+//					if(this.deck.getCards().get(i).getJestValue().equals(JestValue.BEST_JEST_NOJOKER)) { //Testing majority calculation
+//						this.deck.addACardFromAPacketToAnotherPacket(i, this.trophies);
+//					} else if(this.deck.getCards().get(i).getJestValue().equals(JestValue.MAJORITY_3)) { //Testing majority calculation
+//						this.deck.addACardFromAPacketToAnotherPacket(i, this.trophies);
+//					} else if(this.deck.getCards().get(i).getJestValue().equals(JestValue.MAJORITY_2)) { //Testing majority calculation
+//						this.deck.addACardFromAPacketToAnotherPacket(i, this.trophies);
+//					}
+//				}
+//				
+//			}
+			this.deck.addACardFromAPacketToAnotherPacket(0, this.trophies);
+			this.deck.addACardFromAPacketToAnotherPacket(1, this.trophies);
 		}
 		
+		
+		this.playRounds();
 	}
 	
 	
@@ -994,7 +1019,9 @@ public class Game extends AbstractGame implements Visiteur {
 		}
 		
 		//System.out.println(this.players);
-	
+//		if(this.players.size() == 3 || this.players.size() == 4) {
+//			this.initializeDeck();
+//		}
 	}
 
 	public List<Player> getPlayers() {

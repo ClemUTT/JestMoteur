@@ -1,26 +1,30 @@
 package fr.thomas_clement.vue;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.Arrays;
-import java.util.Enumeration;
+import java.util.List;
 
-import javax.swing.AbstractAction;
-import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.SwingConstants;
+import javax.swing.border.Border;
 
 import fr.thomas_clement.controleur.AbstractControleur;
 import fr.thomas_clement.observer.Observer;
+import fr.thomas_clement.utt.Packet;
 
 public class Vue extends JFrame implements Observer{
 	
@@ -33,9 +37,22 @@ public class Vue extends JFrame implements Observer{
 	private ButtonGroup groupeJR = new ButtonGroup();
 	private ButtonGroup groupeJV = new ButtonGroup();
 	private ButtonGroup groupeNiv[] = {new ButtonGroup(), new ButtonGroup(), new ButtonGroup(), new ButtonGroup()};
+	private JPanel content = (JPanel) this.getContentPane();
 	private JRadioButton[][] nivButtons = new JRadioButton[4][2];
 	private JButton btnJouer = new JButton("JOUER");
-	//j1.setEnabled(false);
+	
+	private ImageJest reference_card;
+	private List<ImageJest> offers;
+	private List<ImageJest> hand;
+	private List<ImageJest> trophies;
+	private int deckSize;
+	private int nbJoueurs;
+	private JPanel up = new JPanel();
+	private JPanel down = new JPanel();
+	private JPanel right = new JPanel();
+	private JPanel left = new JPanel();
+	private JPanel center = new JPanel();
+	
 
 	public Vue(AbstractControleur controleur) {
 		super("Jest (Thomas et Clément)");
@@ -50,6 +67,94 @@ public class Vue extends JFrame implements Observer{
 			this.btnJouer.setEnabled(false);
 		}
 	}
+	
+	
+	
+	@Override
+	public void updateStartPlateau(String path, int nbJoueurs, int deckSize) {
+		deleteComponents();
+		this.deckSize = deckSize;
+		this.nbJoueurs = nbJoueurs;
+		this.reference_card = new ImageJest(getClass().getResource(path));
+		
+		this.center.setLayout(new GridLayout(1, 3, 10, 0));
+		
+		this.center.add(new JButton("centre0"), 0,0);
+		this.center.add(new JLabel(getImageResized(this.reference_card)), 0,1);
+		this.center.add(new JButton("centre1"), 0,2);
+		
+		this.up.setLayout(new GridLayout(2, 0));
+		JPanel up1 = new JPanel(new GridLayout(1, 2, 10,0));
+		JPanel up2 = new JPanel(new GridLayout(1,1));
+		
+		up2.add(new JLabel("nomup", SwingConstants.CENTER), 0,0);
+		up1.add(new JButton("up0"), 0,0);
+		up1.add(new JButton("up1"), 0,1);
+		
+		this.up.add(up1);
+		this.up.add(up2);
+		
+		
+		
+		this.down.setLayout(new GridLayout(2, 0));
+		JPanel down1 = new JPanel(new GridLayout(1, 2, 10,0));
+		JPanel down2 = new JPanel(new GridLayout(1,1));
+		
+		down2.add(new JLabel("nomup", SwingConstants.CENTER), 0,0);
+		down1.add(new JButton("up0"), 0,0);
+		down1.add(new JButton("up1"), 0,1);
+		
+		this.down.add(down1);
+		this.down.add(down2);
+		
+		
+		
+		this.left.setLayout(new GridLayout(2, 0));
+		JPanel left1 = new JPanel(new GridLayout(1, 2, 10,0));
+		JPanel left2 = new JPanel(new GridLayout(1,1));
+		
+		left2.add(new JLabel("nomup", SwingConstants.CENTER), 0,0);
+		left1.add(new JButton("up0"), 0,0);
+		left1.add(new JButton("up1"), 0,1);
+		
+		this.left.add(left1);
+		this.left.add(left2);
+		
+		
+		
+		this.right.setLayout(new GridLayout(2, 0));
+		JPanel right1 = new JPanel(new GridLayout(1, 2, 10,0));
+		JPanel right2 = new JPanel(new GridLayout(1,1));
+		
+		right2.add(new JLabel("nomup", SwingConstants.CENTER), 0,0);
+		right1.add(new JButton("up0"), 0,0);
+		right1.add(new JButton("up1"), 0,1);
+		
+		this.right.add(right1);
+		this.right.add(right2);
+		
+		
+		
+		this.content.add(center, BorderLayout.CENTER);
+		this.content.add(up, BorderLayout.NORTH);
+		this.content.add(down, BorderLayout.SOUTH);
+		this.content.add(right, BorderLayout.EAST);
+		this.content.add(left, BorderLayout.WEST);
+		
+		
+		
+		this.content.setBackground(new Color(0,102,15));
+		
+		this.pack();
+	}
+	
+	public ImageIcon getImageResized(ImageIcon ref) {
+		Image refImage = ref.getImage();
+		Image modifiedRef = refImage.getScaledInstance(150, 211, Image.SCALE_SMOOTH);
+		
+		return new ImageIcon(modifiedRef);
+	}
+	
 	
 	public void updateButtons(int nbJoueurs, int nbReels, int nbVirtuels, int nbNiv1, int nbNiv2, String natureJoueur) {
 		int newNbJoueurs = nbJoueurs,  newNbReels = nbReels,  newNbVirtuels = nbVirtuels,  newNbNiv1 = nbNiv1,  newNbNiv2 = nbNiv2;
@@ -157,7 +262,6 @@ public class Vue extends JFrame implements Observer{
 			for (int j = 0; j < nivButtons[i].length; j++) {
 				nivButtons[i][j].setEnabled(true);
 			}
-			//this.groupeNiv[i].clearSelection();
 		}
 	}
 	
@@ -172,32 +276,37 @@ public class Vue extends JFrame implements Observer{
 			for (int j = 0; j < nivButtons[i].length; j++) {
 				nivButtons[i][j].setEnabled(false);
 			}
-			//this.groupeNiv[i].clearSelection();
 		}
 	}
 	
 	public void init() {
 		this.setVisible(true);
 		this.setLocationRelativeTo(null);
-		//When you close the window it also terminates / Kills the program
+		//When you close the window it also terminates / kills the program
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		JPanel content = (JPanel) this.getContentPane();
-		//Add a layout to organizer each element
-		content.add(this.createInitializationWindow(), BorderLayout.CENTER);
-		content.add(this.btnJouer, BorderLayout.SOUTH);
 		
+		//Add a layout to organizer each element
+		this.content.add(this.createInitializationWindow(), BorderLayout.CENTER);
+		this.content.add(this.btnJouer, BorderLayout.SOUTH);
+		
+		//At the click, the game starts
 		this.btnJouer.setEnabled(false);
 		this.btnJouer.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-					controleur.startInitializePlayers();
+					controleur.startInitializePlayers(getDataStart()[0], getDataStart()[1], getDataStart()[2], getDataStart()[3], getDataStart()[4]);
 			}
 		});
 		this.pack();
 		this.disableAllButtons();
 		
 	}
+	
+	public void deleteComponents() {
+		this.content.removeAll();
+	}
+
 	
 	public JPanel createInitializationWindow() {
 		
@@ -212,10 +321,6 @@ public class Vue extends JFrame implements Observer{
 		JLabel nbJoueursReels = new JLabel("Nombre de joueurs réels");
 		JLabel nbJoueursVirtuels = new JLabel("Nombre de joueurs virtuels");
 		JLabel niveauDifficulte = new JLabel("Niveau de difficulté");
-		
-		
-//		JRadioButton jniv1 = new JRadioButton("1");
-//		JRadioButton jniv2 = new JRadioButton("2");
 		
 		groupeJ.add(j[0]);
 		groupeJ.add(j[1]);
@@ -244,9 +349,6 @@ public class Vue extends JFrame implements Observer{
 		
 		this.nivButtons[3][0] = new JRadioButton("1");
 		this.nivButtons[3][1] = new JRadioButton("2");
-		
-//		this.nivButtons[4][0] = new JRadioButton("1");
-//		this.nivButtons[4][1] = new JRadioButton("2");
 		
 		JPanel first = new JPanel();
 		first.setLayout(new GridLayout(2, 1));
@@ -289,7 +391,6 @@ public class Vue extends JFrame implements Observer{
 		
 		for (int i = 0; i < this.nivButtons.length; i++) {
 			for (int j = 0; j < 2; j++) {
-				//this.nivButtons[i][j] = new JRadioButton(Integer.toString(j+1));
 				this.groupeNiv[i].add(this.nivButtons[i][j]);
 			}
 		}
@@ -310,15 +411,11 @@ public class Vue extends JFrame implements Observer{
 		JPanel fourthRadioLigne4 = new JPanel(new FlowLayout());
 		fourthRadioLigne4.add(this.nivButtons[3][0]);
 		fourthRadioLigne4.add(this.nivButtons[3][1]);
-//		JPanel fourthRadioLigne5 = new JPanel(new FlowLayout());
-//		fourthRadioLigne5.add(this.nivButtons[4][0]);
-//		fourthRadioLigne5.add(this.nivButtons[4][1]);
 		
 		fourthRadio.add(fourthRadioLigne1);
 		fourthRadio.add(fourthRadioLigne2);
 		fourthRadio.add(fourthRadioLigne3);
 		fourthRadio.add(fourthRadioLigne4);
-//		fourthRadio.add(fourthRadioLigne5);
 		
 		fourth.add(niveauDifficulte);
 		fourth.add(fourthRadio);
@@ -332,7 +429,6 @@ public class Vue extends JFrame implements Observer{
 		content.add(second);
 		content.add(third);
 		content.add(fourth);
-		//this.updateStart(1, 2);
 		
 		
 		for (int i = 0; i < j.length; i++) {
@@ -341,9 +437,6 @@ public class Vue extends JFrame implements Observer{
 				public void itemStateChanged(ItemEvent e) {
 					
 					if (e.getStateChange() == ItemEvent.SELECTED) {
-						//System.out.println("sélectionné " + Integer.parseInt(((AbstractButton) e.getSource()).getText()));
-						//controleur.setNombreJ(Integer.parseInt(((AbstractButton) e.getSource()).getText()), getNiveau());
-						//controleur.controlStart(getDataStart()[0], getDataStart()[1], getDataStart()[2], getDataStart()[3], getDataStart()[4]);
 						updateButtons(getDataStart()[0], getDataStart()[1], getDataStart()[2], getDataStart()[3], getDataStart()[4], "j");
 				    }
 					
@@ -357,9 +450,6 @@ public class Vue extends JFrame implements Observer{
 				public void itemStateChanged(ItemEvent e) {
 					
 					if (e.getStateChange() == ItemEvent.SELECTED) {
-						//System.out.println("sélectionné " + Integer.parseInt(((AbstractButton) e.getSource()).getText()));
-						//controleur.setNombreRJ(Integer.parseInt(((AbstractButton) e.getSource()).getText()), getNiveau());
-						//controleur.controlStart(getDataStart()[0], getDataStart()[1], getDataStart()[2], getDataStart()[3], getDataStart()[4]);
 						updateButtons(getDataStart()[0], getDataStart()[1], getDataStart()[2], getDataStart()[3], getDataStart()[4], "r");
 				    }
 					
@@ -373,9 +463,6 @@ public class Vue extends JFrame implements Observer{
 				public void itemStateChanged(ItemEvent e) {
 					
 					if (e.getStateChange() == ItemEvent.SELECTED) {
-						//System.out.println("sélectionné " + Integer.parseInt(((AbstractButton) e.getSource()).getText()));
-						//controleur.setNombreVJ(Integer.parseInt(((AbstractButton) e.getSource()).getText()), getNiveau());
-						//controleur.controlStart(getDataStart()[0], getDataStart()[1], getDataStart()[2], getDataStart()[3], getDataStart()[4]);
 						updateButtons(getDataStart()[0], getDataStart()[1], getDataStart()[2], getDataStart()[3], getDataStart()[4], "v");
 				    }
 					
@@ -391,9 +478,6 @@ public class Vue extends JFrame implements Observer{
 				
 				this.nivButtons[i][j].addItemListener(new ItemListener() {
 					public void itemStateChanged(ItemEvent e) {
-						
-						//controleur.startParty(getNiveau()[0], getNiveau()[1]);
-						//controleur.controlStart(getDataStart()[0], getDataStart()[1], getDataStart()[2], getDataStart()[3], getDataStart()[4]);
 						updateButtons(getDataStart()[0], getDataStart()[1], getDataStart()[2], getDataStart()[3], getDataStart()[4], "niv");
 						
 					}
@@ -449,5 +533,6 @@ public class Vue extends JFrame implements Observer{
 		}
 		return new int[]{nbJoueurs, nbReels, nbVirtuels, niv1, niv2};
 	}
+
 
 }

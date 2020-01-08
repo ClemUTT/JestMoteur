@@ -33,13 +33,12 @@ public abstract class AbstractControleur {
 			this.game.notifyReadyToPlay(false);
 		}
 		
-		
-		
 	}
 	
-	public void startInitializePlayers() {
+	public void startInitializePlayers(int nbJoueurs, int nbReels, int nbVirtuels, int nbNiv1, int nbNiv2) {
 		System.out.println("Initialisation des joueurs");
 		// Appelle la méthode initializePlayers
+		this.game.initializePlayers(nbJoueurs, nbReels, nbVirtuels, nbNiv1, nbNiv2);
 	}
 	
 }
