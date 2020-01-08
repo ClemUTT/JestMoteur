@@ -10,8 +10,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		System.out.println((new Random().nextInt((2 - 1) + 1) + 1));
-		
+		System.out.println(new Random().nextInt((2 - 1) + 1) + 1);
 		AbstractGame party = new Game();
 		AbstractControleur controleur = new GameControleur(party);
 		Vue vue = new Vue(controleur);
@@ -22,7 +21,7 @@ public class Main {
 		
 		party.initializeDeck(); //Create cards and add them to a packet named Deck
 		
-		//party.initializeTrophies(); // From the deck, it defines the trophies
+		party.initializeTrophies(); // From the deck, it defines the trophies
 		
 		//System.out.println(party.getTrophies());
 		

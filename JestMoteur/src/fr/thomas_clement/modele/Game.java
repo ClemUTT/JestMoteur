@@ -200,7 +200,11 @@ public class Game extends AbstractGame implements Visiteur {
 			System.out.println("\n---------------------------------\n");
 			System.out.println("NOUS SOMMES AU ROUND " + this.nbRounds);
 			System.out.println("\n---------------------------------\n");
-			System.out.println("Deck : \n" + this.deck);
+			//System.out.println("Deck : \n" + this.deck);
+			System.out.println("*****************************");
+			System.out.println("VOICI LES TROPHEES");
+			System.out.println(this.trophies);
+			System.out.println("*****************************");
 			
 			
 			// Deal Cards to each player if it's the first round
@@ -861,28 +865,28 @@ public class Game extends AbstractGame implements Visiteur {
 		//HIGHTEST, LOWWEST, MAJORITY, BEST_JEST, BEST_JEST_NOJOKER, JOKER, REFERENCE_CARD;
 		
 		
-		Card joker = new Card(0, false, false, Shape.JOKER, JestValue.BEST_JEST, "/17.png");
-		Card referenceCard = new Card(-1, false, false, Shape.REFERENCE_CARD, JestValue.NONE, "/18.png");
+		Card joker = new Card(0, false, false, Shape.JOKER, JestValue.BEST_JEST, "/17.jpeg");
+		Card referenceCard = new Card(-1, false, false, Shape.REFERENCE_CARD, JestValue.NONE, "/18.jpeg");
 		
-		Card Spades5 = new Card(5, false, false, Shape.SPADES, JestValue.HIGHTEST_CLUBS, "/4.png"); //Ace
-		Card Clubs5 = new Card(5, false, false, Shape.CLUBS, JestValue.HIGHTEST_SPADES, "/3.png"); //Ace
-		Card Diamonds5 = new Card(5, false, false, Shape.DIAMONDS, JestValue.MAJORITY_4, "/2.png"); //Ace
-		Card Hearts5 = new Card(5, false, false, Shape.HEARTS, JestValue.JOKER, "/1.png"); //Ace
+		Card Spades5 = new Card(5, false, false, Shape.SPADES, JestValue.HIGHTEST_CLUBS, "/4.jpeg"); //Ace
+		Card Clubs5 = new Card(5, false, false, Shape.CLUBS, JestValue.HIGHTEST_SPADES, "/3.jpeg"); //Ace
+		Card Diamonds5 = new Card(5, false, false, Shape.DIAMONDS, JestValue.MAJORITY_4, "/2.jpeg"); //Ace
+		Card Hearts5 = new Card(5, false, false, Shape.HEARTS, JestValue.JOKER, "/1.jpeg"); //Ace
 		
-		Card Spades4 = new Card(4, false, false, Shape.SPADES, JestValue.LOWEST_CLUBS, "/16.png");
-		Card Clubs4 = new Card(4, false, false, Shape.CLUBS, JestValue.LOWEST_SPADES, "/15.png");
-		Card Diamonds4 = new Card(4, false, false, Shape.DIAMONDS, JestValue.BEST_JEST_NOJOKER, "/14.png");
-		Card Hearts4 = new Card(4, false, false, Shape.HEARTS, JestValue.JOKER, "/13.png");
+		Card Spades4 = new Card(4, false, false, Shape.SPADES, JestValue.LOWEST_CLUBS, "/16.jpeg");
+		Card Clubs4 = new Card(4, false, false, Shape.CLUBS, JestValue.LOWEST_SPADES, "/15.jpeg");
+		Card Diamonds4 = new Card(4, false, false, Shape.DIAMONDS, JestValue.BEST_JEST_NOJOKER, "/14.jpeg");
+		Card Hearts4 = new Card(4, false, false, Shape.HEARTS, JestValue.JOKER, "/13.jpeg");
 		
-		Card Spades3 = new Card(3, false, false, Shape.SPADES, JestValue.MAJORITY_2, "/12.png");
-		Card Clubs3 = new Card(3, false, false, Shape.CLUBS, JestValue.HIGHTEST_HEARTS, "/11.png");
-		Card Diamonds3 = new Card(3, false, false, Shape.DIAMONDS, JestValue.LOWEST_DIAMONDS, "/10.png");
-		Card Hearts3 = new Card(3, false, false, Shape.HEARTS, JestValue.JOKER, "/9.png");
+		Card Spades3 = new Card(3, false, false, Shape.SPADES, JestValue.MAJORITY_2, "/12.jpeg");
+		Card Clubs3 = new Card(3, false, false, Shape.CLUBS, JestValue.HIGHTEST_HEARTS, "/11.jpeg");
+		Card Diamonds3 = new Card(3, false, false, Shape.DIAMONDS, JestValue.LOWEST_DIAMONDS, "/10.jpeg");
+		Card Hearts3 = new Card(3, false, false, Shape.HEARTS, JestValue.JOKER, "/9.jpeg");
 		
-		Card Spades2 = new Card(2, false, false, Shape.SPADES, JestValue.MAJORITY_3, "/8.png");
-		Card Clubs2 = new Card(2, false, false, Shape.CLUBS, JestValue.LOWEST_HEARTS, "/7.png");
-		Card Diamonds2 = new Card(2, false, false, Shape.DIAMONDS, JestValue.HIGHTEST_DIAMONDS, "/6.png");
-		Card Hearts2 = new Card(2, false, false, Shape.HEARTS, JestValue.JOKER, "/5.png");
+		Card Spades2 = new Card(2, false, false, Shape.SPADES, JestValue.MAJORITY_3, "/8.jpeg");
+		Card Clubs2 = new Card(2, false, false, Shape.CLUBS, JestValue.LOWEST_HEARTS, "/7.jpeg");
+		Card Diamonds2 = new Card(2, false, false, Shape.DIAMONDS, JestValue.HIGHTEST_DIAMONDS, "/6.jpeg");
+		Card Hearts2 = new Card(2, false, false, Shape.HEARTS, JestValue.JOKER, "/5.jpeg");
 		
 		//We instance an ArrayList which will receive all the cards
 		ArrayList<Card> cards = new ArrayList<>();
@@ -890,7 +894,6 @@ public class Game extends AbstractGame implements Visiteur {
 				
 		//We add each Card instanced to the ArrayList
 		cards.add(joker);
-		this.reference_card = referenceCard;
 		
 		cards.add(Spades5);
 		cards.add(Clubs5);
@@ -918,7 +921,7 @@ public class Game extends AbstractGame implements Visiteur {
 		this.deck = deckCards;
 		this.reference_card = referenceCard;
 		//this.notifyStartPlateau(referenceCard.getPath(), this.players.size(), this.deck.getCards().size());
-		this.initializeTrophies();
+		//this.initializeTrophies();
 		this.notifyStartPlateau(this.reference_card.getPath(), this.players.size(), this.deck.getCards().size());
 	}
 	
