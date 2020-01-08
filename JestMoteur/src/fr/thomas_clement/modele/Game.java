@@ -852,7 +852,7 @@ public class Game extends AbstractGame implements Visiteur {
 			}
 		}
 		
-		this.notifyStartPlateau(this.reference_card.getPath(), this.players.size(), this.deck.getCards().size());
+		//this.notifyStartPlateau(this.reference_card.getPath(), this.players.size(), this.deck.getCards().size());
 	}
 	
 	public void initializeDeck() {
@@ -919,6 +919,7 @@ public class Game extends AbstractGame implements Visiteur {
 		this.reference_card = referenceCard;
 		//this.notifyStartPlateau(referenceCard.getPath(), this.players.size(), this.deck.getCards().size());
 		this.initializeTrophies();
+		this.notifyStartPlateau(this.reference_card.getPath(), this.players.size(), this.deck.getCards().size());
 	}
 	
 	public void initializeTrophies() {

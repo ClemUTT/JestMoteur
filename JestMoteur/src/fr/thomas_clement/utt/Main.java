@@ -1,5 +1,7 @@
 package fr.thomas_clement.utt;
 
+import java.util.Random;
+
 import fr.thomas_clement.controleur.*;
 import fr.thomas_clement.modele.*;
 import fr.thomas_clement.vue.*;
@@ -8,6 +10,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		
+		System.out.println((new Random().nextInt((2 - 1) + 1) + 1));
 		
 		AbstractGame party = new Game();
 		AbstractControleur controleur = new GameControleur(party);
