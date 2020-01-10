@@ -2,10 +2,9 @@ package fr.thomas_clement.modele;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Scanner;
 
 import fr.thomas_clement.utt.Card;
 import fr.thomas_clement.utt.JestValue;
@@ -18,8 +17,6 @@ import fr.thomas_clement.utt.VirtualPlayer;
 import fr.thomas_clement.utt.VirtualPlayerDifficult;
 import fr.thomas_clement.utt.VirtualPlayerRandom;
 import fr.thomas_clement.utt.Visiteur;
-
-import java.util.Scanner;
 
 public class Game extends AbstractGame implements Visiteur {
 	
@@ -34,7 +31,6 @@ public class Game extends AbstractGame implements Visiteur {
 	
 	private int nbRounds = 1;
 	private boolean readyToPlay = false;
-	private boolean nextPlayer = false;
 	
 	
 	public boolean isReadyToPlay() {
@@ -200,7 +196,6 @@ public class Game extends AbstractGame implements Visiteur {
 			System.out.println("\n---------------------------------\n");
 			System.out.println("NOUS SOMMES AU ROUND " + this.nbRounds);
 			System.out.println("\n---------------------------------\n");
-			//System.out.println("Deck : \n" + this.deck);
 			System.out.println("*****************************");
 			System.out.println("VOICI LES TROPHEES");
 			System.out.println(this.trophies);
@@ -227,15 +222,6 @@ public class Game extends AbstractGame implements Visiteur {
 				//Deal 2 cards from the stack to each player
 				this.dealOffersToEachPlayer(this.stack, 2);
 			}
-				
-			
-		
-//			// The ace has a value of 1 for all the players who have an ace in its hand
-//			for (int i = 0; i < this.players.size(); i++) {
-//				if(this.players.get(i).getHand().getCards().get(0).getShape() == Shape.SPADES) {
-//					this.players.get(i).getHand().getCards().get(0).setValue(1);
-//				}
-//			}
 			
 			/*************************************************************************
 			 ************************Make Offers************************************** 
@@ -385,11 +371,7 @@ public class Game extends AbstractGame implements Visiteur {
 				
 			}
 		
-		System.out.println("Deck : \n" + this.deck);
-		
-		System.out.println("Stack : \n" + this.stack);
-		
-		System.out.println("Stack : \n" + this.trophies);
+		System.out.println("Trophées : \n" + this.trophies);
 		System.out.println("*-*-*-*-*-*-*-*-*-*-*-*-*-*");
 		
 		for (int i = 0; i < players.size(); i++) {
@@ -487,15 +469,10 @@ public class Game extends AbstractGame implements Visiteur {
 		for (int i = 0; i < winners.size(); i++) {
 			this.trophies.addACardFromAPacketToAnotherPacket(0, winners.get(i).getJest());
 		}
-		
-//		for (int j = 0; j < players.size(); j++) {
-//			System.out.println(players.get(j).getNickname());
-//			System.out.println(players.get(j).getJest());
-//		}
 	}
 	
 	public Player calculateHightest(Shape s) {
-		//System.out.println("entrée dans la méthode calculateHightest pour la forme " + s.name());
+		
 		Player highestValue = null;
 		Card card = null;
 		
@@ -520,26 +497,6 @@ public class Game extends AbstractGame implements Visiteur {
 		
 		System.out.println("Le gagnant de la condition HIGHTEST_" + s.name().toUpperCase() + " est " + highestValue.getNickname());
 		return highestValue;
-//		for (int i = 0; i < this.trophies.getCards().size(); i++) {
-//			if(s.equals(Shape.CLUBS)) {
-//				if(this.trophies.getCards().get(i).getJestValue().equals(JestValue.HIGHTEST_CLUBS)) {
-//					this.trophies.addACardFromAPacketToAnotherPacket(i, highestValue.getJest());
-//				}
-//			} else if(s.equals(Shape.SPADES)) {
-//				if(this.trophies.getCards().get(i).getJestValue().equals(JestValue.HIGHTEST_SPADES)) {
-//					this.trophies.addACardFromAPacketToAnotherPacket(i, highestValue.getJest());
-//				}
-//			} else if(s.equals(Shape.HEARTS)) {
-//				if(this.trophies.getCards().get(i).getJestValue().equals(JestValue.HIGHTEST_HEARTS)) {
-//					this.trophies.addACardFromAPacketToAnotherPacket(i, highestValue.getJest());
-//				}
-//			} else if(s.equals(Shape.DIAMONDS)) {
-//				if(this.trophies.getCards().get(i).getJestValue().equals(JestValue.HIGHTEST_DIAMONDS)) {
-//					this.trophies.addACardFromAPacketToAnotherPacket(i, highestValue.getJest());
-//				}
-//			}
-//			
-//		}
 	}
 	
 	public Player calculateLowest(Shape s) {
@@ -568,26 +525,6 @@ public class Game extends AbstractGame implements Visiteur {
 		
 		System.out.println("Le gagnant de la condition LOWEST_" + s.name().toUpperCase() + " est " + lowestValue.getNickname());
 		return lowestValue;
-//		for (int i = 0; i < this.trophies.getCards().size(); i++) {
-//			if(s.equals(Shape.CLUBS)) {
-//				if(this.trophies.getCards().get(i).getJestValue().equals(JestValue.HIGHTEST_CLUBS)) {
-//					this.trophies.addACardFromAPacketToAnotherPacket(i, lowestValue.getJest());
-//				}
-//			} else if(s.equals(Shape.SPADES)) {
-//				if(this.trophies.getCards().get(i).getJestValue().equals(JestValue.HIGHTEST_SPADES)) {
-//					this.trophies.addACardFromAPacketToAnotherPacket(i, lowestValue.getJest());
-//				}
-//			} else if(s.equals(Shape.HEARTS)) {
-//				if(this.trophies.getCards().get(i).getJestValue().equals(JestValue.HIGHTEST_HEARTS)) {
-//					this.trophies.addACardFromAPacketToAnotherPacket(i, lowestValue.getJest());
-//				}
-//			} else if(s.equals(Shape.DIAMONDS)) {
-//				if(this.trophies.getCards().get(i).getJestValue().equals(JestValue.HIGHTEST_DIAMONDS)) {
-//					this.trophies.addACardFromAPacketToAnotherPacket(i, lowestValue.getJest());
-//				}
-//			}
-//			
-//		}
 	}
 	
 	public Player calculateMajority(int value) {
@@ -623,8 +560,6 @@ public class Game extends AbstractGame implements Visiteur {
 					tabPlayers.add(this.players.get(i));
 			}
 		}
-		
-		//System.out.println("\nCelui ou ceux qui ont la majorité de " + value + ", est : " + tabPlayers);
 		
 		if(tabPlayers.size() > 1) {
 			
@@ -666,22 +601,6 @@ public class Game extends AbstractGame implements Visiteur {
 		
 		System.out.println("Le gagnant de la condition MAJORITY_" + value  + " est " + winner.getNickname());
 		return winner;
-//		for (int i = 0; i < this.trophies.getCards().size(); i++) {
-//			if(value == 2) {
-//				if(this.trophies.getCards().get(i).getJestValue().equals(JestValue.MAJORITY_2)) {
-//					this.trophies.addACardFromAPacketToAnotherPacket(i, winner.getJest());
-//				}
-//			} else if(value == 3) {
-//				if(this.trophies.getCards().get(i).getJestValue().equals(JestValue.MAJORITY_3)) {
-//					this.trophies.addACardFromAPacketToAnotherPacket(i, winner.getJest());
-//				}
-//			} else if(value == 4) {
-//				if(this.trophies.getCards().get(i).getJestValue().equals(JestValue.MAJORITY_4)) {
-//					this.trophies.addACardFromAPacketToAnotherPacket(i, winner.getJest());
-//				}
-//			}
-//			
-//		}
 		
 	}
 	
@@ -725,11 +644,6 @@ public class Game extends AbstractGame implements Visiteur {
 		
 		System.out.println("Le gagnant de la condition BEST_JEST est " + winner.getNickname());
 		return winner;
-//		for (int i = 0; i < this.trophies.getCards().size(); i++) {
-//			if(this.trophies.getCards().get(i).getJestValue().equals(JestValue.BEST_JEST)) {
-//				this.trophies.addACardFromAPacketToAnotherPacket(i, winner.getJest());
-//			}
-//		}
 	}
 	
 	public Player calculateJoker() {
@@ -739,11 +653,6 @@ public class Game extends AbstractGame implements Visiteur {
 				if(this.players.get(i).getJest().getCards().get(j).getShape().equals(Shape.JOKER)) {
 					System.out.println("Le gagnant de la condition JOKER est " + this.players.get(i).getNickname());
 					winner = this.players.get(i);
-//					for (int k = 0; k < this.trophies.getCards().size(); k++) {
-//						if(this.trophies.getCards().get(k).getJestValue().equals(JestValue.BEST_JEST)) {
-//							this.trophies.addACardFromAPacketToAnotherPacket(k, this.players.get(i).getJest());
-//						}
-//					}
 				}
 			}
 		}
@@ -754,8 +663,6 @@ public class Game extends AbstractGame implements Visiteur {
 
 	public List<Player> tabPlayersWhoCanBeChosen(Player lastToPlay, Player choosing) {
 		
-		//lastToPlay = Player who just have chosen
-		//choosing = Player who is going to choose (but who ?)
 		List<Player> tabPlayers = new ArrayList<Player>();
 		
 		//Players that still have 2 offers
@@ -786,10 +693,6 @@ public class Game extends AbstractGame implements Visiteur {
 	}
 	
 	public void whoPlaysFirst() {
-		
-//		for (int i = 0; i < this.players.size(); i++) {
-//			System.out.println(this.players.get(i).getHand());
-//		}
 		
 		List<Player> playersSortedByValue = new ArrayList<Player>();
 		List<Player> playersSortedByShape = new ArrayList<Player>();
@@ -864,7 +767,6 @@ public class Game extends AbstractGame implements Visiteur {
 		//SPADES, CLUBS, DIAMONDS, HEARTS
 		//HIGHTEST, LOWWEST, MAJORITY, BEST_JEST, BEST_JEST_NOJOKER, JOKER, REFERENCE_CARD;
 		
-		
 		Card joker = new Card(0, false, false, Shape.JOKER, JestValue.BEST_JEST, "/17.jpeg");
 		Card referenceCard = new Card(-1, false, false, Shape.REFERENCE_CARD, JestValue.NONE, "/18.jpeg");
 		
@@ -936,21 +838,6 @@ public class Game extends AbstractGame implements Visiteur {
 			this.deck.addACardFromAPacketToAnotherPacket(0, this.trophies);
 			
 		} else { //If there are 3 players
-			
-			//Add 2 random Cards to the trophies
-//			for (int i = 0; i < this.deck.getCards().size(); i++) {
-//				if(this.trophies.getCards().size() < 2) {
-//					
-//					if(this.deck.getCards().get(i).getJestValue().equals(JestValue.BEST_JEST_NOJOKER)) { //Testing majority calculation
-//						this.deck.addACardFromAPacketToAnotherPacket(i, this.trophies);
-//					} else if(this.deck.getCards().get(i).getJestValue().equals(JestValue.MAJORITY_3)) { //Testing majority calculation
-//						this.deck.addACardFromAPacketToAnotherPacket(i, this.trophies);
-//					} else if(this.deck.getCards().get(i).getJestValue().equals(JestValue.MAJORITY_2)) { //Testing majority calculation
-//						this.deck.addACardFromAPacketToAnotherPacket(i, this.trophies);
-//					}
-//				}
-//				
-//			}
 			this.deck.addACardFromAPacketToAnotherPacket(0, this.trophies);
 			this.deck.addACardFromAPacketToAnotherPacket(1, this.trophies);
 		}
@@ -1021,11 +908,6 @@ public class Game extends AbstractGame implements Visiteur {
 			}
 			
 		}
-		
-		//System.out.println(this.players);
-//		if(this.players.size() == 3 || this.players.size() == 4) {
-//			this.initializeDeck();
-//		}
 	}
 
 	public List<Player> getPlayers() {
@@ -1039,9 +921,5 @@ public class Game extends AbstractGame implements Visiteur {
 	public Packet getTrophies() {
 		return trophies;
 	}
-
-	
-	
-	
 	
 }

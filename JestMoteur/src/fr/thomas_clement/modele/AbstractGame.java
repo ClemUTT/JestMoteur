@@ -1,11 +1,9 @@
 package fr.thomas_clement.modele;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import fr.thomas_clement.observer.Observable;
 import fr.thomas_clement.observer.Observer;
-import fr.thomas_clement.utt.*;
 
 public abstract class AbstractGame implements Observable{
 	

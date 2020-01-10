@@ -1,9 +1,5 @@
 package fr.thomas_clement.observer;
 
-import java.util.List;
-
-import fr.thomas_clement.utt.*;
-
 public interface Observable {
 	
 	public void addObserver(Observer obs);

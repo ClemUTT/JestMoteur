@@ -10,8 +10,6 @@ public class VirtualPlayerDifficult implements Strategy{
 	public int makeOffers(Player player) {
 		
 		int offerHidden = (new Random().nextInt((2 - 1) + 1) + 1);
-		//player.getHand().getCards().get(offerHidden).setFaceHidden(true);
-		
 		return offerHidden;
 		
 	}

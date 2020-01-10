@@ -2,7 +2,6 @@ package fr.thomas_clement.vue;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.Image;
@@ -20,11 +19,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.SwingConstants;
-import javax.swing.border.Border;
 
 import fr.thomas_clement.controleur.AbstractControleur;
 import fr.thomas_clement.observer.Observer;
-import fr.thomas_clement.utt.Packet;
 
 public class Vue extends JFrame implements Observer{
 	
