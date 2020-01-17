@@ -450,7 +450,9 @@ public class Vue extends JFrame implements Observer{
 	}
 
 	/**
-	 * Initialise l'interface graphique
+	 * Initialise l'interface graphique du plateau
+	 * 
+	 * @return retourne un JPanel qui est le container du plateau
 	 */
 	public JPanel createInitializationWindow() {
 		

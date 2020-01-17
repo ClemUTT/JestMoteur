@@ -772,9 +772,6 @@ public class Game extends AbstractGame implements Visiteur {
 	
 	/**
      * Permet de calculer le joueur qui a le joker
-     * 
-     * @param s
-     *            forme qui est référente pour le calcul
      *            
      * @return le joueur qui remplit la condition
      */
@@ -904,8 +901,6 @@ public class Game extends AbstractGame implements Visiteur {
      *            Le Packet depuis lequel les offres vont être distribuées
      * @param nbCards
      *            le nombre de Cartes qui vont être distribuées
-     *            
-     * @return une List de joueurs dont les offres peuvent être choisies par le joueur à qui c'est son tour
      */
 	public void dealOffersToEachPlayer(Packet p, int nbCards) {
 		for (int i = 0; i < players.size(); i++) {

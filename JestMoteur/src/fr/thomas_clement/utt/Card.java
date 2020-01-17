@@ -92,6 +92,8 @@ public class Card {
 	
 	/**
 	 * Modifier la valeur de la carte
+	 * 
+	 * @param nouvelle valeur
 	 */
 	public void setValue(int value) {
 		this.value = value;
@@ -107,6 +109,8 @@ public class Card {
 	
 	/**
 	 * Modifier la valeur face cahée oui on non
+	 * 
+	 * @param nouveau boolean pour la face cachée ou non
 	 */
 	public void setFaceHidden(boolean faceHidden) {
 		this.faceHidden = faceHidden;
@@ -122,6 +126,8 @@ public class Card {
 
 	/**
 	 * Modifier la valeur : est un trophée oui ou non
+	 * 
+	 * @param boolean pour savoir si la carte est un trophée ou non
 	 */
 	public void setTrophee(boolean isTrophee) {
 		this.isTrophee = isTrophee;

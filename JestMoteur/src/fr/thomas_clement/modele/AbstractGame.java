@@ -89,11 +89,15 @@ public abstract class AbstractGame implements Observable{
 	
 	/**
 	 * Méthode permettant savoir si on peut démarrer une partie ou non
+	 * 
+	 * @return boolean si on peut démarrer une partie ou non
 	 */
 	public abstract boolean isReadyToPlay();
 
 	/**
 	 * Méthode permettant de modifier le fait de si on peut démarrer une partie ou non
+	 * 
+	 * @param boolean si on peut démarrer une partie ou non
 	 */
 	public abstract void setReadyToPlay(boolean readyToPlay);
 	
