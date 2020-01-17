@@ -25,38 +25,138 @@ import fr.thomas_clement.observer.Observer;
 
 public class Vue extends JFrame implements Observer{
 	
+	/**
+	 * ID de la JFrame
+	 */
 	private static final long serialVersionUID = 1L;
+	
+	/**
+	 * Controlleur qui va analyser les actions sur la vue
+	 */
 	private AbstractControleur controleur;
+	
+	/**
+	 * Boutons de type JRadioButton pour le choix des joueurs réels
+	 */
 	private JRadioButton jr[] = {new JRadioButton("0"), new JRadioButton("1"), new JRadioButton("2"), new JRadioButton("3"), new JRadioButton("4")};
+	
+	/**
+	 * Boutons de type JRadioButton pour le choix des joueurs virtuels
+	 */
 	private JRadioButton jv[] = {new JRadioButton("0"), new JRadioButton("1"), new JRadioButton("2"), new JRadioButton("3"), new JRadioButton("4")};
+	
+	/**
+	 * Boutons de type JRadioButton pour le choix du nombre de joueur
+	 */
 	private JRadioButton j[] = {new JRadioButton("3"), new JRadioButton("4")};
+	
+	/**
+	 * Boutons de type ButtonGroup pour grouper les boutons JRadioButton du nombre de joueurs choisi
+	 */
 	private ButtonGroup groupeJ = new ButtonGroup();
+	
+	/**
+	 * Boutons de type ButtonGroup pour grouper les boutons JRadioButton des joueurs réels
+	 */
 	private ButtonGroup groupeJR = new ButtonGroup();
+	
+	/**
+	 * Boutons de type ButtonGroup pour grouper les boutons JRadioButton des joueurs virtuels
+	 */
 	private ButtonGroup groupeJV = new ButtonGroup();
+	
+	/**
+	 * Boutons de type ButtonGroup pour grouper des groupes de boutons qui serviront pour les JRadioButton des niveaux de difficulté
+	 */
 	private ButtonGroup groupeNiv[] = {new ButtonGroup(), new ButtonGroup(), new ButtonGroup(), new ButtonGroup()};
+	
+	/**
+	 * Container principal de la vue
+	 */
 	private JPanel content = (JPanel) this.getContentPane();
+	
+	/**
+	 * Tableau de JRadioButton pour stocker les groupes de niveaux de difficulté
+	 */
 	private JRadioButton[][] nivButtons = new JRadioButton[4][2];
+	
+	/**
+	 * Bouton permettant de démarrer une partie
+	 */
 	private JButton btnJouer = new JButton("JOUER");
 	
+	/**
+	 * Image carte de référence
+	 */
 	private ImageJest reference_card;
+	
+	/**
+	 * List des offres faites par chaque joueur
+	 */
 	private List<ImageJest> offers;
+	
+	/**
+	 * List des hand de chaque joueur
+	 */
 	private List<ImageJest> hand;
+	
+	/**
+	 * List des trophées
+	 */
 	private List<ImageJest> trophies;
+	
+	/**
+	 * Taille du deck
+	 */
 	private int deckSize;
+	
+	/**
+	 * Nombre de joueurs dans la partie
+	 */
 	private int nbJoueurs;
+	
+	/**
+	 * Container pour le premier joueur
+	 */
 	private JPanel up = new JPanel();
+	
+	/**
+	 * Container pour le deuxième joueur
+	 */
 	private JPanel down = new JPanel();
+	
+	/**
+	 * Container pour le troisième joueur
+	 */
 	private JPanel right = new JPanel();
+	
+	/**
+	 * Container pour le quatrième joueur
+	 */
 	private JPanel left = new JPanel();
+	
+	/**
+	 * Container pour les trophées et la carte de référence
+	 */
 	private JPanel center = new JPanel();
 	
-
+	/**
+	 * Controleur de la classe Vue qui permet d'initialiser l'interface graphique
+	 * @param controleur
+	 * 				L'attribut de type AbstractControleur
+	 */
 	public Vue(AbstractControleur controleur) {
 		super("Jest (Thomas et Clément)");
 		this.controleur = controleur;
 		init();
 	}
 	
+	/**
+	 * Méthode permettant de griser ou dégriser le bouton "Jouer"
+	 * 
+	 * @param readyToPlay
+	 * 				boolean qui permet de savoir si la partie peut démarrer ou non
+	 */
 	public void notifyReadyToPlay(boolean readyToPlay) {
 		if(readyToPlay) {
 			this.btnJouer.setEnabled(true);
@@ -66,7 +166,16 @@ public class Vue extends JFrame implements Observer{
 	}
 	
 	
-	
+	/**
+	 * Méthode qui permet d'initialiser le plateau lorsqu'une partie démarre
+	 * 
+	 * @param path
+	 * 				chemin de la carte de référence
+	 * @param nbJoueurs
+	 * 				nombre de joueurs dans la partie
+	 * @param deckSize
+	 * 				taille du deck de la partie
+	 */
 	@Override
 	public void updateStartPlateau(String path, int nbJoueurs, int deckSize) {
 		deleteComponents();
@@ -145,6 +254,14 @@ public class Vue extends JFrame implements Observer{
 		this.pack();
 	}
 	
+	/**
+	 * Définir la taille d'une image
+	 * 
+	 * @param ref
+	 * 				une image
+	 * 
+	 * @return une nouvelle image avec la taille voulue
+	 */
 	public ImageIcon getImageResized(ImageIcon ref) {
 		Image refImage = ref.getImage();
 		Image modifiedRef = refImage.getScaledInstance(150, 211, Image.SCALE_SMOOTH);
@@ -152,7 +269,21 @@ public class Vue extends JFrame implements Observer{
 		return new ImageIcon(modifiedRef);
 	}
 	
-	
+	/**
+	 * Permet de mettre à jour les différents boutons radio
+	 * @param nbJoueurs
+	 * 				L'attribut nombre de joueurs
+	 * @param nbReels
+	 * 				Nombre de joueurs réels
+	 * @param nbVirtuels
+	 * 				Nombre de joueurs virtuels
+	 * @param nbNiv1
+	 * 				Niveau easy
+	 * @param nbNiv2
+	 * 				Niveau hard
+	 * @param natureJoueur
+	 * 				si l'utilisateur a modifié le nombre de joueur : "r" ; nombre de joueurs réels : "jr" ; nombre de joueurs virtuels : "jv"
+	 */
 	public void updateButtons(int nbJoueurs, int nbReels, int nbVirtuels, int nbNiv1, int nbNiv2, String natureJoueur) {
 		int newNbJoueurs = nbJoueurs,  newNbReels = nbReels,  newNbVirtuels = nbVirtuels,  newNbNiv1 = nbNiv1,  newNbNiv2 = nbNiv2;
 		
@@ -249,6 +380,11 @@ public class Vue extends JFrame implements Observer{
 		controleur.controlStart(newNbJoueurs, newNbReels, newNbVirtuels, newNbNiv1, newNbNiv2);
 	}
 	
+	/**
+	 * dégrise les boutons radios
+	 * @param limite
+	 * 				indice pour les boutons radio qu'il faut dégrisé
+	 */
 	public void enableAllButtons(int limite) {
 		for (int i = 0; i < limite; i++) {
 			jr[i].setEnabled(true);
@@ -262,6 +398,9 @@ public class Vue extends JFrame implements Observer{
 		}
 	}
 	
+	/**
+	 * Permet de griser les boutons radios
+	 */
 	public void disableAllButtons() {
 		for (int i = 0; i < jr.length; i++) {
 			jr[i].setSelected(false);
@@ -276,6 +415,9 @@ public class Vue extends JFrame implements Observer{
 		}
 	}
 	
+	/**
+	 * Permet d'initialiser l'interface graphique
+	 */
 	public void init() {
 		this.setVisible(true);
 		this.setLocationRelativeTo(null);
@@ -300,11 +442,16 @@ public class Vue extends JFrame implements Observer{
 		
 	}
 	
+	/**
+	 * permet de supprimer les radios bouttons du début après avoir démarré une partie
+	 */
 	public void deleteComponents() {
 		this.content.removeAll();
 	}
 
-	
+	/**
+	 * Initialise l'interface graphique
+	 */
 	public JPanel createInitializationWindow() {
 		
 		JPanel content = new JPanel();
@@ -488,6 +635,12 @@ public class Vue extends JFrame implements Observer{
 		return content;
 	}
 
+	/**
+	 * Permet de connaître l'etat de chaque boutons radio
+	 * 
+	 * @return un tableau d'entier du nombre de joueurs sélectionné, nombre de joueurs réels sélectionné, nombre de joueurs
+	 * virtuels sélectionné, nombre de niveau 1 sélectionné, nombre de niveau hard sélectionné
+	 */
 	public int[] getDataStart(){
 		int nbJoueurs = 0, nbReels = 0, nbVirtuels = 0, niv1 = 0, niv2 = 0;
 		
