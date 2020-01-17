@@ -3,22 +3,27 @@ package fr.thomas_clement.controleur;
 import fr.thomas_clement.modele.AbstractGame;
 
 /**
- * Classe représentant
+ * Type abstrait de la classe controleur qui permet de controler les actions de l'utilisateur sur la vue
+ * Il s'agit du controleur du patron de conception MVC
  */
-
 public abstract class AbstractControleur {
-
+	
+	/**
+	 * Permet de faire le lien entre AbstractControleur et le modele
+	 */
 	protected AbstractGame game;
 	
+	/**
+	 * Constructeur de la classe
+	 */
 	public AbstractControleur(AbstractGame game) {
 		this.game = game;
 	}
-
 	
-	public void jouer() {
-		
-	}
-	
+	/**
+	 * Méthode de capture de chaque action de l'utilisateur lors de l'initialisation de la partie qui va envoyé au modele
+	 * ex : Nombre de joueurs réels, virtuels, niveau , etc...
+	 */
 	public void controlStart(int nbJoueurs, int nbReels, int nbVirtuels, int nbNiv1, int nbNiv2) {
 		System.out.println("--------------------------------------");
 		System.out.println("nbJoueurs : " + nbJoueurs);
@@ -39,6 +44,10 @@ public abstract class AbstractControleur {
 		
 	}
 	
+	/**
+	 * Capture quand l'utilisateur clique sur jouer
+	 * Appelle la méthode initializePlayers de l'attribut game
+	 */
 	public void startInitializePlayers(int nbJoueurs, int nbReels, int nbVirtuels, int nbNiv1, int nbNiv2) {
 		System.out.println("Initialisation des joueurs");
 		// Appelle la méthode initializePlayers
