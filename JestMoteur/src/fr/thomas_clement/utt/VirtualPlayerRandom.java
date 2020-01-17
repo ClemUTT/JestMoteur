@@ -23,7 +23,7 @@ public class VirtualPlayerRandom implements Strategy{
 	
 	/**
 	 * Choisir une offre de manière aléatoire
-	 * @param players
+	 * @param tabPlayers
 	 * 				La liste des joueurs dont le joueur peut choisir
 	 * @param p
 	 * 				le joueur qui est en train de choisir

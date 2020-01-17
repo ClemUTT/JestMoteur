@@ -48,6 +48,9 @@ public class Packet {
 	
 	/**
 	 * Ajoute une carte de type Carte au paquet
+	 * 
+	 * @param card
+	 * 			Card à ajouter
 	 */
 	public void addCard(Card card) {
 		this.cards.add(card);
@@ -55,6 +58,9 @@ public class Packet {
 	
 	/**
 	 * Retire une carte de type Carte au paquet
+	 * 
+	 * @param card
+	 * 			Card à supprimer
 	 */
 	public void removeCard(Card card) {
 		this.cards.remove(card);
