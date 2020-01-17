@@ -44,6 +44,7 @@ public class Jester extends Packet implements Visitable{
 	/**
 	 * Modifier le score du jest en question
 	 * @param s
+	 * 				score
 	 */
 	public void setScore(int s) {
 		this.score = s;
