@@ -65,6 +65,7 @@ public class Packet {
 	public void removeCard(Card card) {
 		this.cards.remove(card);
 	}
+	
 	/**
 	 * Récupérer la valeur
 	 * @return Liste de cartes de type Carte du paquet
