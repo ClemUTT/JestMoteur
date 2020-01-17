@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class-diagram version="1.2.4" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
-  associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
+<class-diagram version="1.2.4" icons="true" automaticImage="JPEG" always-add-relationships="false" 
+  generalizations="true" realizations="true" associations="true" dependencies="false" nesting-relationships="true" 
+  router="FAN">  
   <class id="1" language="java" name="fr.thomas_clement.modele.Game" project="JestMoteur" 
     file="/JestMoteur/src/fr/thomas_clement/modele/Game.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="576" width="427" x="485" y="1123"/>    
@@ -127,16 +128,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="15" language="java" name="fr.thomas_clement.vue.Plateau" project="JestMoteur" 
-    file="/JestMoteur/src/fr/thomas_clement/vue/Plateau.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="96" width="152" x="198" y="-132"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="16" language="java" name="fr.thomas_clement.utt.Jester" project="JestMoteur" 
+  <class id="15" language="java" name="fr.thomas_clement.utt.Jester" project="JestMoteur" 
     file="/JestMoteur/src/fr/thomas_clement/utt/Jester.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="176" width="236" x="185" y="2391"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -145,7 +137,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="17" language="java" name="fr.thomas_clement.utt.Player" project="JestMoteur" 
+  <class id="16" language="java" name="fr.thomas_clement.utt.Player" project="JestMoteur" 
     file="/JestMoteur/src/fr/thomas_clement/utt/Player.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="356" width="273" x="191" y="1739"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -154,7 +146,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="18" language="java" name="fr.thomas_clement.utt.RealPlayerStrategy" project="JestMoteur" 
+  <class id="17" language="java" name="fr.thomas_clement.utt.RealPlayerStrategy" project="JestMoteur" 
     file="/JestMoteur/src/fr/thomas_clement/utt/RealPlayerStrategy.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="136" width="321" x="1334" y="1739"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -163,7 +155,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <enumeration id="19" language="java" name="fr.thomas_clement.utt.Shape" project="JestMoteur" 
+  <enumeration id="18" language="java" name="fr.thomas_clement.utt.Shape" project="JestMoteur" 
     file="/JestMoteur/src/fr/thomas_clement/utt/Shape.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="216" width="234" x="796" y="2867"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -172,7 +164,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </enumeration>  
-  <class id="20" language="java" name="fr.thomas_clement.utt.Packet" project="JestMoteur" 
+  <class id="19" language="java" name="fr.thomas_clement.utt.Packet" project="JestMoteur" 
     file="/JestMoteur/src/fr/thomas_clement/utt/Packet.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="216" width="427" x="485" y="2135"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -181,7 +173,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="21" language="java" name="fr.thomas_clement.utt.VirtualPlayerDifficult" project="JestMoteur" 
+  <class id="20" language="java" name="fr.thomas_clement.utt.VirtualPlayerDifficult" project="JestMoteur" 
     file="/JestMoteur/src/fr/thomas_clement/utt/VirtualPlayerDifficult.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="136" width="321" x="1695" y="1739"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -190,7 +182,7 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <enumeration id="22" language="java" name="fr.thomas_clement.utt.JestValue" project="JestMoteur" 
+  <enumeration id="21" language="java" name="fr.thomas_clement.utt.JestValue" project="JestMoteur" 
     file="/JestMoteur/src/fr/thomas_clement/utt/JestValue.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="396" width="277" x="1070" y="2867"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -199,16 +191,16 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </enumeration>  
-  <class id="23" language="java" name="fr.thomas_clement.utt.Main" project="JestMoteur" 
+  <class id="22" language="java" name="fr.thomas_clement.utt.Main" project="JestMoteur" 
     file="/JestMoteur/src/fr/thomas_clement/utt/Main.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="116" width="152" x="644" y="-132"/>    
+    <position height="-1" width="-1" x="923" y="107"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="24" language="java" name="fr.thomas_clement.controleur.GameControleur" project="JestMoteur" 
+  <class id="23" language="java" name="fr.thomas_clement.controleur.GameControleur" project="JestMoteur" 
     file="/JestMoteur/src/fr/thomas_clement/controleur/GameControleur.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="96" width="252" x="660" y="760"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -217,230 +209,324 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <association id="25">    
-    <bendpoint x="536" y="1739"/>    
+  <association id="24">    
+    <bendpoint x="515" y="1739"/>    
+    <bendpoint x="817" y="1935"/>    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="26" name="deck"/>      
-      <multiplicity id="27" minimum="0" maximum="1"/>    
+      <attribute id="25" name="trophies">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="26" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
-    <end type="TARGET" refId="20" navigable="true"/>    
+    <end type="TARGET" refId="19" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="28">    
-    <bendpoint x="942" y="1739"/>    
-    <bendpoint x="942" y="2135"/>    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="29" name="reference_card"/>      
-      <multiplicity id="30" minimum="0" maximum="1"/>    
+  <association id="27">    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="28" name="controleur">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="29" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="7" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="30">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="5"/>  
+  </realization>  
+  <association id="31">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="32" name="shape">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="33" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="18" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="34">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="19"/>  
+  </generalization>  
+  <association id="35">    
+    <bendpoint x="1255" y="540"/>    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="36" name="hand">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="37" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="38">    
+    <end type="SOURCE" refId="19" navigable="false">      
+      <attribute id="39" name="cards">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="40" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="31">    
+  <association id="41">    
+    <end type="SOURCE" refId="13" navigable="false">      
+      <attribute id="42" name="listeObserver">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="43" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="8" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="44">    
+    <bendpoint x="478" y="1831"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="45" name="players">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="46" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="47">    
+    <end type="SOURCE" refId="20"/>    
+    <end type="TARGET" refId="4"/>  
+  </realization>  
+  <association id="48">    
+    <bendpoint x="942" y="1739"/>    
+    <bendpoint x="942" y="2135"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="49" name="reference_card">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="50" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="2" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="51">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="13"/>  
+  </generalization>  
+  <realization id="52">    
+    <end type="SOURCE" refId="17"/>    
+    <end type="TARGET" refId="4"/>  
+  </realization>  
+  <association id="53">    
+    <bendpoint x="1101" y="478"/>    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="54" name="reference_card">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="55" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="56">    
     <bendpoint x="1273" y="564"/>    
     <bendpoint x="1273" y="760"/>    
     <end type="SOURCE" refId="12"/>    
     <end type="TARGET" refId="8"/>  
   </realization>  
-  <association id="32">    
-    <end type="SOURCE" refId="17" navigable="false">      
-      <attribute id="33" name="strategy"/>      
-      <multiplicity id="34" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <realization id="35">    
+  <realization id="57">    
     <end type="SOURCE" refId="13"/>    
     <end type="TARGET" refId="6"/>  
   </realization>  
-  <generalization id="36">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="17"/>  
-  </generalization>  
-  <association id="37">    
-    <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="38" name="controleur"/>      
-      <multiplicity id="39" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="7" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="40">    
-    <end type="SOURCE" refId="10"/>    
-    <end type="TARGET" refId="17"/>  
-  </generalization>  
-  <realization id="41">    
-    <end type="SOURCE" refId="14"/>    
-    <end type="TARGET" refId="4"/>  
-  </realization>  
-  <association id="42">    
-    <end type="SOURCE" refId="13" navigable="false">      
-      <attribute id="43" name="listeObserver"/>      
-      <multiplicity id="44" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="8" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="45">    
-    <end type="SOURCE" refId="7" navigable="false">      
-      <attribute id="46" name="game"/>      
-      <multiplicity id="47" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="13" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <realization id="48">    
-    <end type="SOURCE" refId="18"/>    
-    <end type="TARGET" refId="4"/>  
-  </realization>  
-  <association id="49">    
-    <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="50" name="hand"/>      
-      <multiplicity id="51" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <realization id="52">    
-    <end type="SOURCE" refId="21"/>    
-    <end type="TARGET" refId="4"/>  
-  </realization>  
-  <association id="53">    
+  <association id="58">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="54" name="players"/>      
-      <multiplicity id="55" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="17" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="56">    
-    <bendpoint x="515" y="1739"/>    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="57" name="trophies"/>      
-      <multiplicity id="58" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="20" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="59">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="60" name="shape"/>      
-      <multiplicity id="61" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="19" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="62">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="63" name="lastToPlay"/>      
-      <multiplicity id="64" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="17" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="65">    
-    <bendpoint x="494" y="1739"/>    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="66" name="stack"/>      
-      <multiplicity id="67" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="20" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="68">    
-    <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="69" name="reference_card"/>      
-      <multiplicity id="70" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="71">    
-    <end type="SOURCE" refId="17" navigable="false">      
-      <attribute id="72" name="hand"/>      
-      <multiplicity id="73" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="20" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="74">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="75" name="playersWhoHavePlayed"/>      
-      <multiplicity id="76" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="17" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="77">    
-    <end type="SOURCE" refId="16"/>    
-    <end type="TARGET" refId="20"/>  
-  </generalization>  
-  <association id="78">    
-    <end type="SOURCE" refId="20" navigable="false">      
-      <attribute id="79" name="cards"/>      
-      <multiplicity id="80" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="2" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="81">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="13"/>  
-  </generalization>  
-  <association id="82">    
-    <end type="SOURCE" refId="2" navigable="false">      
-      <attribute id="83" name="jestValue"/>      
-      <multiplicity id="84" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="22" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="85">    
-    <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="86" name="trophies"/>      
-      <multiplicity id="87" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="88">    
-    <end type="SOURCE" refId="12" navigable="false">      
-      <attribute id="89" name="offers"/>      
-      <multiplicity id="90" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="9" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="91">    
-    <bendpoint x="194" y="2135"/>    
-    <end type="SOURCE" refId="17" navigable="false">      
-      <attribute id="92" name="jest"/>      
-      <multiplicity id="93" minimum="0" maximum="1"/>    
+      <attribute id="59" name="playersWhoHavePlayed">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="60" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="16" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="94">    
-    <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="95" name="choosing"/>      
-      <multiplicity id="96" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="17" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <realization id="97">    
-    <end type="SOURCE" refId="16"/>    
-    <end type="TARGET" refId="11"/>  
-  </realization>  
-  <realization id="98">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="5"/>  
-  </realization>  
-  <generalization id="99">    
-    <end type="SOURCE" refId="24"/>    
+  <generalization id="61">    
+    <end type="SOURCE" refId="23"/>    
     <end type="TARGET" refId="7"/>  
   </generalization>  
+  <association id="62">    
+    <bendpoint x="194" y="2135"/>    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="63" name="jest">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="64" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="15" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="65">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <association id="66">    
+    <end type="SOURCE" refId="7" navigable="false">      
+      <attribute id="67" name="game">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="68" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="69">    
+    <bendpoint x="494" y="1739"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="70" name="stack">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="71" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="72">    
+    <end type="SOURCE" refId="2" navigable="false">      
+      <attribute id="73" name="jestValue">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="74" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="21" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="75">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="16"/>  
+  </generalization>  
+  <association id="76">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="77" name="hand">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="78" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="79">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="11"/>  
+  </realization>  
+  <association id="80">    
+    <bendpoint x="536" y="1739"/>    
+    <bendpoint x="848" y="1888"/>    
+    <bendpoint x="854" y="2115"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="81" name="deck">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="82" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="19" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="83">    
+    <bendpoint x="368" y="1669"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="84" name="lastToPlay">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="85" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="86">    
+    <end type="SOURCE" refId="16" navigable="false">      
+      <attribute id="87" name="strategy">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="88" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <realization id="89">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="4"/>  
+  </realization>  
+  <association id="90">    
+    <bendpoint x="1024" y="544"/>    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="91" name="offers">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="92" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="93">    
+    <bendpoint x="254" y="1701"/>    
+    <end type="SOURCE" refId="1" navigable="false">      
+      <attribute id="94" name="choosing">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="95" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="16" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="96">    
+    <bendpoint x="1235" y="522"/>    
+    <end type="SOURCE" refId="12" navigable="false">      
+      <attribute id="97" name="trophies">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="98" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="9" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    
