@@ -795,7 +795,7 @@ public class Game extends AbstractGame implements Visiteur {
 
 	
 	/**
-     * Permet de calculer le joueur qui qui remplit la condition HIGHEST_SHAPE
+     * Définit dans une liste des joueurs dont les offres peuvent être choisies par le joueur à qui c'est son tour
      * 
      * @param lastToPlay
      *            le joueur qui vient de choisir le tour précédent
@@ -835,6 +835,9 @@ public class Game extends AbstractGame implements Visiteur {
 		
 	}
 	
+	/**
+     * Détermine qui joue en premier lors du début d'un round
+     */
 	public void whoPlaysFirst() {
 		
 		List<Player> playersSortedByValue = new ArrayList<Player>();
@@ -894,7 +897,16 @@ public class Game extends AbstractGame implements Visiteur {
 	}
 	
 	
-	
+	/**
+     * Définit dans une liste des joueurs dont les offres peuvent être choisies par le joueur à qui c'est son tour
+     * 
+     * @param p
+     *            Le Packet depuis lequel les offres vont être distribuées
+     * @param nbCards
+     *            le nombre de Cartes qui vont être distribuées
+     *            
+     * @return une List de joueurs dont les offres peuvent être choisies par le joueur à qui c'est son tour
+     */
 	public void dealOffersToEachPlayer(Packet p, int nbCards) {
 		for (int i = 0; i < players.size(); i++) {
 			for (int j = 0; j < nbCards; j++) {
@@ -905,6 +917,9 @@ public class Game extends AbstractGame implements Visiteur {
 		//this.notifyStartPlateau(this.reference_card.getPath(), this.players.size(), this.deck.getCards().size());
 	}
 	
+	/**
+     * Permet d'ajouter toutes les cartes du jeu au deck
+     */
 	public void initializeDeck() {
 
 		//SPADES, CLUBS, DIAMONDS, HEARTS
@@ -970,6 +985,9 @@ public class Game extends AbstractGame implements Visiteur {
 		this.notifyStartPlateau(this.reference_card.getPath(), this.players.size(), this.deck.getCards().size());
 	}
 	
+	/**
+     * Permet de définir les trophées parmis les cartes présentes dans le deck
+     */
 	public void initializeTrophies() {
 		
 		this.deck.shuffleCards(); //We shuffle the deck
@@ -989,7 +1007,10 @@ public class Game extends AbstractGame implements Visiteur {
 		this.playRounds();
 	}
 	
-	
+	/**
+     * Permet de définir le nombre de joueurs et quelle stratégie pour chacun.
+     * Utilise le Scanner pour récupérer les données saisies par l'utilisateur
+     */
 	public void initializePlayers() {
 		Scanner sc = new Scanner(System.in);
 		int nbPlayers = 0;
@@ -1053,14 +1074,26 @@ public class Game extends AbstractGame implements Visiteur {
 		}
 	}
 
+	/**
+     * Retourne la List des joueurs d'une partie
+     * @return la List des joueurs d'une partie
+     */
 	public List<Player> getPlayers() {
 		return players;
 	}
-
+	
+	/**
+     * Retourne le deck de la partie
+     * @return le deck de la partie de type Packet
+     */
 	public Packet getDeck() {
 		return deck;
 	}
 
+	/**
+     * Retourne les trophées de la partie
+     * @return les trophées de types Packet
+     */
 	public Packet getTrophies() {
 		return trophies;
 	}
