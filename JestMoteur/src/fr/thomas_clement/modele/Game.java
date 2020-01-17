@@ -19,7 +19,7 @@ import fr.thomas_clement.utt.VirtualPlayerRandom;
 import fr.thomas_clement.utt.Visiteur;
 
 /**
- * Il s'agit du modèle du patron MVC de mettre à jour les données de la Vue et de structure le jeu
+ * Il s'agit du modèle du patron MVC de mettre à jour les données de la Vue et de structurer le jeu
  * Cette classe contient les méthodes principales pour faire fonctionner l'application
  * Cette classe hérite de son superType AbstractGame et implémente Visiteur
  */
