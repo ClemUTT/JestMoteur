@@ -100,6 +100,7 @@ public abstract class Player {
 
 	/**
 	 * Modifier le pseudo du joueur
+	 * @param nickname
 	 */
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
@@ -115,6 +116,7 @@ public abstract class Player {
 
 	/**
 	 * Modifier la stratégie du joueur
+	 * @param strategy
 	 */
 	public void setStrategy(Strategy strategy) {
 		this.strategy = strategy;
@@ -130,6 +132,7 @@ public abstract class Player {
 	
 	/**
 	 * Modifier le jest du joueur
+	 * @param jest
 	 */
 	public void setJest(Jester jest) {
 		this.jest = jest;
@@ -145,6 +148,7 @@ public abstract class Player {
 	
 	/**
 	 * Modifier la main du joueur
+	 * @param hand
 	 */
 	public void setHand(Packet hand) {
 		this.hand = hand;

@@ -12,6 +12,7 @@ public interface Strategy {
 	 * 
 	 * @param player
 	 * 			Player qui va faire une offre
+	 * @return le numéro de l'offre cachée 
 	 */
 	abstract public int makeOffers(Player player);
 	

@@ -93,7 +93,7 @@ public class Card {
 	/**
 	 * Modifier la valeur de la carte
 	 * 
-	 * @param nouvelle valeur
+	 * @param value
 	 */
 	public void setValue(int value) {
 		this.value = value;
@@ -110,7 +110,7 @@ public class Card {
 	/**
 	 * Modifier la valeur face cahée oui on non
 	 * 
-	 * @param nouveau boolean pour la face cachée ou non
+	 * @param faceHidden
 	 */
 	public void setFaceHidden(boolean faceHidden) {
 		this.faceHidden = faceHidden;
@@ -127,7 +127,7 @@ public class Card {
 	/**
 	 * Modifier la valeur : est un trophée oui ou non
 	 * 
-	 * @param boolean pour savoir si la carte est un trophée ou non
+	 * @param isTrophee
 	 */
 	public void setTrophee(boolean isTrophee) {
 		this.isTrophee = isTrophee;
@@ -143,6 +143,7 @@ public class Card {
 	
 	/**
 	 * Modifier la valeur : couleur de la carte
+	 * @param shape
 	 */
 	public void setShape(Shape shape) {
 		this.shape = shape;
@@ -158,6 +159,7 @@ public class Card {
 	
 	/**
 	 * Modifier la valeur de jest de la carte
+	 * @param jestValue
 	 */
 	public void setJestValue(JestValue jestValue) {
 		this.jestValue = jestValue;
@@ -173,6 +175,7 @@ public class Card {
 	
 	/**
 	 * Modifier la valeur du chemin de l'image de la carte
+	 * @param path
 	 */
 	public void setPath(String path) {
 		this.path = path;
