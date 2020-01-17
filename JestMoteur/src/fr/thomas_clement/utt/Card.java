@@ -91,7 +91,7 @@ public class Card {
 	}
 	
 	/**
-	 * Modifier la valeur entière
+	 * Modifier la valeur de la carte
 	 */
 	public void setValue(int value) {
 		this.value = value;

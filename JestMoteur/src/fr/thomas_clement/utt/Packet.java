@@ -10,18 +10,34 @@ import java.util.List;
 public class Packet {
 	
 	/**
-	 * Modifier la valeur entière
+	 * Liste de carte ArrayList de type Carte
+	 * @see List
 	 */
 	private List<Card> cards =  new ArrayList<Card>() ;
 	
+	/**
+	 * Constructeur de la classe
+	 * @param cards
+	 * 				Liste de carte de type Carte
+	 */
 	public Packet(ArrayList<Card> cards) {
 		this.cards = cards;
 	}
 	
+	/**
+	 * Mélange aléatoirement la liste des cartes du paquet en question
+	 */
 	public void shuffleCards() {
 		Collections.shuffle(this.cards);
 	}
 	
+	/**
+	 * Ajoute une carte de ce paquet vers un autre paquet
+	 * @param indexCard
+	 * 				index de la carte dans le paquet
+	 * @param newPacket
+	 * 				nouveau packet de type Paquet
+	 */
 	public void addACardFromAPacketToAnotherPacket(int indexCard, Packet newPacket) { // Avoid to implement add() and remove() every time when you want to move a card to another Packet
 		Packet currentPacket = this;
 		
@@ -30,10 +46,16 @@ public class Packet {
 		currentPacket.removeCard(c); // Remove this Card c to the old Packet this
 	}
 	
+	/**
+	 * Ajoute une carte de type Carte au paquet
+	 */
 	public void addCard(Card card) {
 		this.cards.add(card);
 	}
 	
+	/**
+	 * Retire une carte de type Carte au paquet
+	 */
 	public void removeCard(Card card) {
 		this.cards.remove(card);
 	}
