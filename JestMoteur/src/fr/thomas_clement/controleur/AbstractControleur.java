@@ -2,6 +2,10 @@ package fr.thomas_clement.controleur;
 
 import fr.thomas_clement.modele.AbstractGame;
 
+/**
+ * Classe représentant
+ */
+
 public abstract class AbstractControleur {
 
 	protected AbstractGame game;
