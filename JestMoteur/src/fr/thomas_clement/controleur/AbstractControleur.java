@@ -15,6 +15,8 @@ public abstract class AbstractControleur {
 	
 	/**
 	 * Constructeur de la classe
+	 * @param game
+	 * 				L'attribut game
 	 */
 	public AbstractControleur(AbstractGame game) {
 		this.game = game;
@@ -23,6 +25,16 @@ public abstract class AbstractControleur {
 	/**
 	 * Méthode de capture de chaque action de l'utilisateur lors de l'initialisation de la partie qui va envoyé au modele
 	 * ex : Nombre de joueurs réels, virtuels, niveau , etc...
+	 * @param nbJoueurs
+	 * 				L'attribut nombre de joueurs
+	 * @param nbReels
+	 * 				Nombre de joueurs réels
+	 * @param nbVirtuels
+	 * 				Nombre de joueurs virtuels
+	 * @param nbNiv1
+	 * 				Niveau easy
+	 * @param nbReels
+	 * 				Niveau hard
 	 */
 	public void controlStart(int nbJoueurs, int nbReels, int nbVirtuels, int nbNiv1, int nbNiv2) {
 		System.out.println("--------------------------------------");
@@ -47,6 +59,16 @@ public abstract class AbstractControleur {
 	/**
 	 * Capture quand l'utilisateur clique sur jouer
 	 * Appelle la méthode initializePlayers de l'attribut game
+	 * @param nbJoueurs
+	 * 				L'attribut nombre de joueurs
+	 * @param nbReels
+	 * 				Nombre de joueurs réels
+	 * @param nbVirtuels
+	 * 				Nombre de joueurs virtuels
+	 * @param nbNiv1
+	 * 				Niveau easy
+	 * @param nbReels
+	 * 				Niveau hard
 	 */
 	public void startInitializePlayers(int nbJoueurs, int nbReels, int nbVirtuels, int nbNiv1, int nbNiv2) {
 		System.out.println("Initialisation des joueurs");
