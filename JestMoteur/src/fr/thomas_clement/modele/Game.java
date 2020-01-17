@@ -793,6 +793,7 @@ public class Game extends AbstractGame implements Visiteur {
 		
 	}
 
+	
 	/**
      * Permet de calculer le joueur qui qui remplit la condition HIGHEST_SHAPE
      * 
