@@ -33,7 +33,7 @@ public abstract class AbstractControleur {
 	 * 				Nombre de joueurs virtuels
 	 * @param nbNiv1
 	 * 				Niveau easy
-	 * @param nbReels
+	 * @param nbNiv2
 	 * 				Niveau hard
 	 */
 	public void controlStart(int nbJoueurs, int nbReels, int nbVirtuels, int nbNiv1, int nbNiv2) {
@@ -67,7 +67,7 @@ public abstract class AbstractControleur {
 	 * 				Nombre de joueurs virtuels
 	 * @param nbNiv1
 	 * 				Niveau easy
-	 * @param nbReels
+	 * @param nbNiv2
 	 * 				Niveau hard
 	 */
 	public void startInitializePlayers(int nbJoueurs, int nbReels, int nbVirtuels, int nbNiv1, int nbNiv2) {

@@ -6,8 +6,17 @@ import fr.thomas_clement.modele.AbstractGame;
 import fr.thomas_clement.modele.Game;
 import fr.thomas_clement.vue.Vue;
 
+/**
+ * Il s'agit de la classe principale qui fera fonctionner l'application
+ *
+ */
 public class Main {
 
+	/**
+	 * Méthode qui permet de faire fonctionner l'application
+	 * @param args
+	 * 				arguments de la méthode
+	 */
 	public static void main(String[] args) {
 		
 		AbstractGame party = new Game();

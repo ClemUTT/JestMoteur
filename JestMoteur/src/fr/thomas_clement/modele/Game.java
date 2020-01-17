@@ -18,33 +18,110 @@ import fr.thomas_clement.utt.VirtualPlayerDifficult;
 import fr.thomas_clement.utt.VirtualPlayerRandom;
 import fr.thomas_clement.utt.Visiteur;
 
+/**
+ * Il s'agit du modèle du patron MVC de mettre à jour les données de la Vue et de structure le jeu
+ * Cette classe contient les méthodes principales pour faire fonctionner l'application
+ * Cette classe hérite de son superType AbstractGame et implémente Visiteur
+ */
 public class Game extends AbstractGame implements Visiteur {
 	
-	List<Player> players = new ArrayList<Player>();
-	Packet deck;
-	Packet stack = new Packet(new ArrayList<Card>());
-	Packet trophies;
-	Card reference_card;
-	Player lastToPlay = null;
-	Player choosing = null; // its turn
-	List<Player> playersWhoHavePlayed = new ArrayList<Player>();
+	/**
+	 * Stocke les joueurs de la partie
+	 */
+	private List<Player> players = new ArrayList<Player>();
+	/**
+	 * Stocke les cartes du deck de la partie
+	 * 
+	 * @see Packet
+	 */
+	private Packet deck;
+	/**
+	 * Stocke le stack du jeu
+	 * 
+	 * @see Packet
+	 */
+	private Packet stack = new Packet(new ArrayList<Card>());
+	/**
+	 * Stocke les trophées du jeu
+	 * 
+	 * @see Packet
+	 */
+	private Packet trophies;
+	/**
+	 * Stocke la carte de référence du jeu
+	 * 
+	 * @see Card
+	 */
+	private Card reference_card;
+	/**
+	 * Il s'agit du dernier joueur qui a choisi une offre lors d'un round
+	 * 
+	 * @see Player
+	 */
+	private Player lastToPlay = null;
+	/**
+	 * Stocke le joueur qui est en train de choisir une offre
+	 * 
+	 * @see Player
+	 */
+	private Player choosing = null; // its turn
+	/**
+	 * Stocke les joueurs qui ont déjà joué lors d'un round
+	 * 
+	 * @see List
+	 */
+	private List<Player> playersWhoHavePlayed = new ArrayList<Player>();
 	
+	/**
+	 * Stocke le nombre de round lors effectué d'une partie
+	 */
 	private int nbRounds = 1;
+	/**
+	 * Permet de savoir si un l'utilisateur peut commencer une partie ou non
+	 */
 	private boolean readyToPlay = false;
 	
-	
+	/**
+     * Retourne si l'utilisateur peut commencer une partie ou non
+     * 
+     * @return un boolean qui permet de savoir si l'utilisateur peut démarrer une partie ou non
+     */
 	public boolean isReadyToPlay() {
 		return readyToPlay;
 	}
 
+	/**
+     * Met à jour le fait de savoir si l'utilisateur peut démarrer une partie
+     * 
+     * @param readyToPlay
+     *            un boolean qui permet de savoir si l'utilisateur peut démarrer une partie
+     */
 	public void setReadyToPlay(boolean readyToPlay) {
 		this.readyToPlay = readyToPlay;
 	}
+	
+	/**
+     * Constructeur de la classe Game
+     */
 
 	public Game() {
 		
 	}
 	
+	/**
+     * Permet d'initialiser le nombre de joueurs et les stratégies utilisées
+     * 
+     * @param nbJoueurs
+     *            nombre de joueurs dans une partie
+     * @param nbReels
+     *            nombre de joueurs réels dans une partie
+     * @param nbVirtuels
+     *            nombre de joeurs virtuels dans une partie
+     * @param nb1
+     *            nombre de niveaux de difficulté "facile" pour les joueurs virtuels
+     * @param nb2
+     *            nombre de niveaux de difficulté "difficile" pour les joueurs virtuels
+     */
 	public void initializePlayers(int nbJoueurs, int nbReels, int nbVirtuels, int nb1, int nb2) {
 		this.players.clear();
 		if(nbVirtuels > 0) {
@@ -65,6 +142,12 @@ public class Game extends AbstractGame implements Visiteur {
 		this.initializeDeck();
 	}
 	
+	/**
+     * Permet de calculer le jester d'un joueur
+     * 
+     * @param jest
+     *            jester d'un joueur
+     */
 	public void calculerScore(Jester jest) {
 		int score = 0;
 		
@@ -181,6 +264,9 @@ public class Game extends AbstractGame implements Visiteur {
 		jest.setScore(score);
 	}
 	
+	/**
+     * Permet de débuter une round
+     */
 	public void playRounds() {
 		
 		//For each round, the the value of an ace equals to 1
@@ -354,6 +440,9 @@ public class Game extends AbstractGame implements Visiteur {
 		this.endOfTheGame();
 	}
 	
+	/**
+     * Permet de terminer une partie en définissant les joueurs qui récupèrent les trophées, et en définissant le vainqueur de la partie
+     */
 	private void endOfTheGame() {
 		
 		System.out.println("----------------------------");
@@ -426,6 +515,9 @@ public class Game extends AbstractGame implements Visiteur {
 		
 	}
 	
+	/**
+     * Permet de calculer et de distribuer les trophées aux joueurs pouvant les obtenir
+     */
 	public void calculateTrophies() {
 		List<Player> winners = new ArrayList<>();
 		
@@ -471,6 +563,14 @@ public class Game extends AbstractGame implements Visiteur {
 		}
 	}
 	
+	/**
+     * Permet de calculer le joueur qui remplit la condition HIGHEST_SHAPE
+     * 
+     * @param s
+     *            forme qui est référente pour le calcul
+     *            
+     * @return le joueur qui remplit la condition
+     */
 	public Player calculateHightest(Shape s) {
 		
 		Player highestValue = null;
@@ -499,6 +599,14 @@ public class Game extends AbstractGame implements Visiteur {
 		return highestValue;
 	}
 	
+	/**
+     * Permet de calculer le joueur qui remplit la condition LOWEST_SHAPE
+     * 
+     * @param s
+     *            forme qui est référente pour le calcul
+     *            
+     * @return le joueur qui remplit la condition
+     */
 	public Player calculateLowest(Shape s) {
 		//System.out.println("entrée dans la méthode calculateLowest pour la forme " + s.name());
 		Player lowestValue = null;
@@ -527,6 +635,14 @@ public class Game extends AbstractGame implements Visiteur {
 		return lowestValue;
 	}
 	
+	/**
+     * Permet de calculer le joueur qui remplit la condition MAJORITY
+     * 
+     * @param value
+     *           	valeur de la carte pour laquelle on va calculer le joueur qui a le plus de fois cette valeur
+     *            
+     * @return le joueur qui remplit la condition
+     */
 	public Player calculateMajority(int value) {
 		Player winner = null;
 		Map<Player, Integer> tab = new HashMap<>();
@@ -604,6 +720,14 @@ public class Game extends AbstractGame implements Visiteur {
 		
 	}
 	
+	/**
+     * Permet de calculer le joueur qui remplit la condition BEST_JEST
+     * 
+     * @param joker
+     *            Permet de savoir si le joueur a le joker ou non 
+     *            
+     * @return le joueur qui remplit la condition
+     */
 	public Player calculateBestJest(boolean joker) {
 		Packet jokerPacket = new Packet(new ArrayList<Card>());
 		Player playerWithJoker = null;
@@ -646,6 +770,14 @@ public class Game extends AbstractGame implements Visiteur {
 		return winner;
 	}
 	
+	/**
+     * Permet de calculer le joueur qui a le joker
+     * 
+     * @param s
+     *            forme qui est référente pour le calcul
+     *            
+     * @return le joueur qui remplit la condition
+     */
 	public Player calculateJoker() {
 		Player winner = null;
 		for (int i = 0; i < this.players.size(); i++) {
@@ -661,6 +793,16 @@ public class Game extends AbstractGame implements Visiteur {
 		
 	}
 
+	/**
+     * Permet de calculer le joueur qui qui remplit la condition HIGHEST_SHAPE
+     * 
+     * @param lastToPlay
+     *            le joueur qui vient de choisir le tour précédent
+     * @param choosing
+     *            le joueur qui est en train de choisir
+     *            
+     * @return une List de joueurs dont les offres peuvent être choisies par le joueur à qui c'est son tour
+     */
 	public List<Player> tabPlayersWhoCanBeChosen(Player lastToPlay, Player choosing) {
 		
 		List<Player> tabPlayers = new ArrayList<Player>();
