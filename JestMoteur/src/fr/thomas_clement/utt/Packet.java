@@ -4,8 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Type packet contenant une liste de cartes
+ */
 public class Packet {
-
+	
+	/**
+	 * Modifier la valeur entière
+	 */
 	private List<Card> cards =  new ArrayList<Card>() ;
 	
 	public Packet(ArrayList<Card> cards) {
@@ -31,11 +37,19 @@ public class Packet {
 	public void removeCard(Card card) {
 		this.cards.remove(card);
 	}
-
+	/**
+	 * Récupérer la valeur
+	 * @return Liste de cartes de type Carte du paquet
+	 * @see List
+	 */
 	public List<Card> getCards() {
 		return cards;
 	}
 	
+	/**
+	 * Décrit l'objet de la classe sous forme d'une chaine de caracteres
+	 * @return toString() des cartes du paquets et la taille du paquet
+	 */
 	public String toString() {
 		return this.cards.toString() + " size : " + this.cards.size();
 	}
