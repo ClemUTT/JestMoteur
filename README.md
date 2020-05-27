@@ -18,4 +18,4 @@ Les règles ainsi que le but du jeu sont très bien expliqués sur le site offic
 L'utilisateur doit être muni d'un IDE tel qu'Eclipse ou Intellij et de sa console intégrée.
 Tout au long de l'exécution du programme, il lui sera demandé de répondre à des questions dont les réponses permettront de faire avancer la partie.
 
-Il a la possibilité en début de partie de choisir le nombre de joueurs "réels" et le nombre de joueurs "virtuels" dont ces derniers caractérisant 2 stratégies différentes (facile ou difficile) et qui joueront de manière automatique.
+Il a la possibilité en début de partie de choisir le nombre de joueurs "réels" et le nombre de joueurs "virtuels" dont ces derniers caractérisent 2 stratégies différentes (facile ou difficile) et qui joueront de manière automatique.
